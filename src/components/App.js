@@ -7,7 +7,6 @@ import Footer from './Footer';
 function App() {
   return (
     <div className="App">
-      <p>Hello World and Siski!</p>
       < Nav />
       < InputContainer />
       < InfoContainer />
