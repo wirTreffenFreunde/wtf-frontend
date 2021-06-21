@@ -6,7 +6,8 @@ import Container from "@material-ui/core/Container";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
-import InputField from "./InputField";
+//import TextInput from "./InputField";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,8 +52,22 @@ function InputContainer() {
           autoComplete="off"
           onSubmit={handleSubmitMiddle}
         >
-          <InputField person="A" onChange={handleChangeMiddle} />
-          <InputField person="B" onChange={handleChangeMiddle} />
+          {/* <InputField person="A" handleChange={handleChangeMiddle} />
+          <InputField person="B" handleChange={handleChangeMiddle} /> */}
+          <TextField
+            id="outlined-basic"
+            label="A"
+            variant="outlined"
+            onChange={handleChangeMiddle}
+            name="A"
+          />
+          <TextField
+            id="outlined-basic"
+            label="B"
+            variant="outlined"
+            onChange={handleChangeMiddle}
+            name="B"
+          />
           <Fab color="primary" aria-label="add">
             <AddIcon />
           </Fab>
