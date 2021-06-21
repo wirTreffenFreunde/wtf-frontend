@@ -56,11 +56,7 @@ function InputContainer() {
           <Fab color="primary" aria-label="add">
             <AddIcon />
           </Fab>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmitMiddle}
-          >
+          <Button variant="contained" color="primary" type="submit">
             Find middle point
           </Button>
           {/* loop for others */}
