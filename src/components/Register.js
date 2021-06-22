@@ -16,23 +16,47 @@ import useStyles from '../Layout/useStyles';
 
 
 
-
-
-export default function LogIn() {
+export default function Register() {
     const classes = useStyles();
-
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
+            <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Log In
+                    Sign up
                 </Typography>
                 <form className={classes.form} noValidate>
-                    <TextField
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="firstName"
+                        label="First Name"
+                        name="firstName"
+                        autoComplete="fname"
+                        autoFocus
+                            />
+                        </Grid>
+                         <Grid item xs={12} sm={6}>
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="lastName"
+                        label="Last Name"
+                        name="lastName"
+                        autoComplete="lname"
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                        <TextField
                         variant="outlined"
                         margin="normal"
                         required
@@ -41,23 +65,27 @@ export default function LogIn() {
                         label="Email Address"
                         name="email"
                         autoComplete="email"
-                        autoFocus
-                    />
-                     <TextField
+                        />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                        <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
                         id="password"
+                        label="Password"
+                        name="password"
                         autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remeber me"
-                    />
+                        />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                                label="I agrre to receive propmotions via email."
+                                />
+                        </Grid>
+                    </Grid>
                     <Button
                         type="submit"
                         fullWidth
@@ -65,21 +93,15 @@ export default function LogIn() {
                         color="primary"
                         className={classes.submit}
                     >
-                        Log In
+                        Sign up
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password ?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="/register" variant="body2">
-                                Not registred YET !! please  Sign Up here
+                    <Grid container justify="flex-end">
+                       <Grid item>
+                            <Link href="/" variant="body2">
+                               Already have an account ? Log in here
                             </Link>
                         </Grid>
                     </Grid>
-
                 </form>
             </div>
             <Box mt={8}>
@@ -88,4 +110,3 @@ export default function LogIn() {
         </Container>
     )
 }
-
