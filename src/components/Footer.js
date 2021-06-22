@@ -1,11 +1,12 @@
+import Box from "@material-ui/core/Box";
+import Copyright from "../Layout/Copyright";
 
 function Footer() {
     return (
-      <div className="Footer">
-        Footer here
-      </div>
+        <Box mt={8}>
+            <Copyright />
+        </Box>
     );
-  }
-  
-  export default Footer;
-  
+}
+
+export default Footer;
