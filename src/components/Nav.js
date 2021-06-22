@@ -37,7 +37,7 @@ function Nav() {
                     <Typography variant="h6" className={classes.title}>
                         Wir Treffen Freunde
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button href="/login" color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
         </div>
