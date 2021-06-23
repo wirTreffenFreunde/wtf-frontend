@@ -17,8 +17,8 @@ function App() {
   const [peopleAddresses, setPeopleAddresses] = useState([]);
   // middle point
   const [middlePoint, setMiddlePoint] = useState("");
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
+  const [lat, setLat] = useState(9.9937);
+  const [lng, setLng] = useState(53.5511);
   // saving all the input fields
   const handleChangeMiddle = (e) => {
     setPeopleAddresses({
@@ -35,9 +35,8 @@ function App() {
       Object.values(peopleAddresses)
     );
     console.log(result.data);
-    setLat(result.data.longitude);
-    setLng(result.data.latitude);
-    console.log(lat, lng);
+    setLat(result.data.latitude);
+    setLng(result.data.longitude);
   };
 
   return (

@@ -12,14 +12,21 @@ function Result() {
   const [zoom, setZoom] = useState(9);
 
   useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [lat, lng],
-      zoom: zoom,
-    });
-  });
+    console.log(lng, lat);
+    if (map.current) {
+      map.current.setCenter([lng, lat]);
+    } else {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [lng, lat],
+        zoom: zoom,
+      });
+    }
+    var marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map.current);
+    // Add zoom and rotation controls to the map.
+    map.current.addControl(new mapboxgl.NavigationControl());
+  }, [lat, lng]);
 
   return (
     <div>
