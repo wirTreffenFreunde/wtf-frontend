@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState} from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -9,15 +9,15 @@ import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
 import useStyles from "../Layout/useStyles";
-import { AppData } from "../app-data-context";
+import { useMapContext } from "../context/map-context";
 
 function InputContainer() {
+    const { handleChangeMiddle, handleSubmitMiddle } = useMapContext();
+
     let history = useHistory();
     const classes = useStyles();
-    const { handleChangeMiddle, handleSubmitMiddle } = useContext(AppData);
 
     const [inputsArray, setInputsArray] = useState([1, 2]); // initial value [1, 2]
-
     function handleClickAddNew() {
         setInputsArray([...inputsArray, inputsArray.length + 1]);
     }
@@ -66,7 +66,7 @@ function InputContainer() {
                                 onClick={(e) => {
                                     handleSubmitMiddle(e);
                                     history.push("/result");
-                                }} // need to find how to pass the data
+                                }}
                             >
                                 Find middle point
                             </Button>
