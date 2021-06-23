@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -23,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Nav() {
     const classes = useStyles();
-    let history = useHistory();
 
     return (
         <div className={classes.root}>

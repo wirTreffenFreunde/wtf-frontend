@@ -1,7 +1,9 @@
-import React, { useRef, useEffect, useState} from "react";
+import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import { useMapContext } from "../context/map-context";
 import InputContainer from "./InputContainer";
+import Container from "@material-ui/core/Container";
+
 
 mapboxgl.accessToken = process.env.REACT_APP_API_KEY;
 
@@ -23,12 +25,18 @@ function Result() {
                 zoom: zoom,
             });
         }
+        var marker = new mapboxgl.Marker()
+            .setLngLat([lng, lat])
+            .addTo(map.current);
+        map.current.addControl(new mapboxgl.NavigationControl());
     }, [lat, lng]);
 
     return (
         <div>
             <InputContainer />
-            <div ref={mapContainer} className="map-container" />
+            <Container>
+                <div ref={mapContainer} className="map-container" />
+            </Container>
             {/* <p>{middlePoint}</p> */}
         </div>
     );
