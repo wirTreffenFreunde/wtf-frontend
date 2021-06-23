@@ -24,32 +24,29 @@ function InputContainer() {
     }
 
     return (
-        <div className="InputContainer">
+        <>
             <Container>
-                <Card>
-                    <Typography variant="h4">Put you addresses here</Typography>
+                <Card className={classes.card}>
+                    <Typography variant="h5">
+                        Put you addresses here:
+                    </Typography>
                     <form
-                        className={classes.root}
                         noValidate
                         autoComplete="off"
+                        // className={classes.mainForm}
                     >
-                        <Grid
-                            container
-                            direction="column"
-                            justify="space-around"
-                            spacing={1}
-                        >
+                        <Grid>
                             {inputsArray.map((element, index) => {
                                 return (
-                                    <Grid item key={index}>
+                                    <div key={index}>
                                         <TextField
                                             id="outlined-basic"
                                             label={element}
                                             variant="outlined"
                                             onChange={handleChangeMiddle}
                                             name={`${element}-name`}
+                                            className={classes.inputField}
                                         />
-
                                         {inputsArray.length < 5 && // only for 5 person max!
                                             index ===
                                                 inputsArray.length - 1 && ( // checking the last element to add btn
@@ -63,27 +60,27 @@ function InputContainer() {
                                                     <AddIcon />
                                                 </Fab>
                                             )}
-                                    </Grid>
+                                    </div>
                                 );
                             })}
-                            <Grid>
-                                <Button
-                                    variant="contained"
-                                    type="submit"
-                                    color="primary"
-                                    onClick={(e) => {
-                                        handleSubmitMiddle(e);
-                                        history.push("/result");
-                                    }}
-                                >
-                                    Find middle point
-                                </Button>
-                            </Grid>
                         </Grid>
+                        <Button
+                            variant="contained"
+                            type="submit"
+                            color="primary"
+                            size="large"
+                            className={classes.submitForm}
+                            onClick={(e) => {
+                                handleSubmitMiddle(e);
+                                history.push("/result");
+                            }}
+                        >
+                            Find middle point
+                        </Button>
                     </form>
                 </Card>
             </Container>
-        </div>
+        </>
     );
 }
 
