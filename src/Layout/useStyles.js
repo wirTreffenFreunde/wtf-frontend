@@ -1,4 +1,5 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { red } from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -50,8 +51,11 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3, 0, 2),
     },
     submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
+        margin: theme.spacing(3, 0, 2)
+    }
+    // error: {
+    //     color: red
+    // }
 }));
 
 export default useStyles;
