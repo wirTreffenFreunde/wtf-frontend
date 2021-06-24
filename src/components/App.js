@@ -9,76 +9,29 @@ import Register from "./Register";
 import Result from "./Result";
 
 import "./App.css";
-import { AppData } from "../app-data-context";
-import { accessToken } from "mapbox-gl";
+import { MapProvider } from "../context/map-context";
 
 function App() {
+    return (
+        <div className="App">
+            <MapProvider>
+                <Nav />
 
-  // input fields for everyone
-  const [peopleAddresses, setPeopleAddresses] = useState([]);
-  // middle point
-  const [middlePoint, setMiddlePoint] = useState("");
-
-  // saving all the input fields
-  const handleChangeMiddle = (e) => {
-    setPeopleAddresses({
-      ...peopleAddresses,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmitMiddle = async (e) => {
-    e.preventDefault();
-    console.log(peopleAddresses);
-    const result = await axios.post(
-      `http://localhost:8080/api`,
-      Object.values(peopleAddresses)
+                <Router>
+                    <Switch>
+                        <Route exact path="/">
+                            <InputContainer />
+                            <InfoContainer />
+                        </Route>
+                        <Route exact path="/result" component={Result} />
+                        <Route exact path="/login" component={LogIn} />
+                        <Route exact path="/register" component={Register} />
+                    </Switch>
+                </Router>
+                <Footer />
+            </MapProvider>
+        </div>
     );
-    console.log(result.data);
-    setMiddlePoint(result.data);
-  };
-
-  return (
-    <div className="App">
-      <AppData.Provider
-        value={{
-          peopleAddresses,
-          setPeopleAddresses,
-          middlePoint,
-          setMiddlePoint,
-          handleChangeMiddle,
-          handleSubmitMiddle,
-        }}
-      >
-        <Nav />
-
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <InputContainer />
-            </Route>
-
-            <Route exact path="/">
-              <InfoContainer />
-            </Route>
-
-            <Route exact path="/result">
-              <Result />
-            </Route>
-
-            <Route exact path="/login">
-              <LogIn />
-            </Route>
-
-            <Route path="/register">
-              <Register />
-            </Route>
-          </Switch>
-        </Router>
-        <Footer />
-      </AppData.Provider>
-    </div>
-  );
 }
 
 export default App;
