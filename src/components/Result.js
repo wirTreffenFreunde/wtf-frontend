@@ -17,7 +17,8 @@ function Result() {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [zoom, setZoom] = useState(9);
-    
+
+    //test
     useEffect(() => {
         if (map.current) {
             map.current.setCenter([lng, lat]);
