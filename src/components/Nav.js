@@ -1,47 +1,62 @@
 import React from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import Link from "@material-ui/core/Link";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
-}));
+import useStyles from "../Layout/useStyles";
 
 function Nav() {
     const classes = useStyles();
-
     return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
+        <>
+            <CssBaseline />
+            <AppBar position="static" elevation={1} className={classes.appBar}>
+                <Toolbar className={classes.toolbar}>
+                    <Link
+                        variant="h6"
+                        href="/"
                         color="inherit"
-                        aria-label="menu"
+                        noWrap
+                        underline="none"
+                        className={classes.toolbarTitle}
                     >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
                         Wir Treffen Freunde
-                    </Typography>
-                    <Button href="/login" color="inherit">Login</Button>
+                    </Link>
+                    <nav>
+                        <Link
+                            variant="button"
+                            color="textPrimary"
+                            href="#"
+                            className={classes.link}
+                        >
+                            Find middle point
+                        </Link>
+                        <Link
+                            variant="button"
+                            color="textPrimary"
+                            href="#"
+                            className={classes.link}
+                        >
+                            How it works
+                        </Link>
+                        <Link
+                            variant="button"
+                            color="textPrimary"
+                            href="#"
+                            className={classes.link}
+                        >
+                            About us
+                        </Link>
+                    </nav>
+                    <Button href="/login" color="inherit" variant="outlined">
+                        Login
+                    </Button>
                 </Toolbar>
             </AppBar>
-        </div>
+        </>
     );
 }
 
