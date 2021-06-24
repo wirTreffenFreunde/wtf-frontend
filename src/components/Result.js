@@ -3,10 +3,15 @@ import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-load
 import { useMapContext } from "../context/map-context";
 import InputContainer from "./InputContainer";
 import Container from "@material-ui/core/Container";
+import Card from "@material-ui/core/Card";
+import useStyles from "../Layout/useStyles";
 
 mapboxgl.accessToken = process.env.REACT_APP_API_KEY;
+let marker;
 
 function Result() {
+  const classes = useStyles();
+
   const { middlePoint, lat, lng } = useMapContext();
 
   const mapContainer = useRef(null);
@@ -24,15 +29,22 @@ function Result() {
         zoom: zoom,
       });
     }
-    var marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map.current);
-    map.current.addControl(new mapboxgl.NavigationControl());
+    if (marker) {
+      marker.setLngLat([lng, lat]);
+    } else {
+      marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map.current);
+    }
+
+    // map.current.addControl(new mapboxgl.NavigationControl());
   }, [lat, lng, zoom]);
 
   return (
     <div>
       <InputContainer />
       <Container>
-        <div ref={mapContainer} className="map-container" />
+        <Card className={classes.map}>
+          <div ref={mapContainer} className="map-container" />
+        </Card>
       </Container>
       {/* <p>{middlePoint}</p> */}
     </div>

@@ -13,78 +13,72 @@ import useStyles from "../Layout/useStyles";
 import { useMapContext } from "../context/map-context";
 
 function InputContainer() {
-    const { handleChangeMiddle, handleSubmitMiddle } = useMapContext();
+  const { handleChangeMiddle, handleSubmitMiddle } = useMapContext();
 
-    let history = useHistory();
-    const classes = useStyles();
+  let history = useHistory();
+  const classes = useStyles();
 
-    const [inputsArray, setInputsArray] = useState([1, 2]); // initial value [1, 2]
-    function handleClickAddNew() {
-        setInputsArray([...inputsArray, inputsArray.length + 1]);
-    }
+  const [inputsArray, setInputsArray] = useState([1, 2]); // initial value [1, 2]
+  function handleClickAddNew() {
+    setInputsArray([...inputsArray, inputsArray.length + 1]);
+  }
 
-    return (
-        <div className="InputContainer">
-            <Container>
-                <Card>
-                    <Typography variant="h4">Put you addresses here</Typography>
-                    <form
-                        className={classes.root}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <Grid
-                            container
-                            direction="column"
-                            justify="space-around"
-                            spacing={1}
+  return (
+    <>
+      <Container>
+        <Card className={classes.card}>
+          <Typography variant="h5">Put you addresses here:</Typography>
+          <form
+            noValidate
+            autoComplete="off"
+            // className={classes.mainForm}
+          >
+            <Grid>
+              {inputsArray.map((element, index) => {
+                return (
+                  <div key={index}>
+                    <TextField
+                      id="outlined-basic"
+                      label={element}
+                      variant="outlined"
+                      onChange={handleChangeMiddle}
+                      name={`${element}-name`}
+                      className={classes.inputField}
+                    />
+                    {inputsArray.length < 5 && // only for 5 person max!
+                      index === inputsArray.length - 1 && ( // checking the last element to add btn
+                        <Fab
+                          color="primary"
+                          aria-label="add"
+                          onClick={() => {
+                            handleClickAddNew();
+                          }}
                         >
-                            {inputsArray.map((element, index) => {
-                                return (
-                                    <Grid item key={index}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            label={element}
-                                            variant="outlined"
-                                            onChange={handleChangeMiddle}
-                                            name={`${element}-name`}
-                                        />
-
-                                        {inputsArray.length < 5 && // only for 5 person max!
-                                            index ===
-                                                inputsArray.length - 1 && ( // checking the last element to add btn
-                                                <Fab
-                                                    color="primary"
-                                                    aria-label="add"
-                                                    onClick={() => {
-                                                        handleClickAddNew();
-                                                    }}
-                                                >
-                                                    <AddIcon />
-                                                </Fab>
-                                            )}
-                                    </Grid>
-                                );
-                            })}
-                            <Grid>
-                                <Button
-                                    variant="contained"
-                                    type="submit"
-                                    color="primary"
-                                    onClick={(e) => {
-                                        handleSubmitMiddle(e);
-                                        history.push("/result");
-                                    }}
-                                >
-                                    Find middle point
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </Card>
-            </Container>
-        </div>
-    );
+                          <AddIcon />
+                        </Fab>
+                      )}
+                  </div>
+                );
+              })}
+            </Grid>
+            <Button
+              variant="contained"
+              type="submit"
+              color="primary"
+              size="large"
+              className={classes.submitForm}
+              onClick={(e) => {
+                handleSubmitMiddle(e);
+                history.push("/result");
+              }}
+            >
+              Find middle point
+            </Button>
+          </form>
+        </Card>
+      </Container>
+    </>
+  );
 }
 
 export default InputContainer;
