@@ -19,9 +19,6 @@ export default function LogIn() {
 
   const { control, handleSubmit, formState: { errors } } = useForm()
   const [wrongCredentials,setWrongCredentials] = useState(false)
-  
-  
-  
   async function onSubmit(data) {
   
     try {
