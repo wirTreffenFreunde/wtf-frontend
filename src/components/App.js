@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import axios from "axios";
 import Nav from "./Nav";
 import InputContainer from "./InputContainer";
 import InfoContainer from "./InfoContainer";
@@ -10,76 +9,27 @@ import Register from "./Register";
 import Result from "./Result";
 
 import "./App.css";
-import { AppData } from "../app-data-context";
+import { MapProvider } from "../context/map-context";
 
 function App() {
-  // input fields for everyone
-  const [peopleAddresses, setPeopleAddresses] = useState([]);
-  // middle point
-  const [middlePoint, setMiddlePoint] = useState("");
-  const [lat, setLat] = useState(9.9937);
-  const [lng, setLng] = useState(53.5511);
-  // saving all the input fields
-  const handleChangeMiddle = (e) => {
-    setPeopleAddresses({
-      ...peopleAddresses,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmitMiddle = async (e) => {
-    e.preventDefault();
-    console.log(peopleAddresses);
-    const result = await axios.post(
-      `http://localhost:8080/api`,
-      Object.values(peopleAddresses)
-    );
-    console.log(result.data);
-    setLat(result.data.latitude);
-    setLng(result.data.longitude);
-  };
-
   return (
     <div className="App">
-      <AppData.Provider
-        value={{
-          peopleAddresses,
-          setPeopleAddresses,
-          middlePoint,
-          setMiddlePoint,
-          handleChangeMiddle,
-          handleSubmitMiddle,
-          lat,
-          lng,
-        }}
-      >
+      <MapProvider>
         <Nav />
 
         <Router>
           <Switch>
             <Route exact path="/">
               <InputContainer />
-            </Route>
-
-            <Route exact path="/">
               <InfoContainer />
             </Route>
-
-            <Route exact path="/result">
-              <Result />
-            </Route>
-
-            <Route exact path="/login">
-              <LogIn />
-            </Route>
-
-            <Route path="/register">
-              <Register />
-            </Route>
+            <Route exact path="/result" component={Result} />
+            <Route exact path="/login" component={LogIn} />
+            <Route exact path="/register" component={Register} />
           </Switch>
         </Router>
         <Footer />
-      </AppData.Provider>
+      </MapProvider>
     </div>
   );
 }
