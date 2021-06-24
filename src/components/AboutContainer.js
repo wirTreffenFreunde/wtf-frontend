@@ -4,13 +4,13 @@ import Typography from "@material-ui/core/Typography";
 
 import useStyles from "../Layout/useStyles";
 
-function InfoContainer() {
+function AboutContainer() {
     const classes = useStyles();
 
     return (
-        <Container className="InfoContainer" id="info">
+        <Container className="AboutContainer" id="about">
             <Card className={classes.card}>
-                <Typography variant="h3">How it works</Typography>
+                <Typography variant="h3">About us</Typography>
                 <Typography variant="h5" component="h3">
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                     Optio, molestias dolore! Molestias exercitationem ut
@@ -23,4 +23,4 @@ function InfoContainer() {
     );
 }
 
-export default InfoContainer;
+export default AboutContainer;

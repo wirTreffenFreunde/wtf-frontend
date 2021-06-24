@@ -7,7 +7,6 @@ import Card from "@material-ui/core/Card";
 import useStyles from "../Layout/useStyles";
 
 mapboxgl.accessToken = process.env.REACT_APP_API_KEY;
-let marker;
 
 function Result() {
     const classes = useStyles();
@@ -17,8 +16,8 @@ function Result() {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [zoom, setZoom] = useState(9);
+    const marker = useRef(null)
 
-    //test
     useEffect(() => {
         if (map.current) {
             map.current.setCenter([lng, lat]);
@@ -29,15 +28,15 @@ function Result() {
                 center: [lng, lat], // have to switch them.. why? nobody knows
                 zoom: zoom,
             });
-            
+            map.current.addControl(new mapboxgl.NavigationControl());
         }
-        if (marker) {
-            marker.setLngLat([lng, lat])
+        if (marker.current) {
+            marker.current.setLngLat([lng, lat]);
         } else {
-            marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map.current);
+            marker.current = new mapboxgl.Marker()
+                .setLngLat([lng, lat])
+                .addTo(map.current);
         }
-
-        // map.current.addControl(new mapboxgl.NavigationControl());
     }, [lat, lng]);
 
     return (
