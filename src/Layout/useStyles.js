@@ -1,3 +1,4 @@
+import { red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,17 +24,27 @@ const useStyles = makeStyles((theme) => ({
     card: {
         margin: theme.spacing(3),
         padding: theme.spacing(3),
+        height: "500px",
     },
     map: {
         margin: theme.spacing(3),
     },
-    mainForm: {
-    },
-    inputField:{
+    mainForm: {},
+    inputField: {
         width: "300px",
     },
     submitForm: {
         // width: "300px"
+    },
+    footerContainer: {
+        // backgroundColor: "#212121",
+        // margin: theme.spacing(0),
+    },
+    footer: {
+        borderTop: `1px solid ${theme.palette.divider}`,
+        marginTop: theme.spacing(8),
+        paddingTop: theme.spacing(3),
+        paddingBottom: theme.spacing(3),
     },
     paper: {
         marginTop: theme.spacing(8),
@@ -52,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    // error: {
+    //     color: red
+    // }
 }));
 
 export default useStyles;
