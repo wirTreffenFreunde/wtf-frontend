@@ -1,3 +1,4 @@
+import { useState} from "react"
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,11 +10,31 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-
+import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
 import useStyles from "../Layout/useStyles";
 
 export default function LogIn() {
   const classes = useStyles();
+
+  const { control, handleSubmit, formState: { errors } } = useForm()
+  const [wrongCredentials,setWrongCredentials] = useState(false)
+  async function onSubmit(data) {
+  
+    try {
+      const response = await axios({
+        method: "POST", 
+        url:"http://localhost:8080/users/login",
+        data:data
+      })
+      setWrongCredentials(false)
+      axios.defaults.headers.common["authorization"] = `basic ${response.data.accessToken}`
+      await axios.put ("http://localhost:8080/users")
+      console.log(response.data.accessToken);
+    } catch (error) {
+      if (error.response.status == "404") setWrongCredentials(true) 
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -25,33 +46,48 @@ export default function LogIn() {
         <Typography component="h1" variant="h5">
           Log In
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            name='email'
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => <TextField
+              {...field}
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="Email Address"
+              autoComplete="email"
+              autoFocus
+            />}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
+          {errors.email && <span>Please enter a valid email address</span>}
+
+          <Controller 
             name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => <TextField
+              {...field}
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="Password"
+              autoComplete="current-password"
+              autoFocus
+              type="password"
+            />}
           />
-          <FormControlLabel
+          {errors.password && <span>Please enter a valid password   </span>}
+            
+
+          {wrongCredentials && <div style={{color:"#ff0000"}}>Wrong username or password   </div>}
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
