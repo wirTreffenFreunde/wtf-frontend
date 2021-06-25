@@ -7,9 +7,11 @@ import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 
 import useStyles from "../Layout/useStyles";
+import { useUserContext } from "../context/user-context"
 
 function Nav() {
     const classes = useStyles();
+    const { user } = useUserContext()
     return (
         <>
             <CssBaseline />
@@ -51,9 +53,16 @@ function Nav() {
                             About us
                         </Link>
                     </nav>
-                    <Button href="/login" color="inherit" variant="outlined">
-                        Login
-                    </Button>
+                    {user ?
+                        <Button href="" color="inherit" variant="outlined">
+                            Logout
+                        </Button>
+                        :
+                        <Button href="/login" color="inherit" variant="outlined">
+                            Login
+                        </Button>
+                    }
+                    
                 </Toolbar>
             </AppBar>
         </>

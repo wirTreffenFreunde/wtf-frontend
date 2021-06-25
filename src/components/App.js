@@ -11,29 +11,32 @@ import Result from "./Result";
 
 import "./App.css";
 import { MapProvider } from "../context/map-context";
+import { UserProvider } from "../context/user-context"
 
 function App() {
-  return (
-    <div className="App">
-      <MapProvider>
-        <Nav />
+    return (
+        <div className="App">
+            <MapProvider>
+              <UserProvider>
+                <Nav />
 
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <InputContainer />
-              <InfoContainer />
-              <AboutContainer />
-            </Route>
-            <Route exact path="/result" component={Result} />
-            <Route exact path="/login" component={LogIn} />
-            <Route exact path="/register" component={Register} />
-          </Switch>
-        </Router>
-        <Footer />
-      </MapProvider>
-    </div>
-  );
+                <Router>
+                    <Switch>
+                        <Route exact path="/">
+                            <InputContainer />
+                            <InfoContainer />
+                            <AboutContainer />
+                        </Route>
+                        <Route exact path="/result" component={Result} />
+                        <Route exact path="/login" component={LogIn} />
+                        <Route exact path="/register" component={Register} />
+                    </Switch>
+                </Router>
+                <Footer />
+              </UserProvider>
+            </MapProvider>
+        </div>
+    );
 }
 
 export default App;
