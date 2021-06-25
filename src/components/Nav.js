@@ -31,7 +31,7 @@ function Nav() {
                         <Link
                             variant="button"
                             color="textPrimary"
-                            href="#"
+                            href="#input"
                             className={classes.link}
                         >
                             Find middle point
@@ -39,7 +39,7 @@ function Nav() {
                         <Link
                             variant="button"
                             color="textPrimary"
-                            href="#"
+                            href="#info"
                             className={classes.link}
                         >
                             How it works
@@ -47,7 +47,7 @@ function Nav() {
                         <Link
                             variant="button"
                             color="textPrimary"
-                            href="#"
+                            href="#about"
                             className={classes.link}
                         >
                             About us
