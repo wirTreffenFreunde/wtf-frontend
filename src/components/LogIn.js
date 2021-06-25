@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,28 +11,49 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { useForm, Controller } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useStyles from "../Layout/useStyles";
+import { accessToken } from "mapbox-gl";
+import { useUserContext } from "../context/user-context"
 
 export default function LogIn() {
+  let history = useHistory();
   const classes = useStyles();
 
-  const { control, handleSubmit, formState: { errors } } = useForm()
-  const [wrongCredentials,setWrongCredentials] = useState(false)
+  const { user, setUser } = useUserContext()
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [wrongCredentials, setWrongCredentials] = useState(false);
   async function onSubmit(data) {
-  
     try {
       const response = await axios({
-        method: "POST", 
-        url:"http://localhost:8080/users/login",
-        data:data
-      })
-      setWrongCredentials(false)
-      axios.defaults.headers.common["authorization"] = `basic ${response.data.accessToken}`
-      await axios.put ("http://localhost:8080/users")
-      console.log(response.data.accessToken);
+        method: "POST",
+        url: "http://localhost:8080/users/login",
+        data: data,
+      });
+      setWrongCredentials(false);
+      const accessToken = response.data.accessToken
+      axios.defaults.headers.common[
+        "authorization"
+      ] = `basic ${accessToken}`;
+
+      setUser({email: data.email})
+
+      if (data["remember-me"]) {
+        localStorage.setItem("token",accessToken) 
+
+      }else(
+        sessionStorage.setItem("token",accessToken)
+      )
+      console.log(accessToken);
+      history.push('/')
     } catch (error) {
-      if (error.response.status === "404") setWrongCredentials(true) 
+      if (error.response.status === "404") setWrongCredentials(true);
     }
   }
 
@@ -48,46 +69,59 @@ export default function LogIn() {
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Controller
-            name='email'
+            name="email"
             control={control}
             defaultValue=""
             rules={{ required: true }}
-            render={({ field }) => <TextField
-              {...field}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Email Address"
-              autoComplete="email"
-              autoFocus
-            />}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                label="Email Address"
+                autoComplete="email"
+                autoFocus
+              />
+            )}
           />
           {errors.email && <span>Please enter a valid email address</span>}
 
-          <Controller 
+          <Controller
             name="password"
             control={control}
             defaultValue=""
             rules={{ required: true }}
-            render={({ field }) => <TextField
-              {...field}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Password"
-              autoComplete="current-password"
-              autoFocus
-              type="password"
-            />}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                label="Password"
+                autoComplete="current-password"
+                autoFocus
+                type="password"
+              />
+            )}
           />
-          {errors.password && <span>Please enter a valid password   </span>}
-            
+          {errors.password && <span>Please enter a valid password </span>}
 
-          {wrongCredentials && <div style={{color:"#ff0000"}}>Wrong username or password   </div>}
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
+          {wrongCredentials && (
+            <div style={{ color: "#ff0000" }}>Wrong username or password </div>
+          )}
+          <Controller
+            name="remember-me"
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+               
+                control={<Checkbox  {...field}  value="remember" color="primary" />}
+                label="Remember me"
+              />
+            )}
+          />
+
           <Button
             type="submit"
             fullWidth

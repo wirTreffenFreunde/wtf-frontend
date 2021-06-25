@@ -10,11 +10,13 @@ import Result from "./Result";
 
 import "./App.css";
 import { MapProvider } from "../context/map-context";
+import { UserProvider } from "../context/user-context"
 
 function App() {
     return (
         <div className="App">
             <MapProvider>
+              <UserProvider>
                 <Nav />
 
                 <Router>
@@ -29,6 +31,7 @@ function App() {
                     </Switch>
                 </Router>
                 <Footer />
+              </UserProvider>
             </MapProvider>
         </div>
     );
