@@ -9,47 +9,47 @@ import useStyles from "../Layout/useStyles";
 mapboxgl.accessToken = process.env.REACT_APP_API_KEY;
 
 function Result() {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const { middlePoint, lat, lng } = useMapContext();
+  const { middlePoint, lat, lng } = useMapContext();
 
-    const mapContainer = useRef(null);
-    const map = useRef(null);
-    const [zoom, setZoom] = useState(9);
-    const marker = useRef(null)
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [zoom, setZoom] = useState(9);
+  const marker = useRef(null);
 
-    useEffect(() => {
-        if (map.current) {
-            map.current.setCenter([lng, lat]);
-        } else {
-            map.current = new mapboxgl.Map({
-                container: mapContainer.current,
-                style: "mapbox://styles/mapbox/streets-v11",
-                center: [lng, lat], // have to switch them.. why? nobody knows
-                zoom: zoom,
-            });
-            map.current.addControl(new mapboxgl.NavigationControl());
-        }
-        if (marker.current) {
-            marker.current.setLngLat([lng, lat]);
-        } else {
-            marker.current = new mapboxgl.Marker()
-                .setLngLat([lng, lat])
-                .addTo(map.current);
-        }
-    }, [lat, lng]);
+  useEffect(() => {
+    if (map.current) {
+      map.current.setCenter([lng, lat]);
+    } else {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [lng, lat], // have to switch them.. why? nobody knows
+        zoom: zoom,
+      });
+      map.current.addControl(new mapboxgl.NavigationControl());
+    }
+    if (marker.current) {
+      marker.current.setLngLat([lng, lat]);
+    } else {
+      marker.current = new mapboxgl.Marker()
+        .setLngLat([lng, lat])
+        .addTo(map.current);
+    }
+  }, [lat, lng, zoom]);
 
-    return (
-        <div>
-            <InputContainer />
-            <Container>
-                <Card className={classes.map}>
-                    <div ref={mapContainer} className="map-container" />
-                </Card>
-            </Container>
-            {/* <p>{middlePoint}</p> */}
-        </div>
-    );
+  return (
+    <div>
+      <InputContainer />
+      <Container>
+        <Card className={classes.map}>
+          <div ref={mapContainer} className="map-container" />
+        </Card>
+      </Container>
+      {/* <p>{middlePoint}</p> */}
+    </div>
+  );
 }
 
 export default Result;

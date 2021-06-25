@@ -13,27 +13,27 @@ import "./App.css";
 import { MapProvider } from "../context/map-context";
 
 function App() {
-    return (
-        <div className="App">
-            <MapProvider>
-                <Nav />
+  return (
+    <div className="App">
+      <MapProvider>
+        <Nav />
 
-                <Router>
-                    <Switch>
-                        <Route exact path="/">
-                            <InputContainer />
-                            <InfoContainer />
-                            <AboutContainer />
-                        </Route>
-                        <Route exact path="/result" component={Result} />
-                        <Route exact path="/login" component={LogIn} />
-                        <Route exact path="/register" component={Register} />
-                    </Switch>
-                </Router>
-                <Footer />
-            </MapProvider>
-        </div>
-    );
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <InputContainer />
+              <InfoContainer />
+              <AboutContainer />
+            </Route>
+            <Route exact path="/result" component={Result} />
+            <Route exact path="/login" component={LogIn} />
+            <Route exact path="/register" component={Register} />
+          </Switch>
+        </Router>
+        <Footer />
+      </MapProvider>
+    </div>
+  );
 }
 
 export default App;
