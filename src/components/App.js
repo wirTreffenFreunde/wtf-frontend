@@ -19,11 +19,12 @@ function App() {
           <Route exact path="/">
             <InputContainer />
           </Route>
-
           <Route exact path="/">
             <InfoContainer />
           </Route>
-
+          <Route path="/myAccount">
+            <MyAccount />
+          </Route>
           <Route exact path="/login">
             <LogIn />
           </Route>
@@ -33,6 +34,7 @@ function App() {
         </Switch>
       </Router>
       <Footer />
+      <MyAccount />
     </div>
   );
 }
