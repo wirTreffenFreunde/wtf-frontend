@@ -24,10 +24,16 @@ const useStyles = makeStyles((theme) => ({
     card: {
         margin: theme.spacing(3),
         padding: theme.spacing(3),
+        height: "300px",
+    },
+    cardMap: {
+        margin: theme.spacing(3),
         height: "500px",
     },
-    map: {
-        margin: theme.spacing(3),
+    mapPopup: {
+        margin: theme.spacing(0),
+        padding: theme.spacing(0),
+        backgroundColor: "black"
     },
     mainForm: {},
     inputField: {
