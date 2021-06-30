@@ -17,8 +17,8 @@ function MapProvider({ children }) {
 
   // middle point
   const [middlePoint, setMiddlePoint] = useState("");
-  const [lat, setLat] = useState("53.57835738834605");
-  const [lng, setLng] = useState("9.97645520197268");
+  const [lat, setLat] = useState(53.57835738834605);
+  const [lng, setLng] = useState(9.97645520197268);
 
   // saving all the input fields
   const handleChangeMiddle = (e) => {
@@ -39,9 +39,8 @@ function MapProvider({ children }) {
         encodedAddresses
       );
       console.log(result.data);
-      setLat(result.data.latitude);
-      setLng(result.data.longitude);
-      console.log(lat, lng);
+      setLat(Number(result.data.latitude));
+      setLng(Number(result.data.longitude));
     } catch (err) {
       console.error(err);
     }
