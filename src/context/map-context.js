@@ -20,10 +20,10 @@ function MapProvider({ children }) {
         latitude: 53.57835738834605,
         longitude: 9.97645520197268,
     });
-    const [peopleCoordinates, setPeopleCoordinates] = useState([{
-        latitude: 53.57835738834605,
-        longitude: 9.97645520197268,
-    }]);
+    // coordinates from input fields
+    const [peopleCoordinates, setPeopleCoordinates] = useState([]);
+    // bounds of all addresses
+    const [boundsCoordinates, setBoundsCoordinates] = useState(null)
 
     // saving all the input fields
     const handleChangeMiddle = (e) => {
@@ -43,12 +43,12 @@ function MapProvider({ children }) {
                 `http://localhost:8080/api`,
                 encodedAddresses
             );
-            // console.log(result.data);
             setMiddlePoint({
                 latitude: Number(result.data[0].middlePoint.latitude),
                 longitude: Number(result.data[0].middlePoint.longitude),
             });
             setPeopleCoordinates(result.data[0].peopleAddresses)
+            setBoundsCoordinates(result.data[0].boundsAddresses)
         } catch (err) {
             console.error(err);
         }
@@ -58,6 +58,7 @@ function MapProvider({ children }) {
         setPeopleAddresses,
         middlePoint,
         peopleCoordinates,
+        boundsCoordinates,
         setMiddlePoint,
         handleChangeMiddle,
         handleSubmitMiddle,

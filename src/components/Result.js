@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
-import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
+import ReactMapGL, {
+    Marker,
+    Popup,
+    NavigationControl,
+    WebMercatorViewport,
+} from "react-map-gl";
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import RoomIcon from "@material-ui/icons/Room";
-import HomeIcon from '@material-ui/icons/Home';
+import HomeIcon from "@material-ui/icons/Home";
 import { Badge, Typography } from "@material-ui/core";
 
 import { useMapContext } from "../context/map-context";
@@ -17,29 +22,49 @@ const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 function Result() {
     const classes = useStyles();
 
-    const { middlePoint, peopleCoordinates } = useMapContext();
-    // console.log(peopleCoordinates);
-    // const [showPopup, togglePopup] = useState(false);
+    const { middlePoint, peopleCoordinates, boundsCoordinates } =
+        useMapContext();
+
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [copySuccess, setCopySuccess] = useState(0);
+
+    const [viewport, setViewport] = useState({
+        latitude: middlePoint.latitude,
+        longitude: middlePoint.longitude,
+        zoom: 10,
+    });
 
     const navControlStyle = {
         right: 10,
         top: 10,
     };
-    const [viewport, setViewport] = useState({
-        latitude: middlePoint.latitude,
-        longitude: middlePoint.longitude,
-        zoom: 8,
-    });
-
     useEffect(() => {
-        setViewport({
-            ...viewport,
-            latitude: middlePoint.latitude,
-            longitude: middlePoint.longitude,
-        });
-    }, [middlePoint.latitude, middlePoint.longitude]);
+        if (boundsCoordinates) {
+            const { longitude, latitude, zoom } = new WebMercatorViewport(
+                viewport
+            ).fitBounds(
+                [
+                    [boundsCoordinates.minLng, boundsCoordinates.minLat],
+                    [boundsCoordinates.maxLng, boundsCoordinates.maxLat],
+                ],
+                {
+                    padding: {top:50, bottom: 20, left: 20, right: 20},
+                }
+            );
+            setViewport({
+                ...viewport,
+                longitude,
+                latitude,
+                zoom,
+            });
+        } else {
+            setViewport({
+                ...viewport,
+                latitude: middlePoint.latitude,
+                longitude: middlePoint.longitude,
+            });
+        }
+    }, [middlePoint, boundsCoordinates]);
 
     function copyToClipboard() {
         const el = document.createElement("input");
@@ -53,6 +78,7 @@ function Result() {
             setCopySuccess(0);
         }, 3000);
     }
+
     return (
         <div>
             <InputContainer />
