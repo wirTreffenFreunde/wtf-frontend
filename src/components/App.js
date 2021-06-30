@@ -5,6 +5,7 @@ import InputContainer from "./InputContainer";
 import InfoContainer from "./InfoContainer";
 import AboutContainer from "./AboutContainer";
 import Footer from "./Footer";
+import MyAccount from "./MyAccount";
 import LogIn from "./LogIn";
 import Register from "./Register";
 import Result from "./Result";
