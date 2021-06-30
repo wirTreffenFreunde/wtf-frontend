@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
+import ReactMapGL, {
+    Marker,
+    Popup,
+    NavigationControl,
+    CanvasOverlay,
+    SVGOverlay
+} from "react-map-gl";
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import RoomIcon from "@material-ui/icons/Room";
@@ -35,6 +41,21 @@ function Result() {
         setViewport({ ...viewport, latitude: lat, longitude: lng });
     }, [lat, lng]);
 
+    function redraw(props) {
+        const [cx, cy] = props.project([lng, lat]);
+        return <circle cx={cx} cy={cy} r={4} fill="blue" />;
+        // // canvas line
+        // const {ctx} = props
+        // ctx.lineWidth = 3;
+        // // ctx.strokeStyle = "red";
+        // ctx.beginPath();
+        // ctx.moveTo(53.54747588317542, 9.984121867878017);
+        // ctx.lineTo(52.54745244551041, 13.425392544312823);
+        // ctx.stroke();
+        // console.log(ctx)
+        // return props
+    }
+
     const handleClick = (e) => {
         e.preventDefault();
         // setSelectedMarker({ lat: viewport.latitude, lng: viewport.longitude });
@@ -62,7 +83,7 @@ function Result() {
                     <ReactMapGL
                         {...viewport}
                         mapboxApiAccessToken={mapboxAccessToken}
-                        mapStyle='mapbox://styles/mapbox/streets-v11'
+                        mapStyle="mapbox://styles/mapbox/streets-v11"
                         width="100%"
                         height="100%"
                         onViewportChange={(viewport) => setViewport(viewport)}
@@ -73,7 +94,11 @@ function Result() {
                             offsetTop={-36}
                             offsetLeft={-18}
                         >
-                            <RoomIcon onClick={handleClick} color="primary" fontSize="large"/>
+                            <RoomIcon
+                                onClick={handleClick}
+                                color="primary"
+                                fontSize="large"
+                            />
                         </Marker>
 
                         {showPopup && (
@@ -105,6 +130,9 @@ function Result() {
                         )}
 
                         <NavigationControl style={navControlStyle} />
+
+                        {/* <CanvasOverlay redraw={redraw} /> */}
+                        <SVGOverlay redraw={redraw} />
                     </ReactMapGL>
                 </Card>
             </Container>
