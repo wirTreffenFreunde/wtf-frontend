@@ -28,7 +28,7 @@ function Result() {
     const [viewport, setViewport] = useState({
         latitude: lat,
         longitude: lng,
-        zoom: 15,
+        zoom: 8,
     });
 
     useEffect(() => {

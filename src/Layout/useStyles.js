@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     card: {
         margin: theme.spacing(3),
         padding: theme.spacing(3),
-        height: "300px",
+        // height: "300px",
     },
     cardMap: {
         margin: theme.spacing(3),
