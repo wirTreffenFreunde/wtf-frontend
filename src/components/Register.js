@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,7 +13,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useStyles from "../Layout/useStyles";
 
@@ -72,8 +72,7 @@ export default function Register() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-              onChange= {change}
-                
+                onChange={change}
                 name="firstName"
                 variant="outlined"
                 margin="normal"
@@ -85,7 +84,7 @@ export default function Register() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-              onChange= {change}
+                onChange={change}
                 name="lastName"
                 variant="outlined"
                 margin="normal"
@@ -97,8 +96,8 @@ export default function Register() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-               onChange= {change}
-                name="email" 
+                onChange={change}
+                name="email"
                 variant="outlined"
                 margin="normal"
                 fullWidth
@@ -109,7 +108,7 @@ export default function Register() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                onChange= {change}
+                onChange={change}
                 name="password"
                 variant="outlined"
                 margin="normal"
