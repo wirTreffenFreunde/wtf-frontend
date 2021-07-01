@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import Fab from "@material-ui/core/Fab";
@@ -31,12 +32,11 @@ function InputContainer() {
           <form
             noValidate
             autoComplete="off"
-            // className={classes.mainForm}
           >
             <Grid>
               {inputsArray.map((element, index) => {
                 return (
-                  <div key={index}>
+                  <Box key={index}>
                     <TextField
                       id="outlined-basic"
                       label={element}
@@ -57,7 +57,7 @@ function InputContainer() {
                           <AddIcon />
                         </Fab>
                       )}
-                  </div>
+                  </Box>
                 );
               })}
             </Grid>
@@ -66,7 +66,7 @@ function InputContainer() {
               type="submit"
               color="primary"
               size="large"
-              className={classes.submitForm}
+              className={classes.submitBtn}
               onClick={(e) => {
                 handleSubmitMiddle(e);
                 history.push("/result");

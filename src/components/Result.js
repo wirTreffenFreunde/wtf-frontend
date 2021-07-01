@@ -81,7 +81,6 @@ function Result() {
 
     return (
         <div>
-            <InputContainer />
             <Container>
                 <Card className={classes.cardMap}>
                     <ReactMapGL
