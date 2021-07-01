@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,11 +13,51 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
-import Copyright from "../Layout/Copyright";
+import axios from "axios";
 import useStyles from "../Layout/useStyles";
 
+import { useUserContext } from "../context/user-context";
+import Copyright from "../Layout/Copyright";
+
 export default function Register() {
+  let history = useHistory();
   const classes = useStyles();
+
+  const [error, setError] = useState("");
+
+  const [field, setField] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  const { firstName, lastName, email, password } = field;
+
+  const change = (e) => {
+    setField({ ...field, [e.target.name]: e.target.value });
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await axios.post("http:/users", {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      if (result.status === 200) {
+        history.push("/");
+      } else {
+        setError("User already exists");
+      }
+    } catch (e) {
+      console.log("@", e);
+      setError(e);
+    }
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -26,55 +68,55 @@ export default function Register() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={submit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                onChange={change}
+                name="firstName"
                 variant="outlined"
                 margin="normal"
-                required
                 fullWidth
-                id="firstName"
                 label="First Name"
-                name="firstName"
                 autoComplete="fname"
                 autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
+                onChange={change}
                 name="lastName"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                label="Last Name"
                 autoComplete="lname"
+                autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
+                onChange={change}
                 name="email"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                label="Email Address"
                 autoComplete="email"
+                autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                onChange={change}
+                name="password"
                 variant="outlined"
                 margin="normal"
-                required
                 fullWidth
-                id="password"
                 label="Password"
-                name="password"
                 autoComplete="current-password"
+                autoFocus
+                type="password"
               />
             </Grid>
             <Grid item xs={12}>
@@ -93,13 +135,6 @@ export default function Register() {
           >
             Sign up
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account ? Log in here
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={8}>
