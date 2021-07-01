@@ -3,12 +3,12 @@ import ReactMapGL, {
     Marker,
     Popup,
     NavigationControl,
-    CanvasOverlay,
-    SVGOverlay
+    WebMercatorViewport,
 } from "react-map-gl";
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import RoomIcon from "@material-ui/icons/Room";
+import HomeIcon from "@material-ui/icons/Home";
 import { Badge, Typography } from "@material-ui/core";
 
 import { useMapContext } from "../context/map-context";
@@ -22,49 +22,53 @@ const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 function Result() {
     const classes = useStyles();
 
-    const { middlePoint, lat, lng } = useMapContext();
-    // const [selectedMarker, setSelectedMarker] = useState([]);
-    const [showPopup, togglePopup] = useState(false);
+    const { middlePoint, peopleCoordinates, boundsCoordinates } =
+        useMapContext();
+
+    const [selectedMarker, setSelectedMarker] = useState(null);
     const [copySuccess, setCopySuccess] = useState(0);
+
+    const [viewport, setViewport] = useState({
+        latitude: middlePoint.latitude,
+        longitude: middlePoint.longitude,
+        zoom: 10,
+    });
 
     const navControlStyle = {
         right: 10,
         top: 10,
     };
-    const [viewport, setViewport] = useState({
-        latitude: lat,
-        longitude: lng,
-        zoom: 8,
-    });
-
     useEffect(() => {
-        setViewport({ ...viewport, latitude: lat, longitude: lng });
-    }, [lat, lng]);
-
-    function redraw(props) {
-        const [cx, cy] = props.project([lng, lat]);
-        return <circle cx={cx} cy={cy} r={4} fill="blue" />;
-        // // canvas line
-        // const {ctx} = props
-        // ctx.lineWidth = 3;
-        // // ctx.strokeStyle = "red";
-        // ctx.beginPath();
-        // ctx.moveTo(53.54747588317542, 9.984121867878017);
-        // ctx.lineTo(52.54745244551041, 13.425392544312823);
-        // ctx.stroke();
-        // console.log(ctx)
-        // return props
-    }
-
-    const handleClick = (e) => {
-        e.preventDefault();
-        // setSelectedMarker({ lat: viewport.latitude, lng: viewport.longitude });
-        togglePopup(!showPopup);
-    };
+        if (boundsCoordinates) {
+            const { longitude, latitude, zoom } = new WebMercatorViewport(
+                viewport
+            ).fitBounds(
+                [
+                    [boundsCoordinates.minLng, boundsCoordinates.minLat],
+                    [boundsCoordinates.maxLng, boundsCoordinates.maxLat],
+                ],
+                {
+                    padding: {top:50, bottom: 20, left: 20, right: 20},
+                }
+            );
+            setViewport({
+                ...viewport,
+                longitude,
+                latitude,
+                zoom,
+            });
+        } else {
+            setViewport({
+                ...viewport,
+                latitude: middlePoint.latitude,
+                longitude: middlePoint.longitude,
+            });
+        }
+    }, [middlePoint, boundsCoordinates]);
 
     function copyToClipboard() {
         const el = document.createElement("input");
-        el.value = `${lat}, ${lng}`;
+        el.value = `${selectedMarker.latitude}, ${selectedMarker.longitude}`;
         document.body.appendChild(el);
         el.select();
         document.execCommand("copy");
@@ -88,26 +92,52 @@ function Result() {
                         height="100%"
                         onViewportChange={(viewport) => setViewport(viewport)}
                     >
+                        <NavigationControl style={navControlStyle} />
+
                         <Marker
-                            latitude={lat}
-                            longitude={lng}
+                            latitude={middlePoint.latitude}
+                            longitude={middlePoint.longitude}
                             offsetTop={-36}
                             offsetLeft={-18}
                         >
                             <RoomIcon
-                                onClick={handleClick}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setSelectedMarker(middlePoint);
+                                }}
                                 color="primary"
                                 fontSize="large"
                             />
                         </Marker>
 
-                        {showPopup && (
+                        {peopleCoordinates.map((el, index) => {
+                            return (
+                                <Marker
+                                    key={index}
+                                    latitude={Number(el.latitude)}
+                                    longitude={Number(el.longitude)}
+                                    offsetTop={-36}
+                                    offsetLeft={-18}
+                                >
+                                    <HomeIcon
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setSelectedMarker(el);
+                                        }}
+                                        color="secondary"
+                                        fontSize="large"
+                                    />
+                                </Marker>
+                            );
+                        })}
+
+                        {selectedMarker && (
                             <Popup
-                                latitude={lat}
-                                longitude={lng}
+                                latitude={selectedMarker.latitude}
+                                longitude={selectedMarker.longitude}
                                 closeButton={true}
                                 closeOnClick={false}
-                                onClose={() => togglePopup(false)}
+                                onClose={() => setSelectedMarker(null)}
                                 anchor="left"
                                 tipSize={20}
                             >
@@ -122,17 +152,13 @@ function Result() {
                                     <div onClick={copyToClipboard}>
                                         <Typography>Press to copy</Typography>
                                         <Typography>
-                                            {lat}, {lng}
+                                            {selectedMarker.latitude},{" "}
+                                            {selectedMarker.longitude}
                                         </Typography>
                                     </div>
                                 </Badge>
                             </Popup>
                         )}
-
-                        <NavigationControl style={navControlStyle} />
-
-                        {/* <CanvasOverlay redraw={redraw} /> */}
-                        <SVGOverlay redraw={redraw} />
                     </ReactMapGL>
                 </Card>
             </Container>
