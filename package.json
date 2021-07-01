@@ -12,6 +12,11 @@
     "chokidar": "^3.5.2",
     "dotenv": "^10.0.0",
     "geolib": "^3.3.1",
+<<<<<<< HEAD
+    "mapbox-gl": "^2.3.1",
+    "material-ui-popup-state": "^1.8.3",
+=======
+>>>>>>> upstream/main
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.9.0",
