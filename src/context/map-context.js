@@ -43,12 +43,13 @@ function MapProvider({ children }) {
                 `http://localhost:8080/api`,
                 encodedAddresses
             );
+            console.log(result)
             setMiddlePoint({
-                latitude: Number(result.data[0].middlePoint.latitude),
-                longitude: Number(result.data[0].middlePoint.longitude),
+                latitude: Number(result.data.middlePoint.latitude),
+                longitude: Number(result.data.middlePoint.longitude),
             });
-            setPeopleCoordinates(result.data[0].peopleAddresses)
-            setBoundsCoordinates(result.data[0].boundsAddresses)
+            setPeopleCoordinates(result.data.peopleAddresses)
+            setBoundsCoordinates(result.data.boundsAddresses)
         } catch (err) {
             console.error(err);
         }
