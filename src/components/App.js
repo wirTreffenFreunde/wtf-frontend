@@ -31,6 +31,7 @@ function App() {
                         <Route exact path="/result" component={Result} />
                         <Route exact path="/login" component={LogIn} />
                         <Route exact path="/register" component={Register} />
+                        <Route exact path="/myAccount" component={MyAccount} />
                     </Switch>
                 </Router>
                 <Footer />

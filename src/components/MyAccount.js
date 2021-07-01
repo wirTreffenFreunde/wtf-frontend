@@ -8,19 +8,61 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Box from "@material-ui/core/Box";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Popover from "@material-ui/core/Popover";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
 import useStyles from "../Layout/useStyles";
+import { TripOriginSharp } from "@material-ui/icons";
+import { mockData } from "../mockData";
 
 export default function MyAccount() {
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [popupOpen, setPopupOpen] = React.useState(false);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+    setPopupOpen(true);
+  };
+
+  const handleClose = () => {
+    setPopupOpen(false);
   };
 
   return (
     <Container component="main">
-      <Typography>Howdy, my friend!</Typography>
+      <Dialog
+        open={popupOpen}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">
+          {mockData.trips[selectedIndex]}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Content of {mockData.trips[selectedIndex]}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Box>
+        <Typography className={classes.greeting}>Howdy, my friend!</Typography>
+      </Box>
       <div className={classes.root}>
         <Accordion>
           <AccordionSummary
@@ -35,27 +77,17 @@ export default function MyAccount() {
           <AccordionDetails>
             <div className={classes.accordionList}>
               <List component="nav">
-                <ListItem
-                  button
-                  selected={selectedIndex === 0}
-                  onClick={(event) => handleListItemClick(event, 0)}
-                >
-                  <ListItemText primary="MyFirstTrip" />
-                </ListItem>
-                <ListItem
-                  button
-                  selected={selectedIndex === 1}
-                  onClick={(event) => handleListItemClick(event, 1)}
-                >
-                  <ListItemText primary="MySecondTrip" />
-                </ListItem>
-                <ListItem
-                  button
-                  selected={selectedIndex === 2}
-                  onClick={(event) => handleListItemClick(event, 2)}
-                >
-                  <ListItemText primary="MyThirdTrip" />
-                </ListItem>
+                {mockData.trips.map((trip, index) => {
+                  return (
+                    <ListItem
+                      button
+                      selected={selectedIndex === index}
+                      onClick={(event) => handleListItemClick(event, index)}
+                    >
+                      <ListItemText primary={trip} />
+                    </ListItem>
+                  );
+                })}
               </List>
             </div>
           </AccordionDetails>
@@ -71,11 +103,22 @@ export default function MyAccount() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <Card className={classes.memoriesRoot}>
+              <CardHeader
+                action={
+                  <IconButton aria-label="share">
+                    <ShareIcon />
+                  </IconButton>
+                }
+                title="My first trip"
+                subheader="September 14, 2016"
+              />
+              <CardMedia
+                className={classes.memoriesMedia}
+                image="http://localhost:3000/images/paella.png"
+                title="Paella dish"
+              />
+            </Card>
           </AccordionDetails>
         </Accordion>
       </div>

@@ -14,12 +14,16 @@ function useMapContext() {
 function MapProvider({ children }) {
   // input fields for everyone
   const [peopleAddresses, setPeopleAddresses] = useState([]);
-  const [geoPeopleAddresses, setGeoPeopleAddresses] = useState([]);
 
   // middle point
-  const [middlePoint, setMiddlePoint] = useState("");
-  const [lat, setLat] = useState(53.57835738834605);
-  const [lng, setLng] = useState(9.97645520197268);
+  const [middlePoint, setMiddlePoint] = useState({
+    latitude: 53.57835738834605,
+    longitude: 9.97645520197268,
+  });
+  // coordinates from input fields
+  const [peopleCoordinates, setPeopleCoordinates] = useState([]);
+  // bounds of all addresses
+  const [boundsCoordinates, setBoundsCoordinates] = useState(null);
 
   // saving all the input fields
   const handleChangeMiddle = (e) => {
@@ -39,9 +43,13 @@ function MapProvider({ children }) {
         `http://localhost:8080/api`,
         encodedAddresses
       );
-      console.log(result.data.geoPeopleAddresses, result.data.geoMiddle);
-      setLat(Number(result.data.geoMiddle.latitude));
-      setLng(Number(result.data.geoMiddle.longitude));
+      console.log(result);
+      setMiddlePoint({
+        latitude: Number(result.data.middlePoint.latitude),
+        longitude: Number(result.data.middlePoint.longitude),
+      });
+      setPeopleCoordinates(result.data.peopleAddresses);
+      setBoundsCoordinates(result.data.boundsAddresses);
     } catch (err) {
       console.error(err);
     }
@@ -50,14 +58,11 @@ function MapProvider({ children }) {
     peopleAddresses,
     setPeopleAddresses,
     middlePoint,
+    peopleCoordinates,
+    boundsCoordinates,
     setMiddlePoint,
-    lat,
-    lng,
-    setLat,
-    setLng,
     handleChangeMiddle,
     handleSubmitMiddle,
-    geoPeopleAddresses,
   };
 
   return <MapContext.Provider value={value}>{children}</MapContext.Provider>;
