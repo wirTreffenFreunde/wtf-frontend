@@ -19,7 +19,7 @@ function InputContainer() {
 
   let history = useHistory();
   const classes = useStyles();
-
+                        // have to rewrite it using maybe people addresses?!?!?!?
   const [inputsArray, setInputsArray] = useState([1, 2]); // initial value [1, 2]
   function handleClickAddNew() {
     setInputsArray([...inputsArray, inputsArray.length + 1]);
@@ -40,7 +40,6 @@ function InputContainer() {
                       id={index}
                       badgeContent={index >= 2 ? "x" : 0}
                       onClick={(e) => {
-                        console.log(e.target.textContent, e.target.localName); //check if it's span or add new class to badge
                         if (
                           e.target.localName === "span" &&
                           e.target.textContent === "x"
@@ -48,7 +47,7 @@ function InputContainer() {
                           const newArray = [...inputsArray];
                           newArray.splice(index, 1);
                           setInputsArray(newArray);
-                          console.log(peopleAddresses)
+                          // console.log(peopleAddresses)
                         }
                       }}
                     >
