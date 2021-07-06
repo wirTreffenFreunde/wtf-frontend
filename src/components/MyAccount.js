@@ -26,11 +26,30 @@ import Button from "@material-ui/core/Button";
 import useStyles from "../Layout/useStyles";
 import { TripOriginSharp } from "@material-ui/icons";
 import { mockData } from "../mockData";
+import axios from "axios";
 
 export default function MyAccount() {
   const classes = useStyles();
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [popupOpen, setPopupOpen] = React.useState(false);
+  const [user, setUser] = React.useState({
+    trips: [{ title: "", cities: [] }],
+  });
+
+  React.useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    console.log("getting user ....");
+    axios.defaults.headers.common = {
+      Authorization: "Bearer " + mockData.userTocken,
+    };
+    const res = await axios.get(`http://localhost:8080/users`);
+    if (!res.data) alert("You have to log in!");
+    console.log("got user: ", res.data);
+    setUser(res.data);
+  };
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -41,6 +60,19 @@ export default function MyAccount() {
     setPopupOpen(false);
   };
 
+  //   const getMiddlePoint = async (cities) => {
+  //     try {
+  //       const encodedAddresses = cities.map((city) => encodeURIComponent(city));
+  //       const result = await axios.post(
+  //         `http://localhost:8080/api`,
+  //         encodedAddresses
+  //       );
+  //       return result.data;
+  //     } catch (err) {
+  //       return "Could not calculate...";
+  //     }
+  //   };
+
   return (
     <Container component="main">
       <Dialog
@@ -49,11 +81,22 @@ export default function MyAccount() {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          {mockData.trips[selectedIndex]}
+          {user.trips[selectedIndex].title}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Content of {mockData.trips[selectedIndex]}
+            <Typography>
+              Cities: {user.trips[selectedIndex].cities.join(", ")}
+            </Typography>
+            <Typography>
+              Where you met: {user.trips[selectedIndex].middlePoint}
+            </Typography>
+            {/* <Typography>
+              Where you should have met:{" "}
+              {() => {
+                return getMiddlePoint(mockData.trips[selectedIndex].cities);
+              }}
+            </Typography> */}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -77,14 +120,15 @@ export default function MyAccount() {
           <AccordionDetails>
             <div className={classes.accordionList}>
               <List component="nav">
-                {mockData.trips.map((trip, index) => {
+                {user.trips.map((trip, index) => {
                   return (
                     <ListItem
                       button
                       selected={selectedIndex === index}
                       onClick={(event) => handleListItemClick(event, index)}
+                      key={trip.title}
                     >
-                      <ListItemText primary={trip} />
+                      <ListItemText primary={trip.title} />
                     </ListItem>
                   );
                 })}
