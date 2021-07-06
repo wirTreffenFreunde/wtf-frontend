@@ -23,7 +23,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-import useStyles from "../Layout/useStyles";
+import { useStyles } from "../Layout/useStyles";
 import { TripOriginSharp } from "@material-ui/icons";
 import { mockData } from "../mockData";
 

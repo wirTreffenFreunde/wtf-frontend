@@ -11,15 +11,16 @@ import { Badge, Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
-import useStyles from "../Layout/useStyles";
+import { useStyles } from "../Layout/useStyles";
 import { useMapContext } from "../context/map-context";
 
 function InputContainer() {
-  const { handleChangeMiddle, handleSubmitMiddle, peopleAddresses } = useMapContext();
+  const { handleChangeMiddle, handleSubmitMiddle, peopleAddresses } =
+    useMapContext();
 
   let history = useHistory();
   const classes = useStyles();
-                        // have to rewrite it using maybe people addresses?!?!?!?
+  // have to rewrite it using maybe people addresses?!?!?!?
   const [inputsArray, setInputsArray] = useState([1, 2]); // initial value [1, 2]
   function handleClickAddNew() {
     setInputsArray([...inputsArray, inputsArray.length + 1]);
