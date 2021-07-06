@@ -12,7 +12,6 @@ import HomeIcon from "@material-ui/icons/Home";
 import { Badge, Typography } from "@material-ui/core";
 
 import { useMapContext } from "../context/map-context";
-import InputContainer from "./InputContainer";
 
 import { useStyles } from "../Layout/useStyles";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -26,7 +25,6 @@ function Result() {
 
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [copySuccess, setCopySuccess] = useState(0);
-
   const [viewport, setViewport] = useState({
     latitude: middlePoint.latitude,
     longitude: middlePoint.longitude,
@@ -37,6 +35,7 @@ function Result() {
     right: 10,
     top: 10,
   };
+
   useEffect(() => {
     if (boundsCoordinates) {
       const { longitude, latitude, zoom } = new WebMercatorViewport(
@@ -77,7 +76,7 @@ function Result() {
       setCopySuccess(0);
     }, 3000);
   }
-
+  console.log(selectedMarker);
   return (
     <div>
       <Container>
@@ -112,8 +111,8 @@ function Result() {
               return (
                 <Marker
                   key={index}
-                  latitude={Number(el.latitude)}
-                  longitude={Number(el.longitude)}
+                  latitude={el.latitude}
+                  longitude={el.longitude}
                   offsetTop={-36}
                   offsetLeft={-18}
                 >
