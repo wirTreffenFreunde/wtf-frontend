@@ -31,24 +31,24 @@ function Nav() {
                         <Link
                             variant="button"
                             color="textPrimary"
-                            href="#input"
-                            className={classes.link}
+                            href="/#input"
+                            className={classes.navLink}
                         >
                             Find middle point
                         </Link>
                         <Link
                             variant="button"
                             color="textPrimary"
-                            href="#info"
-                            className={classes.link}
+                            href="/#info"
+                            className={classes.navLink}
                         >
                             How it works
                         </Link>
                         <Link
                             variant="button"
                             color="textPrimary"
-                            href="#about"
-                            className={classes.link}
+                            href="/#about"
+                            className={classes.navLink}
                         >
                             About us
                         </Link>

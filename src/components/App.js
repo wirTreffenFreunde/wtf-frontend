@@ -28,7 +28,10 @@ function App() {
                             <InfoContainer />
                             <AboutContainer />
                         </Route>
-                        <Route exact path="/result" component={Result} />
+                        <Route exact path="/result" >
+                            <InputContainer />
+                            <Result />
+                        </Route>
                         <Route exact path="/login" component={LogIn} />
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/myAccount" component={MyAccount} />

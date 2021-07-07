@@ -23,6 +23,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
+import Input from "@material-ui/core/Input";
+import TextField from "@material-ui/core/TextField";
 import useStyles from "../Layout/useStyles";
 import { TripOriginSharp } from "@material-ui/icons";
 import { mockData } from "../mockData";
@@ -32,9 +34,12 @@ export default function MyAccount() {
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [popupOpen, setPopupOpen] = React.useState(false);
+  const [myMemoryPopupOpen, setMyMemoryPopupOpen] = React.useState(true);
   const [user, setUser] = React.useState({
     trips: [{ title: "", cities: [] }],
   });
+  const [currentImage, setCurrentImage] = React.useState(undefined);
+  const [currentMemoryTitle, setCurrentMemoryTitle] = React.useState("");
 
   React.useEffect(() => {
     getUserData();
@@ -60,18 +65,48 @@ export default function MyAccount() {
     setPopupOpen(false);
   };
 
-  //   const getMiddlePoint = async (cities) => {
-  //     try {
-  //       const encodedAddresses = cities.map((city) => encodeURIComponent(city));
-  //       const result = await axios.post(
-  //         `http://localhost:8080/api`,
-  //         encodedAddresses
-  //       );
-  //       return result.data;
-  //     } catch (err) {
-  //       return "Could not calculate...";
-  //     }
-  //   };
+  const handleCloseMemoryPopup = () => {
+    setMyMemoryPopupOpen(false);
+  };
+
+  const showUploadPopup = () => {
+    setCurrentImage(undefined);
+    setCurrentMemoryTitle("");
+    setMyMemoryPopupOpen(true);
+  };
+
+  const uploadMemory = async () => {
+    if (currentImage === undefined || currentMemoryTitle === "") {
+      alert("You have to add a title and an image");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("img", currentImage.image, currentImage.image.name);
+    formData.append("title", currentMemoryTitle);
+    console.log(formData);
+    axios.defaults.headers.common = {
+      Authorization: "Bearer " + mockData.userTocken,
+      "Content-Type": "multipart/form-data; boundary=${formData._boundary}",
+    };
+    const res = await axios.post(
+      `http://localhost:8080/users/uploadMemory`,
+      formData
+    );
+    console.log(res);
+    // if (!res.data) alert("You have to log in!");
+    // fetch("/upload", {
+    //   method: "POST",
+    //   body: formData,
+    // });
+  };
+
+  const fileChanged = (e) => {
+    setCurrentImage({ image: e.target.files[0] });
+  };
+
+  const memoryTitleChanged = (e) => {
+    setCurrentMemoryTitle(e.target.value);
+  };
 
   return (
     <Container component="main">
@@ -101,6 +136,31 @@ export default function MyAccount() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={myMemoryPopupOpen}
+        onClose={handleCloseMemoryPopup}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Upload Memory</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <TextField
+              id="memory-title"
+              label="Memory title"
+              onChange={memoryTitleChanged}
+            ></TextField>
+            <br></br>
+            <Input type="file" onChange={fileChanged}></Input>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button className={classes.memoryActionButton} onClick={uploadMemory}>
+            Upload
+          </Button>
+          <Button onClick={handleCloseMemoryPopup}>Close</Button>
         </DialogActions>
       </Dialog>
       <Box>
@@ -147,6 +207,12 @@ export default function MyAccount() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
+            <Button
+              className={classes.memoryActionButton}
+              onClick={showUploadPopup}
+            >
+              Add Memory
+            </Button>
             <Card className={classes.memoriesRoot}>
               <CardHeader
                 action={
