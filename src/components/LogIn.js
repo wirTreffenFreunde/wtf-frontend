@@ -13,8 +13,8 @@ import Container from "@material-ui/core/Container";
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import useStyles from "../Layout/useStyles";
- import { accessToken } from "mapbox-gl";
+import { useStyles } from "../Layout/useStyles";
+import { accessToken } from "mapbox-gl";
 import { useUserContext } from "../context/user-context"
 
 export default function LogIn() {

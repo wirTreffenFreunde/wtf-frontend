@@ -18,7 +18,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText'; 
 
 import axios from "axios";
-import useStyles from "../Layout/useStyles";
+import { useStyles } from "../Layout/useStyles";
 
 import { useUserContext } from "../context/user-context";
 import Copyright from "../Layout/Copyright";

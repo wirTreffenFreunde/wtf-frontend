@@ -43,7 +43,6 @@ function MapProvider({ children }) {
                 `http://localhost:8080/api`,
                 encodedAddresses
             );
-            console.log(result)
             setMiddlePoint({
                 latitude: Number(result.data.middlePoint.latitude),
                 longitude: Number(result.data.middlePoint.longitude),
