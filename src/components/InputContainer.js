@@ -9,13 +9,12 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import { Badge, Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
 
 import { useStyles } from "../Layout/useStyles";
 import { useMapContext } from "../context/map-context";
 
 function InputContainer() {
-  const { handleChangeMiddle, handleSubmitMiddle, peopleAddresses } =
+  const { handleChangeMiddle, handleSubmitMiddle } =
     useMapContext();
 
   let history = useHistory();
