@@ -89,6 +89,47 @@ export const useStyles = makeStyles((theme) => ({
       width: "300px",
     },
 
+<<<<<<< HEAD
+  // MY ACCOUNT
+  greeting: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: theme.spacing(8),
+    fontSize: theme.typography.pxToRem(23),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
+  root: {
+    width: "100%",
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(20),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
+  accordionList: {
+    width: "100%",
+    backgroundColor: theme.palette.background.paper,
+  },
+  //   tripButton: {
+  //     width: "100%",
+  //     backgroundColor: theme.palette.background.paper,
+  //   },
+  memoriesRoot: {
+    maxWidth: 345,
+  },
+  memoriesMedia: {
+    height: 0,
+    paddingTop: "56.25%", // 16:9
+  },
+  memoryActionButton: {
+    variant: "contained",
+    color: "primary",
+  },
+
+  //   popOvertypography: {
+  //     padding: theme.spacing(2),
+  //   },
+=======
   //   // LOGIN and REGISTER pages
     paper: {
       marginTop: theme.spacing(8),
@@ -107,6 +148,7 @@ export const useStyles = makeStyles((theme) => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+>>>>>>> upstream/main
 
     // MY ACCOUNT
     greeting: {
