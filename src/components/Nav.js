@@ -1,10 +1,12 @@
 import React from "react";
+import { useState } from "react";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
+import RoomIcon from "@material-ui/icons/Room";
 
 import { useStyles } from "../Layout/useStyles";
 import { useUserContext } from "../context/user-context";
@@ -15,7 +17,7 @@ function Nav() {
   return (
     <>
       <CssBaseline />
-      <AppBar position="static" elevation={1} className={classes.appBar}>
+      <AppBar position="sticky" elevation={1} className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <Link
             variant="h6"
@@ -25,17 +27,9 @@ function Nav() {
             underline="none"
             className={classes.toolbarTitle}
           >
-            Wir Treffen Freunde
+            <RoomIcon /> Wir Treffen Freunde
           </Link>
-          <nav>
-            <Link
-              variant="button"
-              color="textPrimary"
-              href="/#input"
-              className={classes.navLink}
-            >
-              Find middle point
-            </Link>
+          <nav className={classes.navBar}>
             <Link
               variant="button"
               color="textPrimary"
