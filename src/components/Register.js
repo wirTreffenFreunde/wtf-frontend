@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
 import axios from "axios";
-import useStyles from "../Layout/useStyles";
+import { useStyles } from "../Layout/useStyles";
 
 import { useUserContext } from "../context/user-context";
 import Copyright from "../Layout/Copyright";

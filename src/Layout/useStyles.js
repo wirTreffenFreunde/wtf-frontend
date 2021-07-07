@@ -1,6 +1,14 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { blue } from "@material-ui/core/colors";
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+export const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: blue[500]
+    }
+  }
+})
+export const useStyles = makeStyles((theme) => ({
   "@global": {
     ul: {
       margin: 0,
@@ -105,4 +113,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default useStyles;
+// export default useStyles;
