@@ -4,10 +4,22 @@ import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: blue[500]
-    }
-  }
-})
+      main: blue[500],
+    },
+  },
+  typography: {
+    h2: {
+      fontWeight: 600,
+      color: "#fff",
+    },
+    subtitle1: {
+      fontSize: "1.5rem",
+      fontStyle: "italic",
+      color: "#fff",
+    },
+  },
+  spacing: 4,
+});
 export const useStyles = makeStyles((theme) => ({
   "@global": {
     ul: {
@@ -23,20 +35,47 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   // NAVIGATION BAR
-  appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
   toolbar: {
-    flexWrap: "wrap",
+    paddingLeft: theme.spacing(10),
+    paddingRight: theme.spacing(10),
+    flexWrap: "nowrap",
   },
   toolbarTitle: {
     flexGrow: 1,
   },
+  navBar: {
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
+  },
   navLink: {
-    margin: theme.spacing(1, 1.5),
+    color: "#fff",
+    marginRight: theme.spacing(4),
   },
 
-  // INPUT CONTAINER
+  // BANNER
+  banner: {
+    backgroundColor: blue[300],
+    padding: theme.spacing(20, 20, 30, 20),
+    background: "url(images/mapPicture.png) no-repeat",
+    backgroundSize: "400px",
+    backgroundPosition: "right",
+    backgroundOrigin: "content-box",
+  },
+  [theme.breakpoints.down("sm")]: {
+    banner: {
+      textAlign: "center",
+      padding: theme.spacing(10, 5, 20, 5),
+    },
+    taglineHeading: {
+      fontSize: "3rem",
+    },
+    taglineText: {
+      fontSize: "1rem",
+    },
+  },
+
+  // // INPUT CONTAINER
   inputField: {
     width: "300px",
   },
@@ -100,9 +139,10 @@ export const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
-  //   popOvertypography: {
-  //     padding: theme.spacing(2),
-  //   },
+  memoryActionButton: {
+    variant: "contained",
+    color: "primary",
+  },
 
   // FOOTER
   footer: {
@@ -112,5 +152,3 @@ export const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(3),
   },
 }));
-
-// export default useStyles;

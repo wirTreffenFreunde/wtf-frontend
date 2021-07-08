@@ -42,7 +42,7 @@ function Result() {
     top: 10,
   };
 
-  useEffect(() => {
+  useEffect(() => { // changing view port on the map to have all the markers visible
     if (boundsCoordinates) {
       const { longitude, latitude, zoom } = new WebMercatorViewport(
         viewport
@@ -82,7 +82,7 @@ function Result() {
       setCopySuccess(0);
     }, 3000);
   }
-  console.log(selectedMarker);
+
   return (
     <div>
       <Container>
