@@ -19,18 +19,12 @@ import "mapbox-gl/dist/mapbox-gl.css";
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
 function Result() {
-<<<<<<< HEAD
-  console.log("tocken: " + mapboxAccessToken);
-=======
->>>>>>> upstream/main
   const classes = useStyles();
 
   const { middlePoint, peopleCoordinates, boundsCoordinates } = useMapContext();
 
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [copySuccess, setCopySuccess] = useState(0);
-<<<<<<< HEAD
-
   const [viewport, setViewport] = useState({
     latitude: middlePoint.latitude,
     longitude: middlePoint.longitude,
@@ -41,21 +35,9 @@ function Result() {
     right: 10,
     top: 10,
   };
+
   useEffect(() => {
-=======
-  const [viewport, setViewport] = useState({
-    latitude: middlePoint.latitude,
-    longitude: middlePoint.longitude,
-    zoom: 10,
-  });
-
-  const navControlStyle = {
-    right: 10,
-    top: 10,
-  };
-
-  useEffect(() => { // changing view port on the map to have all the markers visible
->>>>>>> upstream/main
+    // changing view port on the map to have all the markers visible
     if (boundsCoordinates) {
       const { longitude, latitude, zoom } = new WebMercatorViewport(
         viewport
@@ -130,13 +112,8 @@ function Result() {
               return (
                 <Marker
                   key={index}
-<<<<<<< HEAD
-                  latitude={Number(el.latitude)}
-                  longitude={Number(el.longitude)}
-=======
                   latitude={el.latitude}
                   longitude={el.longitude}
->>>>>>> upstream/main
                   offsetTop={-36}
                   offsetLeft={-18}
                 >
