@@ -24,6 +24,7 @@ function MapProvider({ children }) {
   const [peopleCoordinates, setPeopleCoordinates] = useState([]);
   // bounds of all addresses
   const [boundsCoordinates, setBoundsCoordinates] = useState(null);
+  const [locality, setLocality] = useState("");
 
   // saving all the input fields
   const handleChangeMiddle = (e) => {
@@ -53,6 +54,22 @@ function MapProvider({ children }) {
       console.error(err);
     }
   };
+  // const handleChangeLocation = (e) => {};
+
+  // const findLocation = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const result = await axios.post(
+  //       `http://localhost:8080/api/city`,
+  //       middlePoint
+  //     );
+  //     setLocality(result.data);
+  //     console.log("location", locality);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   const value = {
     peopleAddresses,
     setPeopleAddresses,
@@ -62,6 +79,8 @@ function MapProvider({ children }) {
     setMiddlePoint,
     handleChangeMiddle,
     handleSubmitMiddle,
+    locality,
+    //findLocation,
   };
 
   return <MapContext.Provider value={value}>{children}</MapContext.Provider>;

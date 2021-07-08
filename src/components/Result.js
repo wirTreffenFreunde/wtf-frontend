@@ -21,7 +21,13 @@ const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 function Result() {
   const classes = useStyles();
 
-  const { middlePoint, peopleCoordinates, boundsCoordinates } = useMapContext();
+  const {
+    middlePoint,
+    peopleCoordinates,
+    boundsCoordinates,
+    locality,
+    //findLocation,
+  } = useMapContext();
 
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [copySuccess, setCopySuccess] = useState(0);
@@ -149,7 +155,7 @@ function Result() {
                   <div onClick={copyToClipboard}>
                     <Typography>Press to copy</Typography>
                     <Typography>
-                      {selectedMarker.latitude}, {selectedMarker.longitude}
+                      {selectedMarker.latitude},{selectedMarker.longitude}
                     </Typography>
                   </div>
                 </Badge>
