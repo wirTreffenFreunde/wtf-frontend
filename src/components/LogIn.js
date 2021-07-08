@@ -51,7 +51,7 @@ export default function LogIn() {
         sessionStorage.setItem("token",accessToken)
       )
       console.log(accessToken);
-      history.push('/')
+      history.push('/myAccount')
     } catch (error) {
       if (error.response.status === "404") setWrongCredentials(true);
     }
@@ -127,6 +127,7 @@ export default function LogIn() {
             fullWidth
             variant="contained"
             color="primary"
+            size="large"
             className={classes.submit}
           >
             Log In
@@ -139,7 +140,7 @@ export default function LogIn() {
             </Grid>
             <Grid item>
               <Link href="/register" variant="body2">
-                Not registered YET !! please Sign Up here
+                Not registered! Please Sign Up here
               </Link>
             </Grid>
           </Grid>

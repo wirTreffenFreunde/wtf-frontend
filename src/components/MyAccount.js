@@ -25,7 +25,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
-import useStyles from "../Layout/useStyles";
+import { useStyles } from "../Layout/useStyles";
 import { TripOriginSharp } from "@material-ui/icons";
 import { mockData } from "../mockData";
 import axios from "axios";
