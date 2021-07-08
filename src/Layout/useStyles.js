@@ -89,7 +89,7 @@ export const useStyles = makeStyles((theme) => ({
     width: "300px",
   },
 
-  // LOGIN and REGISTER pages
+  //   // LOGIN and REGISTER pages
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -139,10 +139,9 @@ export const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
-  memoryActionButton: {
-    variant: "contained",
-    color: "primary",
-  },
+  //   popOvertypography: {
+  //     padding: theme.spacing(2),
+  //   },
 
   // FOOTER
   footer: {
