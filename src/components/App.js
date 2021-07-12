@@ -28,8 +28,9 @@ function App() {
       >
         <MapProvider>
           <UserProvider>
-            <Nav />
+           
             <Router>
+              <Nav />
               <Switch>
                 <Route exact path="/">
                   <Container
