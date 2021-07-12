@@ -9,7 +9,10 @@ import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import RoomIcon from "@material-ui/icons/Room";
 import HomeIcon from "@material-ui/icons/Home";
+import HotelIcon from "@material-ui/icons/Hotel";
+import LocalDiningIcon from "@material-ui/icons/LocalDining";
 import { Badge, Typography } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 import { useMapContext } from "../context/map-context";
 
@@ -26,7 +29,11 @@ function Result() {
     peopleCoordinates,
     boundsCoordinates,
     locality,
-    //findLocation,
+    findLocation,
+    hotels,
+    findHotels,
+    restaurants,
+    findRestaurants,
   } = useMapContext();
 
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -42,7 +49,8 @@ function Result() {
     top: 10,
   };
 
-  useEffect(() => { // changing view port on the map to have all the markers visible
+  useEffect(() => {
+    // changing view port on the map to have all the markers visible
     if (boundsCoordinates) {
       const { longitude, latitude, zoom } = new WebMercatorViewport(
         viewport
@@ -82,9 +90,38 @@ function Result() {
       setCopySuccess(0);
     }, 3000);
   }
-
   return (
     <div>
+      <Button
+        variant="contained"
+        type="submit"
+        color="primary"
+        size="large"
+        //className={classes.submitBtn}
+        onClick={() => findLocation(middlePoint)}
+      >
+        Location name
+      </Button>
+      <Button
+        variant="contained"
+        type="submit"
+        color="primary"
+        size="large"
+        //className={classes.submitBtn}
+        onClick={() => findHotels(middlePoint)}
+      >
+        local hotels
+      </Button>
+      <Button
+        variant="contained"
+        type="submit"
+        color="primary"
+        size="large"
+        //className={classes.submitBtn}
+        onClick={() => findRestaurants(middlePoint)}
+      >
+        Restaurants nearby
+      </Button>
       <Container>
         <Card className={classes.cardMap}>
           <ReactMapGL
@@ -112,6 +149,31 @@ function Result() {
                 fontSize="large"
               />
             </Marker>
+            {hotels &&
+              hotels.map((hotel, index) => (
+                <Marker
+                  latitude={hotel.position.lat}
+                  longitude={hotel.position.lng}
+                  offsetTop={-36}
+                  offsetLeft={-18}
+                  key={`${index}hotel`}
+                >
+                  <HotelIcon color="secondary" fontSize="large" />
+                </Marker>
+              ))}
+
+            {restaurants &&
+              restaurants.map((restaurant, index) => (
+                <Marker
+                  latitude={restaurant.position.lat}
+                  longitude={restaurant.position.lng}
+                  offsetTop={-36}
+                  offsetLeft={-18}
+                  key={`${index}hotel`}
+                >
+                  <LocalDiningIcon color="secondary" fontSize="large" />
+                </Marker>
+              ))}
 
             {peopleCoordinates.map((el, index) => {
               return (

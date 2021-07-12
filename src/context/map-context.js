@@ -25,6 +25,8 @@ function MapProvider({ children }) {
   // bounds of all addresses
   const [boundsCoordinates, setBoundsCoordinates] = useState(null);
   const [locality, setLocality] = useState("");
+  const [hotels, setHotels] = useState("");
+  const [restaurants, setRestaurants] = useState("");
 
   // saving all the input fields
   const handleChangeMiddle = (e) => {
@@ -56,19 +58,50 @@ function MapProvider({ children }) {
   };
   // const handleChangeLocation = (e) => {};
 
-  // const findLocation = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const result = await axios.post(
-  //       `http://localhost:8080/api/city`,
-  //       middlePoint
-  //     );
-  //     setLocality(result.data);
-  //     console.log("location", locality);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const findLocation = async (geoLocation) => {
+    console.log("geoLocation", geoLocation);
+    try {
+      const result = await axios.post(
+        `http://localhost:8080/api/city`,
+        geoLocation
+      );
+      console.log("closest city", result.data);
+      setLocality(result.data);
+      //console.log("location", locality);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const findHotels = async (geoLocation) => {
+    console.log("geoLocation", geoLocation);
+    try {
+      const result = await axios.post(
+        `http://localhost:8080/api/hotels`,
+        geoLocation
+      );
+      console.log("Hotels", result.data);
+      setHotels(result.data);
+      //console.log("location", locality);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const findRestaurants = async (geoLocation) => {
+    console.log("geoLocation", geoLocation);
+    try {
+      const result = await axios.post(
+        `http://localhost:8080/api/restaurants`,
+        geoLocation
+      );
+      console.log("restaurants", result.data);
+      setRestaurants(result.data);
+      //console.log("location", locality);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const value = {
     peopleAddresses,
@@ -80,7 +113,11 @@ function MapProvider({ children }) {
     handleChangeMiddle,
     handleSubmitMiddle,
     locality,
-    //findLocation,
+    findLocation,
+    hotels,
+    findHotels,
+    restaurants,
+    findRestaurants,
   };
 
   return <MapContext.Provider value={value}>{children}</MapContext.Provider>;
