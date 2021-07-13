@@ -5,11 +5,10 @@ import ReactMapGL, {
   NavigationControl,
   WebMercatorViewport,
 } from "react-map-gl";
-import Container from "@material-ui/core/Container";
-import Card from "@material-ui/core/Card";
+import { Badge, Typography, Container, Card } from "@material-ui/core";
+
 import RoomIcon from "@material-ui/icons/Room";
 import HomeIcon from "@material-ui/icons/Home";
-import { Badge, Typography } from "@material-ui/core";
 
 import { useMapContext } from "../context/map-context";
 
