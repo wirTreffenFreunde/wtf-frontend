@@ -1,99 +1,124 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import Card from "@material-ui/core/Card";
-import Fab from "@material-ui/core/Fab";
+import {
+	Typography,
+	Button,
+	Grid,
+	Container,
+	Card,
+	Fab,
+	FormControl,
+	InputLabel,
+	OutlinedInput,
+	InputAdornment,
+	IconButton,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import { Badge, Typography } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
+import RoomIcon from "@material-ui/icons/Room";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 import { useStyles } from "../Layout/useStyles";
 import { useMapContext } from "../context/map-context";
 
 function InputContainer() {
-  const { handleChangeMiddle, handleSubmitMiddle } =
-    useMapContext();
+	const {
+		peopleAddresses,
+		setPeopleAddresses,
+		handleChangeMiddle,
+		handleSubmitMiddle,
+	} = useMapContext();
 
-  let history = useHistory();
-  const classes = useStyles();
-  // have to rewrite it using maybe people addresses?!?!?!?
-  const [inputsArray, setInputsArray] = useState([1, 2]); // initial value [1, 2]
-  function handleClickAddNew() {
-    setInputsArray([...inputsArray, inputsArray.length + 1]);
-  }
+	let history = useHistory();
+	const classes = useStyles();
 
-  return (
-    <>
-      <Container>
-        <Card className={classes.card}>
-          <Typography variant="h5">Put you addresses here:</Typography>
-          <form noValidate autoComplete="off">
-            <Grid>
-              {inputsArray.map((element, index) => {
-                return (
-                  <Box key={index}>
-                    <Badge
-                      color="secondary"
-                      id={index}
-                      badgeContent={index >= 2 ? "x" : 0}
-                      onClick={(e) => {
-                        if (
-                          e.target.localName === "span" &&
-                          e.target.textContent === "x"
-                        ) {
-                          const newArray = [...inputsArray];
-                          newArray.splice(index, 1);
-                          setInputsArray(newArray);
-                          // console.log(peopleAddresses)
-                        }
-                      }}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label={index + 1}
-                        variant="outlined"
-                        onChange={handleChangeMiddle}
-                        name={`${index + 1}-name`}
-                        className={classes.inputField}
-                      />
-                    </Badge>
-                    {inputsArray.length < 5 && // only for 5 person max!
-                      index === inputsArray.length - 1 && ( // checking the last element to add btn
-                        <Fab
-                          color="primary"
-                          aria-label="add"
-                          onClick={() => {
-                            handleClickAddNew();
-                          }}
-                        >
-                          <AddIcon />
-                        </Fab>
-                      )}
-                  </Box>
-                );
-              })}
-            </Grid>
-            <Button
-              variant="contained"
-              type="submit"
-              color="primary"
-              size="large"
-              className={classes.submitBtn}
-              onClick={(e) => {
-                handleSubmitMiddle(e);
-                history.push("/result");
-              }}
-            >
-              Find middle point
-            </Button>
-          </form>
-        </Card>
-      </Container>
-    </>
-  );
+	function handleClickAddNew() {
+		setPeopleAddresses([...peopleAddresses, ""]);
+	}
+
+	function handleDelete(e, index) {
+		const newArray = [...peopleAddresses];
+		newArray.splice(index, 1);
+		setPeopleAddresses(newArray);
+	}
+
+	return (
+		<form noValidate autoComplete="off">
+			<Grid>
+				{peopleAddresses.map((element, index) => {
+					return (
+						<Grid key={`${index}city`}>
+							<Grid>
+								<FormControl variant="outlined">
+									<InputLabel htmlFor={index + 1}>{`${
+										index + 1
+									} address`}</InputLabel>
+									<OutlinedInput
+										id={index + 1}
+										label={`${index + 1} address`}
+										value={element}
+										defaultValue={element}
+										onChange={handleChangeMiddle}
+										name={index + 1}
+										placeholder={
+											index === 0
+												? "For example, Hamburg"
+												: index === 1
+												? "For example, Berlin"
+												: "Put your address here"
+										}
+										endAdornment={
+											<InputAdornment
+												position="end"
+												className={classes.inputDeleteBtn}
+											>
+												<IconButton
+													size="small"
+													color="secondary"
+													disableFocusRipple="true"
+													area-label="Delete this input field"
+													edge="end"
+													onClick={(e) => handleDelete(e, index)}
+												>
+													{peopleAddresses.length > 2 && <CancelIcon />}
+												</IconButton>
+											</InputAdornment>
+										}
+									/>
+								</FormControl>
+							</Grid>
+							<Grid>
+								{peopleAddresses.length < 5 && // only for 5 person max!
+									index === peopleAddresses.length - 1 && ( // checking the last element to add btn
+										<Fab
+											color="primary"
+											aria-label="add"
+											onClick={() => {
+												handleClickAddNew();
+											}}
+										>
+											<AddIcon />
+										</Fab>
+									)}
+							</Grid>
+						</Grid>
+					);
+				})}
+			</Grid>
+			<Button
+				variant="contained"
+				type="submit"
+				color="primary"
+				size="large"
+				className={classes.submitBtn}
+				onClick={(e) => {
+					handleSubmitMiddle(e);
+					history.push("/result");
+				}}
+			>
+				Find middle point
+			</Button>
+		</form>
+	);
 }
 
 export default InputContainer;
