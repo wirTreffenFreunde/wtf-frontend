@@ -19,6 +19,7 @@ function MapProvider({ children }) {
   const [middlePoint, setMiddlePoint] = useState({
     latitude: 53.57835738834605,
     longitude: 9.97645520197268,
+    address: "Hamburg",
   });
   // coordinates from input fields
   const [peopleCoordinates, setPeopleCoordinates] = useState([]);
@@ -46,9 +47,11 @@ function MapProvider({ children }) {
         `http://localhost:8080/api`,
         encodedAddresses
       );
+      console.log("from backend", result.data);
       setMiddlePoint({
         latitude: Number(result.data.middlePoint.latitude),
         longitude: Number(result.data.middlePoint.longitude),
+        address: result.data.middlePoint.address,
       });
       setPeopleCoordinates(result.data.peopleAddresses);
       setBoundsCoordinates(result.data.boundsAddresses);

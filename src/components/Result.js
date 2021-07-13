@@ -80,7 +80,7 @@ function Result() {
 
   function copyToClipboard() {
     const el = document.createElement("input");
-    el.value = `${selectedMarker.latitude}, ${selectedMarker.longitude}`;
+    el.value = `${selectedMarker.latitude}, ${selectedMarker.longitude}, ${selectedMarker.address}`;
     document.body.appendChild(el);
     el.select();
     document.execCommand("copy");
@@ -90,6 +90,7 @@ function Result() {
       setCopySuccess(0);
     }, 3000);
   }
+  console.log(middlePoint);
   return (
     <div>
       <Button
@@ -152,26 +153,40 @@ function Result() {
             {hotels &&
               hotels.map((hotel, index) => (
                 <Marker
-                  latitude={hotel.position.lat}
-                  longitude={hotel.position.lng}
+                  latitude={hotel.latitude}
+                  longitude={hotel.longitude}
                   offsetTop={-36}
                   offsetLeft={-18}
                   key={`${index}hotel`}
                 >
-                  <HotelIcon color="secondary" fontSize="large" />
+                  <HotelIcon
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedMarker(hotel);
+                    }}
+                    color="secondary"
+                    fontSize="large"
+                  />
                 </Marker>
               ))}
 
             {restaurants &&
               restaurants.map((restaurant, index) => (
                 <Marker
-                  latitude={restaurant.position.lat}
-                  longitude={restaurant.position.lng}
+                  latitude={restaurant.latitude}
+                  longitude={restaurant.longitude}
                   offsetTop={-36}
                   offsetLeft={-18}
                   key={`${index}hotel`}
                 >
-                  <LocalDiningIcon color="secondary" fontSize="large" />
+                  <LocalDiningIcon
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedMarker(restaurant);
+                    }}
+                    color="secondary"
+                    fontSize="large"
+                  />
                 </Marker>
               ))}
 
@@ -217,7 +232,9 @@ function Result() {
                   <div onClick={copyToClipboard}>
                     <Typography>Press to copy</Typography>
                     <Typography>
-                      {selectedMarker.latitude},{selectedMarker.longitude}
+                      {selectedMarker.address}
+                      {/* ,{selectedMarker.latitude},
+                      {selectedMarker.longitude} */}
                     </Typography>
                   </div>
                 </Badge>
