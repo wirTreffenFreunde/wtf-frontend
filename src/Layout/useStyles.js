@@ -88,6 +88,13 @@ export const useStyles = makeStyles((theme) => ({
   submitBtn: {
     width: "300px",
   },
+  markerHome: {
+    backgroundColor: "rgba(0, 0, 0, 1)",
+    boxShadow: "0px 0px 3px 1px rgba(0, 0, 0, 1)",
+    borderRadius: "50%",
+    width: "35px",
+    height: "35px",
+  },
 
   // LOGIN and REGISTER pages
   paper: {

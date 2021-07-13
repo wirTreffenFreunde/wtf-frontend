@@ -115,6 +115,7 @@ function Result() {
                   longitude={el.longitude}
                   offsetTop={-36}
                   offsetLeft={-18}
+                  className={classes.markerHome}
                 >
                   <HomeIcon
                     onClick={(e) => {
