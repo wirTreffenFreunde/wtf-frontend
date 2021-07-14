@@ -1,5 +1,6 @@
 import React from "react";
-import { useState, useHistory } from "react";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import {
   IconButton,
