@@ -1,11 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import {
-	Typography,
 	Button,
 	Grid,
-	Container,
-	Card,
 	Fab,
 	FormControl,
 	InputLabel,
@@ -14,7 +11,6 @@ import {
 	IconButton,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import RoomIcon from "@material-ui/icons/Room";
 import CancelIcon from "@material-ui/icons/Cancel";
 
 import { useStyles } from "../Layout/useStyles";
