@@ -5,7 +5,19 @@ import ReactMapGL, {
   NavigationControl,
   WebMercatorViewport,
 } from "react-map-gl";
-import { Badge, Typography, Container, Card, Button } from "@material-ui/core";
+import {
+  Badge,
+  Typography,
+  Container,
+  Card,
+  Button,
+  FormControl,
+  FormLabel,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  FormHelperText,
+} from "@material-ui/core";
 
 import RoomIcon from "@material-ui/icons/Room";
 import HomeIcon from "@material-ui/icons/Home";
@@ -26,12 +38,12 @@ function Result() {
     middlePoint,
     peopleCoordinates,
     boundsCoordinates,
-    locality,
-    findLocation,
+    // locality,
+    // findLocation,
     hotels,
-    findHotels,
+    // findHotels,
     restaurants,
-    findRestaurants,
+    // findRestaurants,
   } = useMapContext();
 
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -41,12 +53,16 @@ function Result() {
     longitude: middlePoint.longitude,
     zoom: 10,
   });
+  const [filter, setFilter] = useState({
+    // location: false,
+    hotels: false,
+    restaurants: false,
+  });
 
   const navControlStyle = {
     right: 10,
     top: 10,
   };
-
   useEffect(() => {
     // changing view port on the map to have all the markers visible
     if (boundsCoordinates) {
@@ -58,7 +74,7 @@ function Result() {
           [boundsCoordinates.maxLng, boundsCoordinates.maxLat],
         ],
         {
-          padding: { top: 50, bottom: 20, left: 20, right: 20 },
+          padding: { top: 100, bottom: 50, left: 50, right: 50 },
         }
       );
       setViewport({
@@ -88,160 +104,217 @@ function Result() {
       setCopySuccess(0);
     }, 3000);
   }
-  console.log(middlePoint);
+
+  function handleChangeFilter(e) {
+    setFilter({ ...filter, [e.target.name]: !filter[e.target.name] });
+  }
+
+  function handleClickFilter() {
+    if (filter.hotels || filter.restaurants) {
+      setViewport({
+        ...viewport,
+        latitude: middlePoint.latitude,
+        longitude: middlePoint.longitude,
+        zoom: 12,
+      });
+    }
+  }
+  /* <Button
+      variant="contained"
+      type="submit"
+      color="primary"
+      size="large"
+      //className={classes.submitBtn}
+      onClick={() => findLocation(middlePoint)}
+    >
+      Location name
+    </Button>
+    <Button
+      variant="contained"
+      type="submit"
+      color="primary"
+      size="large"
+      //className={classes.submitBtn}
+      onClick={() => findHotels(middlePoint)}
+    >
+      local hotels
+    </Button>
+    <Button
+      variant="contained"
+      type="submit"
+      color="primary"
+      size="large"
+      //className={classes.submitBtn}
+      onClick={() => findRestaurants(middlePoint)}
+    >
+      Restaurants nearby
+    </Button> */
+
   return (
-    <div>
-      <Button
-        variant="contained"
-        type="submit"
-        color="primary"
-        size="large"
-        //className={classes.submitBtn}
-        onClick={() => findLocation(middlePoint)}
-      >
-        Location name
-      </Button>
-      <Button
-        variant="contained"
-        type="submit"
-        color="primary"
-        size="large"
-        //className={classes.submitBtn}
-        onClick={() => findHotels(middlePoint)}
-      >
-        local hotels
-      </Button>
-      <Button
-        variant="contained"
-        type="submit"
-        color="primary"
-        size="large"
-        //className={classes.submitBtn}
-        onClick={() => findRestaurants(middlePoint)}
-      >
-        Restaurants nearby
-      </Button>
-      <Container>
-        <Card className={classes.cardMap}>
-          <ReactMapGL
-            {...viewport}
-            mapboxApiAccessToken={mapboxAccessToken}
-            mapStyle="mapbox://styles/mapbox/streets-v11"
-            width="100%"
-            height="100%"
-            onViewportChange={(viewport) => setViewport(viewport)}
-          >
-            <NavigationControl style={navControlStyle} />
-
-            <Marker
-              latitude={middlePoint.latitude}
-              longitude={middlePoint.longitude}
-              offsetTop={-36}
-              offsetLeft={-18}
-            >
-              <RoomIcon
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedMarker(middlePoint);
-                }}
-                color="primary"
-                fontSize="large"
+    <Container maxWidth="lg">
+      <Card className={classes.cardMap}>
+        <Card className={classes.cardFilter}>
+          <FormControl component="fieldset" className={classes.formControl}>
+            <FormLabel component="legend">Filter:</FormLabel>
+            <FormGroup>
+              {/* <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filter.location}
+                    onChange={handleChangeFilter}
+                    name="location"
+                  />
+                }
+                label="Closest location"
+              /> */}
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filter.hotels}
+                    onChange={handleChangeFilter}
+                    name="hotels"
+                  />
+                }
+                label="Hotels"
               />
-            </Marker>
-            {hotels &&
-              hotels.map((hotel, index) => (
-                <Marker
-                  latitude={hotel.latitude}
-                  longitude={hotel.longitude}
-                  offsetTop={-36}
-                  offsetLeft={-18}
-                  key={`${index}hotel`}
-                >
-                  <HotelIcon
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSelectedMarker(hotel);
-                    }}
-                    color="secondary"
-                    fontSize="large"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={filter.restaurants}
+                    onChange={handleChangeFilter}
+                    name="restaurants"
                   />
-                </Marker>
-              ))}
-
-            {restaurants &&
-              restaurants.map((restaurant, index) => (
-                <Marker
-                  latitude={restaurant.latitude}
-                  longitude={restaurant.longitude}
-                  offsetTop={-36}
-                  offsetLeft={-18}
-                  key={`${index}hotel`}
-                >
-                  <LocalDiningIcon
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSelectedMarker(restaurant);
-                    }}
-                    color="secondary"
-                    fontSize="large"
-                  />
-                </Marker>
-              ))}
-
-            {peopleCoordinates.map((el, index) => {
-              return (
-                <Marker
-                  key={index}
-                  latitude={el.latitude}
-                  longitude={el.longitude}
-                  offsetTop={-36}
-                  offsetLeft={-18}
-                >
-                  <HomeIcon
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSelectedMarker(el);
-                    }}
-                    color="secondary"
-                    fontSize="large"
-                  />
-                </Marker>
-              );
-            })}
-
-            {selectedMarker && (
-              <Popup
-                latitude={selectedMarker.latitude}
-                longitude={selectedMarker.longitude}
-                closeButton={true}
-                closeOnClick={false}
-                onClose={() => setSelectedMarker(null)}
-                anchor="left"
-                tipSize={20}
-              >
-                <Badge
-                  badgeContent={copySuccess}
-                  color="primary"
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right",
-                  }}
-                >
-                  <div onClick={copyToClipboard}>
-                    <Typography>Press to copy</Typography>
-                    <Typography>
-                      {selectedMarker.address}
-                      {/* ,{selectedMarker.latitude},
-                      {selectedMarker.longitude} */}
-                    </Typography>
-                  </div>
-                </Badge>
-              </Popup>
-            )}
-          </ReactMapGL>
+                }
+                label="Restaurants"
+              />
+            </FormGroup>
+            <Button
+              onClick={handleClickFilter}
+              variant="contained"
+              color="primary"
+            >
+              Filter
+            </Button>
+          </FormControl>
         </Card>
-      </Container>
-    </div>
+        <ReactMapGL
+          {...viewport}
+          mapboxApiAccessToken={mapboxAccessToken}
+          mapStyle="mapbox://styles/mapbox/streets-v11"
+          width="100%"
+          height="100%"
+          onViewportChange={(viewport) => setViewport(viewport)}
+        >
+          <NavigationControl style={navControlStyle} />
+
+          <Marker
+            latitude={middlePoint.latitude}
+            longitude={middlePoint.longitude}
+            offsetTop={-36}
+            offsetLeft={-18}
+          >
+            <RoomIcon
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedMarker(middlePoint);
+              }}
+              color="primary"
+              fontSize="large"
+            />
+          </Marker>
+          {filter.hotels &&
+            hotels.map((hotel, index) => (
+              <Marker
+                latitude={hotel.latitude}
+                longitude={hotel.longitude}
+                offsetTop={-36}
+                offsetLeft={-18}
+                key={`${index}hotel`}
+              >
+                <HotelIcon
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedMarker(hotel);
+                  }}
+                  color="secondary"
+                  fontSize="large"
+                />
+              </Marker>
+            ))}
+
+          {filter.restaurants &&
+            restaurants.map((restaurant, index) => (
+              <Marker
+                latitude={restaurant.latitude}
+                longitude={restaurant.longitude}
+                offsetTop={-36}
+                offsetLeft={-18}
+                key={`${index}hotel`}
+              >
+                <LocalDiningIcon
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedMarker(restaurant);
+                  }}
+                  color="secondary"
+                  fontSize="large"
+                />
+              </Marker>
+            ))}
+
+          {peopleCoordinates.map((el, index) => {
+            return (
+              <Marker
+                key={index}
+                latitude={el.latitude}
+                longitude={el.longitude}
+                offsetTop={-36}
+                offsetLeft={-18}
+              >
+                <HomeIcon
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedMarker(el);
+                  }}
+                  color="secondary"
+                  fontSize="large"
+                />
+              </Marker>
+            );
+          })}
+
+          {selectedMarker && (
+            <Popup
+              latitude={selectedMarker.latitude}
+              longitude={selectedMarker.longitude}
+              closeButton={true}
+              closeOnClick={false}
+              onClose={() => setSelectedMarker(null)}
+              anchor="left"
+              tipSize={20}
+            >
+              <Badge
+                badgeContent={copySuccess}
+                color="primary"
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+              >
+                <div onClick={copyToClipboard}>
+                  <Typography>Press to copy</Typography>
+                  <Typography>
+                    {selectedMarker.address}
+                    {/* ,{selectedMarker.latitude},
+                      {selectedMarker.longitude} */}
+                  </Typography>
+                </div>
+              </Badge>
+            </Popup>
+          )}
+        </ReactMapGL>
+      </Card>
+    </Container>
   );
 }
 
