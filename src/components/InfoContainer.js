@@ -1,6 +1,4 @@
-import Container from "@material-ui/core/Container";
-import Card from "@material-ui/core/Card";
-import Typography from "@material-ui/core/Typography";
+import { Container, Card, Typography } from "@material-ui/core";
 
 import { useStyles } from "../Layout/useStyles";
 
@@ -8,10 +6,10 @@ function InfoContainer() {
   const classes = useStyles();
 
   return (
-    <Container className="InfoContainer" id="info">
-      <Card className={classes.card}>
-        <Typography variant="h3">How it works</Typography>
-        <Typography variant="h5" component="h3">
+    <Container maxWidth="lg" className="InfoContainer" id="info">
+      <Card className={classes.homeCard}>
+        <Typography variant="h3" className={classes.h3}>How it works</Typography>
+        <Typography variant="body" className={classes.bodyText}>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio,
           molestias dolore! Molestias exercitationem ut quibusdam maiores illo
           aperiam hic voluptas recusandae quidem soluta repellendus aut, ea
