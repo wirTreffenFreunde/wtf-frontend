@@ -34,7 +34,7 @@ export default function MyAccount() {
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [popupOpen, setPopupOpen] = React.useState(false);
-  const [myMemoryPopupOpen, setMyMemoryPopupOpen] = React.useState(true);
+  const [myMemoryPopupOpen, setMyMemoryPopupOpen] = React.useState(false);
   const [user, setUser] = React.useState({
     trips: [{ title: "", cities: [] }],
   });
