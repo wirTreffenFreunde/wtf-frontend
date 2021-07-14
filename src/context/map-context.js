@@ -19,11 +19,17 @@ function MapProvider({ children }) {
 	const [middlePoint, setMiddlePoint] = useState({
 		latitude: 53.57835738834605,
 		longitude: 9.97645520197268,
+		address: "Hamburg",
 	});
+
 	// coordinates from input fields
 	const [peopleCoordinates, setPeopleCoordinates] = useState([]);
+
 	// bounds of all addresses
 	const [boundsCoordinates, setBoundsCoordinates] = useState(null);
+	const [locality, setLocality] = useState("");
+	const [hotels, setHotels] = useState("");
+	const [restaurants, setRestaurants] = useState("");
 
 	// saving all the input fields
 	const handleChangeMiddle = (e) => {
@@ -37,11 +43,12 @@ function MapProvider({ children }) {
 	const handleSubmitMiddle = async (e) => {
 		e.preventDefault();
 		try {
-			const encodedAddresses = peopleAddresses.filter((e)=> e);
+			const encodedAddresses = peopleAddresses.filter((e) => e);
 			const result = await axios.post(`/api`, encodedAddresses);
 			setMiddlePoint({
 				latitude: Number(result.data.middlePoint.latitude),
 				longitude: Number(result.data.middlePoint.longitude),
+				address: result.data.middlePoint.address,
 			});
 			setPeopleCoordinates(result.data.peopleAddresses);
 			setBoundsCoordinates(result.data.boundsAddresses);
@@ -49,6 +56,51 @@ function MapProvider({ children }) {
 			console.error(err);
 		}
 	};
+
+	const findLocation = async (geoLocation) => {
+		console.log("geoLocation", geoLocation);
+		try {
+			const result = await axios.post(
+				`/api/city`,
+				geoLocation
+			);
+			console.log("closest city", result.data);
+			setLocality(result.data);
+			//console.log("location", locality);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const findHotels = async (geoLocation) => {
+		console.log("geoLocation", geoLocation);
+		try {
+			const result = await axios.post(
+				`/api/hotels`,
+				geoLocation
+			);
+			console.log("Hotels", result.data);
+			setHotels(result.data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const findRestaurants = async (geoLocation) => {
+		console.log("geoLocation", geoLocation);
+		try {
+			const result = await axios.post(
+				`/api/restaurants`,
+				geoLocation
+			);
+			console.log("restaurants", result.data);
+			setRestaurants(result.data);
+			//console.log("location", locality);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const value = {
 		peopleAddresses,
 		setPeopleAddresses,
@@ -58,6 +110,12 @@ function MapProvider({ children }) {
 		setMiddlePoint,
 		handleChangeMiddle,
 		handleSubmitMiddle,
+		locality,
+		findLocation,
+		hotels,
+		findHotels,
+		restaurants,
+		findRestaurants,
 	};
 
 	return <MapContext.Provider value={value}>{children}</MapContext.Provider>;
