@@ -11,6 +11,8 @@ import MyAccount from "./MyAccount";
 import LogIn from "./LogIn";
 import Register from "./Register";
 import Result from "./Result";
+import ForgotPassword from "./ForgotPassword";
+
 
 import "./App.css";
 import { theme, useStyles } from "../Layout/useStyles";
@@ -55,6 +57,7 @@ function App() {
                 <Route exact path="/login" component={LogIn} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/myAccount" component={MyAccount} />
+                <Route exact path="/forgotPassword" component={ForgotPassword} />
               </Switch>
             </Router>
             <Footer />

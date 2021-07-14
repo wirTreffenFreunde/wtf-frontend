@@ -17,6 +17,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import RoomIcon from "@material-ui/icons/Room";
+import ForgotPassword from "./ForgotPassword";
 
 import { useStyles } from "../Layout/useStyles";
 import { useUserContext } from "../context/user-context";

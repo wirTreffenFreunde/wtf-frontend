@@ -149,7 +149,7 @@ function Result() {
                   <div onClick={copyToClipboard}>
                     <Typography>Press to copy</Typography>
                     <Typography>
-                      {selectedMarker.latitude}, {selectedMarker.longitude}
+                      {selectedMarker.latitude}, {selectedMarker.longitude}, {selectedMarker.address}
                     </Typography>
                   </div>
                 </Badge>

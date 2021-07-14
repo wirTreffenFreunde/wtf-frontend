@@ -16,6 +16,7 @@ import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
 import { accessToken } from "mapbox-gl";
 import { useUserContext } from "../context/user-context"
+import ForgotPassword from "./ForgotPassword"
 
 export default function LogIn() {
   let history = useHistory();
@@ -133,14 +134,19 @@ export default function LogIn() {
             Log In
           </Button>
           <Grid container>
-            <Grid item xs>
+            <Grid item xm>
               <Link href="#" variant="body2">
+                
+              </Link>
+            </Grid>
+            <Grid item xs>
+              <Link href="/forgotpassword" variant="body2">
                 Forgot password ?
               </Link>
             </Grid>
             <Grid item>
               <Link href="/register" variant="body2">
-                Not registered! Please Sign Up here
+                  Sign Up here
               </Link>
             </Grid>
           </Grid>
