@@ -1,25 +1,48 @@
-import { blue } from "@material-ui/core/colors";
-import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import {
+  amber,
+  blue,
+  deepOrange,
+  green,
+  orange,
+  yellow,
+} from "@material-ui/core/colors";
+import { makeStyles, createTheme } from "@material-ui/core/styles";
 
-export const theme = createMuiTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       main: blue[500],
     },
+    secondary: {
+      main: amber[500],
+    },
   },
   typography: {
     h2: {
+      fontSize: "1.5rem",
       fontWeight: 600,
       color: "#fff",
     },
+    h3: {
+      textAlign: "center",
+      fontWeight: 600,
+    },
+    h4: {
+      textAlign: "center",
+      fontWeight: 500,
+    },
+    h5: {
+      textAlign: "center",
+    },
     subtitle1: {
-      fontSize: "1.5rem",
+      fontSize: "1rem",
       fontStyle: "italic",
       color: "#fff",
     },
   },
-  spacing: 4,
+  spacing: 5,
 });
+
 export const useStyles = makeStyles((theme) => ({
   "@global": {
     ul: {
@@ -28,65 +51,189 @@ export const useStyles = makeStyles((theme) => ({
       listStyle: "none",
     },
   },
-  card: {
-    margin: theme.spacing(3),
-    padding: theme.spacing(3),
-    height: "500px",
-  },
 
   // NAVIGATION BAR
   toolbar: {
-    paddingLeft: theme.spacing(10),
-    paddingRight: theme.spacing(10),
     flexWrap: "nowrap",
+    justifyContent: "space-between",
+    padding: 0,
   },
   toolbarTitle: {
     flexGrow: 1,
+    fontSize: "1.1rem",
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.3rem",
+    },
   },
   navBar: {
-    [theme.breakpoints.down("xs")]: {
-      display: "none",
+    display: "none",
+
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
     },
   },
   navLink: {
     color: "#fff",
-    marginRight: theme.spacing(4),
+    marginRight: theme.spacing(5),
   },
 
   // BANNER
+  
   banner: {
     backgroundColor: blue[300],
-    padding: theme.spacing(20, 20, 30, 20),
-    background: "url(images/mapPicture.png) no-repeat",
-    backgroundSize: "400px",
-    backgroundPosition: "right",
-    backgroundOrigin: "content-box",
-  },
-  [theme.breakpoints.down("sm")]: {
-    banner: {
-      textAlign: "center",
-      padding: theme.spacing(10, 5, 20, 5),
+    marginBottom: theme.spacing(-20),
+    padding: theme.spacing(5, 0, 25, 0),
+
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(20, 0, 40, 0),
     },
-    taglineHeading: {
+  },
+  taglineHeading: {
+    textAlign: "center",
+    fontSize: "2rem",
+    
+    [theme.breakpoints.up("md")]: {
       fontSize: "3rem",
     },
-    taglineText: {
-      fontSize: "1rem",
+    [theme.breakpoints.up("lg")]: {
+      marginLeft: theme.spacing(35),
+      textAlign: "left",
+    },
+  },
+  taglineText: {
+    textAlign: "center",
+    fontSize: "1rem",
+
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.up("lg")]: {
+      marginLeft: theme.spacing(35),
+      textAlign: "left",
     },
   },
 
-  // // INPUT CONTAINER
+  // HOME PAGE
+  homeCard: {
+    marginBottom: theme.spacing(2),
+
+    [theme.breakpoints.up("md")]: {
+      marginBottom: theme.spacing(5),
+      padding: theme.spacing(2),
+    },
+  },
+  h3: {
+    fontSize: "1.2rem",
+    marginBottom: theme.spacing(2),
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem",
+    },
+  },
+  bodyText: {
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.2rem",
+    },
+  },
+
+  // INPUT CONTAINER
+  cardInput: {
+    position: "relative",
+    overflow: "visible",
+    padding: theme.spacing(0),
+    marginBottom: theme.spacing(5),
+
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(1),
+    },
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(3, 0, 3, 0),
+      marginBottom: theme.spacing(10),
+    },
+    [theme.breakpoints.up("lg")]: {
+      padding: theme.spacing(5, 5, 3, 5),
+      margin: theme.spacing(0, 20, 10, 20),
+    },
+  },
+  heading4: {
+    fontSize: "1.2rem",
+    marginBottom: theme.spacing(2),
+
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.down("md")]: {
+      marginBottom: theme.spacing(3),
+    },
+  },
+  heading5: {
+    marginBottom: theme.spacing(2),
+    fontSize: "1rem",
+
+    [theme.breakpoints.up("sm")]: {
+      marginBottom: theme.spacing(3),
+    },
+    [theme.breakpoints.down("md")]: {
+      marginBottom: theme.spacing(4),
+    },
+  },
+  inputFieldGrid: {
+    margin: theme.spacing(0, 0, 3, 0),
+    flexGrow: 1,
+    [theme.breakpoints.down("md")]: {
+      margin: theme.spacing(0, 2, 4, 2),
+    },
+    [theme.breakpoints.down("lg")]: {
+      margin: theme.spacing(0, 2, 4, 2),
+    },
+  },
   inputField: {
-    width: "300px",
+    width: "100%",
+  },
+  inputDeleteBtn: {
+    position: "absolute",
+    top: 0,
+    right: "-12px",
+    zIndex: "1",
+  },
+  inputDeleteBtnIcon: {
+    backgroundColor: "#fff",
+    borderRadius: "50%",
+  },
+  inputAddBtn: {
+    marginLeft: theme.spacing(1),
+
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(2),
+    },
+    [theme.breakpoints.up("md")]: {
+      marginRight: theme.spacing(2),
+    },
+  },
+  submitBtn: {
+    position: "absolute",
+    width: "60px",
+    height: "60px",
+    left: "calc(50% - 30px)", // btn in the middle of the card
+    bottom: "-30px",
+    [theme.breakpoints.up("md")]: {
+      width: "80px",
+      height: "80px",
+      left: "calc(50% - 40px)", // btn in the middle of the card
+      bottom: "-40px",
+    },
+  },
+  submitBtnIcon: {
+    fontSize: "2rem",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "3rem",
+    },
   },
 
   // RESULT PAGE
   cardMap: {
     margin: theme.spacing(3),
     height: "500px",
-  },
-  submitBtn: {
-    width: "300px",
   },
 
   //   // LOGIN and REGISTER pages

@@ -89,7 +89,7 @@ export default function MyAccount() {
       "Content-Type": "multipart/form-data; boundary=${formData._boundary}",
     };
     const res = await axios.post(
-      `http://localhost:8080/users/uploadMemory`,
+      `/users/uploadMemory`,
       formData
     );
     console.log(res);
@@ -174,7 +174,7 @@ export default function MyAccount() {
             id="panel1a-header"
           >
             <Typography className={classes.heading}>
-              Have a glympse at where have you been
+              Have a glimpse at where have you been
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
