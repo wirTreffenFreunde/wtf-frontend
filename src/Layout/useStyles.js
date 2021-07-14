@@ -162,7 +162,7 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       fontSize: "1.5rem",
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.up("md")]: {
       marginBottom: theme.spacing(3),
     },
   },
@@ -173,17 +173,18 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       marginBottom: theme.spacing(3),
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.up("md")]: {
       marginBottom: theme.spacing(4),
     },
   },
   inputFieldGrid: {
     margin: theme.spacing(0, 0, 3, 0),
     flexGrow: 1,
-    [theme.breakpoints.down("md")]: {
+
+    [theme.breakpoints.up("md")]: {
       margin: theme.spacing(0, 2, 4, 2),
     },
-    [theme.breakpoints.down("lg")]: {
+    [theme.breakpoints.up("lg")]: {
       margin: theme.spacing(0, 2, 4, 2),
     },
   },
