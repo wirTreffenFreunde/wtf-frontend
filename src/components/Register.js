@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+} from "@material-ui/core";
+
 import { useForm, Controller } from "react-hook-form";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
+
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem'; 
-import ListItemText from '@material-ui/core/ListItemText'; 
 
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
@@ -48,7 +52,7 @@ export default function Register() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" >
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -68,6 +72,7 @@ export default function Register() {
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    display="inline"
                     variant="outlined"
                     margin="normal"
                     fullWidth
@@ -78,8 +83,8 @@ export default function Register() {
                 )}
               />
               {errors.firstName && <span>First name is required</span>}
-            </Grid> 
-             <Grid item xs={12} sm={6}>
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <Controller
                 name="lastName"
                 control={control}
@@ -88,6 +93,7 @@ export default function Register() {
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    display="flex"
                     variant="outlined"
                     margin="normal"
                     fullWidth
@@ -98,53 +104,94 @@ export default function Register() {
                 )}
               />
               {errors.lastName && <span>Last name is required</span>}
-            </Grid> 
+            </Grid>
 
             <Grid item xs={12} sm={6}>
               <Controller
                 name="email"
                 control={control}
                 defaultValue=""
-                rules={{ required: true }}
+                rules={{
+                  required: true,
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: "Entered value does not match email format",
+                  },
+                }}
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    display="flex"
                     variant="outlined"
                     margin="normal"
                     fullWidth
                     label="Email Address"
-                    pattern={{
-                      value: /\S+@\S+\.\S+/,
-                      message: "Entered value does not match email format",
-                    }}
                     autoComplete="email"
                     autoFocus
                   />
                 )}
               />
-            </Grid> 
+              {errors.email && <span>{errors.email.message}</span>}
+            </Grid>
             <Grid item xs={12} sm={6}>
               <Controller
                 name="password"
                 control={control}
                 defaultValue=""
-                rules={{ required: true }}
+                rules={{
+                  required: true,
+                  pattern: {
+                    value:
+                      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                    message:
+                      "Password should contain small character,big character,special character,a number and needs to be at least 8 characters long",
+                  },
+                }}
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    display="flex"
                     variant="outlined"
                     margin="normal"
                     fullWidth
                     label="Password"
-                    
                     type="password"
                     autoFocus
-                    minLength={{ value: 5, message: "min length is 5" }}
                   />
                 )}
               />
-            </Grid> 
-             
+              {errors.password && <span>{errors.password.message}</span>}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Controller
+                name="retype-password"
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: true,
+                  pattern: {
+                    value:
+                      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                    message:
+                      "Password should contain small character,big character,special character,a number and needs to be at least 8 characters long",
+                  },
+                }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    display="inline-flex"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    label="Retype-Password"
+                    type="retype-password"
+                    autoFocus
+                  />
+                )}
+              />
+              {errors.password && <span>{errors.password.message}</span>}
+            </Grid>
+
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}

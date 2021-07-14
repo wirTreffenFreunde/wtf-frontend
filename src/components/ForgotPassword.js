@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -15,14 +16,13 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
 import { accessToken } from "mapbox-gl";
-import { useUserContext } from "../context/user-context"
-import ForgotPassword from "./ForgotPassword"
+import { useUserContext } from "../context/user-context";
 
-export default function LogIn() {
+export default function ForgotPassword() {
   let history = useHistory();
   const classes = useStyles();
 
-  const { user, setUser } = useUserContext()
+  const { user, setUser } = useUserContext();
 
   const {
     control,
@@ -38,21 +38,16 @@ export default function LogIn() {
         data: data,
       });
       setWrongCredentials(false);
-      const accessToken = response.data.accessToken
-      axios.defaults.headers.common[
-        "authorization"
-      ] = `basic ${accessToken}`;
+      const accessToken = response.data.accessToken;
+      axios.defaults.headers.common["authorization"] = `basic ${accessToken}`;
 
-      setUser({email: data.email})
+      setUser({ email: data.email });
 
       if (data["remember-me"]) {
-        localStorage.setItem("token",accessToken) 
-
-      }else(
-        sessionStorage.setItem("token",accessToken)
-      )
+        localStorage.setItem("token", accessToken);
+      } else sessionStorage.setItem("token", accessToken);
       console.log(accessToken);
-      history.push('/myAccount')
+      history.push("/forgotPassword");
     } catch (error) {
       if (error.response.status === "404") setWrongCredentials(true);
     }
@@ -66,7 +61,7 @@ export default function LogIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Log In
+          Forgot Password
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Controller
@@ -86,70 +81,26 @@ export default function LogIn() {
               />
             )}
           />
-          {errors.email && <span>Please enter a valid email address</span>}
-
-          <Controller
-            name="password"
-            control={control}
-            defaultValue=""
-            rules={{ required: true }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                label="Password"
-                autoComplete="current-password"
-                autoFocus
-                type="password"
-              />
-            )}
-          />
-          {errors.password && <span>Please enter a valid password </span>}
-
-          {wrongCredentials && (
-            <div style={{ color: "#ff0000" }}>Wrong username or password </div>
-          )}
-          <Controller
-            name="remember-me"
-            control={control}
-            render={({ field }) => (
-              <FormControlLabel
-               
-                control={<Checkbox  {...field}  value="remember" color="primary" />}
-                label="Remember me"
-              />
-            )}
-          />
+          {/* {errors.email && <span>Please enter a valid email address</span>} */}
 
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            color="secondary"
             size="large"
             className={classes.submit}
           >
-            Log In
+            Retrieve  Password
           </Button>
-          <Grid container>
-            <Grid item xm>
-              <Link href="#" variant="body2">
-                
-              </Link>
-            </Grid>
+
+          {/* <Grid container>
             <Grid item xs>
-              <Link href="/forgotpassword" variant="body2">
+              <Link href="forgotpassword" variant="body2">
                 Forgot password ?
               </Link>
             </Grid>
-            <Grid item>
-              <Link href="/register" variant="body2">
-                  Sign Up here
-              </Link>
-            </Grid>
-          </Grid>
+          </Grid> */}
         </form>
       </div>
     </Container>
