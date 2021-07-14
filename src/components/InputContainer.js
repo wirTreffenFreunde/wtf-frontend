@@ -90,9 +90,9 @@ function InputContainer() {
                   />
                 </FormControl>
               </Grid>
-              <Grid>
-                {peopleAddresses.length < 5 && // only for 5 person max!
-                  index === peopleAddresses.length - 1 && ( // checking the last element to add btn
+              {peopleAddresses.length < 5 && // only for 5 person max!
+                index === peopleAddresses.length - 1 && ( // checking the last element to add btn
+                  <Grid item className={classes.inputGridAddBtn}>
                     <Fab
                       color="primary"
                       aria-label="add"
@@ -103,8 +103,8 @@ function InputContainer() {
                     >
                       <AddIcon />
                     </Fab>
-                  )}
-              </Grid>
+                  </Grid>
+                )}
             </Grid>
           );
         })}
@@ -119,7 +119,7 @@ function InputContainer() {
           history.push("/result");
         }}
       >
-        <RoomIcon className={classes.submitBtnIcon}/>
+        <RoomIcon className={classes.submitBtnIcon} />
       </Fab>
     </form>
   );

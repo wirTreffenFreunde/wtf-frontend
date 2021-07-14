@@ -1,18 +1,20 @@
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
+import { Container, Link, Typography } from "@material-ui/core";
+import { useStyles } from "../Layout/useStyles";
 
 const Copyright = () => {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://www.google.de/maps">
-                {"DCI "}
-            </Link>
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+  const classes = useStyles();
 
+  return (
+    <Container maxWidth="lg" className={classes.copyright}>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="#">
+          {"WTF "}
+        </Link>
+        {new Date().getFullYear()}
+      </Typography>
+    </Container>
+  );
+};
 
 export default Copyright;

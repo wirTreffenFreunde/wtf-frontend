@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core";
-import { Container, Typography, Card, CardContent } from "@material-ui/core";
+import { Container, Typography, Card } from "@material-ui/core";
 
 import Nav from "./Nav";
 import InputContainer from "./InputContainer";
@@ -38,15 +38,13 @@ function App() {
                   <Banner />
                   <Container maxWidth="lg">
                     <Card className={classes.cardInput} elevation="5">
-                      <CardContent>
-                        <Typography variant="h4" className={classes.heading4}>
-                          Find middle point to meet your friends
-                        </Typography>
-                        <Typography variant="h5" className={classes.heading5}>
-                          Put addresses of your friends:
-                        </Typography>
-                        <InputContainer />
-                      </CardContent>
+                      <Typography variant="h4" className={classes.heading4}>
+                        Find middle point to meet your friends
+                      </Typography>
+                      <Typography variant="h5" className={classes.heading5}>
+                        Put addresses of your friends:
+                      </Typography>
+                      <InputContainer />
                     </Card>
                   </Container>
                   <InfoContainer />
@@ -55,9 +53,7 @@ function App() {
                 <Route exact path="/result">
                   <Container maxWidth="lg">
                     <Card className={classes.cardInput}>
-                      <CardContent>
-                        <InputContainer />
-                      </CardContent>
+                      <InputContainer />
                     </Card>
                   </Container>
                   <Result />
