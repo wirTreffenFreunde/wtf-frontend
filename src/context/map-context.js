@@ -27,9 +27,9 @@ function MapProvider({ children }) {
 
 	// bounds of all addresses
 	const [boundsCoordinates, setBoundsCoordinates] = useState(null);
-	const [locality, setLocality] = useState("");
-	const [hotels, setHotels] = useState("");
-	const [restaurants, setRestaurants] = useState("");
+	const [locality, setLocality] = useState([]);
+	const [hotels, setHotels] = useState([]);
+	const [restaurants, setRestaurants] = useState([]);
 
 	// saving all the input fields
 	const handleChangeMiddle = (e) => {

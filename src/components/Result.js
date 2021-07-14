@@ -175,7 +175,7 @@ function Result() {
                     name="hotels"
                   />
                 }
-                label="Hotels"
+                label={`Hotels (${hotels.length ? hotels.length : "0"})`}
               />
               <FormControlLabel
                 control={
@@ -185,7 +185,7 @@ function Result() {
                     name="restaurants"
                   />
                 }
-                label="Restaurants"
+                label={`Restaurants (${hotels.length ? hotels.length : "0"})`}
               />
             </FormGroup>
             <Button
@@ -208,6 +208,7 @@ function Result() {
           <NavigationControl style={navControlStyle} />
 
           <Marker
+            className={classes.marker}
             latitude={middlePoint.latitude}
             longitude={middlePoint.longitude}
             offsetTop={-36}
@@ -225,6 +226,7 @@ function Result() {
           {filter.hotels &&
             hotels.map((hotel, index) => (
               <Marker
+                className={classes.marker}
                 latitude={hotel.latitude}
                 longitude={hotel.longitude}
                 offsetTop={-36}
@@ -245,6 +247,7 @@ function Result() {
           {filter.restaurants &&
             restaurants.map((restaurant, index) => (
               <Marker
+                className={classes.marker}
                 latitude={restaurant.latitude}
                 longitude={restaurant.longitude}
                 offsetTop={-36}
@@ -265,6 +268,7 @@ function Result() {
           {peopleCoordinates.map((el, index) => {
             return (
               <Marker
+                className={classes.marker}
                 key={index}
                 latitude={el.latitude}
                 longitude={el.longitude}
