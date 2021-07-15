@@ -94,7 +94,8 @@ function Result() {
 
   function copyToClipboard() {
     const el = document.createElement("input");
-    el.value = `${selectedMarker.latitude}, ${selectedMarker.longitude}, ${selectedMarker.address}`;
+    // el.value = `${selectedMarker.latitude}, ${selectedMarker.longitude}, ${selectedMarker.address}`;
+    el.value = `${selectedMarker.address}`;
     document.body.appendChild(el);
     el.select();
     document.execCommand("copy");
@@ -193,7 +194,7 @@ function Result() {
               variant="contained"
               color="primary"
             >
-              Filter
+              Take me there
             </Button>
           </FormControl>
         </Card>
@@ -215,6 +216,7 @@ function Result() {
             offsetLeft={-18}
           >
             <RoomIcon
+              className={classes.middlePointIcon}
               onClick={(e) => {
                 e.preventDefault();
                 setSelectedMarker(middlePoint);
@@ -226,7 +228,7 @@ function Result() {
           {filter.hotels &&
             hotels.map((hotel, index) => (
               <Marker
-                className={classes.marker}
+                className={classes.markerFilter}
                 latitude={hotel.latitude}
                 longitude={hotel.longitude}
                 offsetTop={-36}
@@ -247,7 +249,7 @@ function Result() {
           {filter.restaurants &&
             restaurants.map((restaurant, index) => (
               <Marker
-                className={classes.marker}
+                className={classes.markerFilter}
                 latitude={restaurant.latitude}
                 longitude={restaurant.longitude}
                 offsetTop={-36}

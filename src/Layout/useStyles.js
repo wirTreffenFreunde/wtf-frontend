@@ -251,8 +251,21 @@ export const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   marker: {
-    
+    //change the size here
   },
+  middlePointIcon: {
+    fontSize: "30px",
+    zIndex: 1
+  },
+  markerFilter: {
+    backgroundColor: "#fff",
+    borderRadius: "50%",
+    height: "40px",
+    width: "40px",
+    textAlign: "center",
+    boxShadow: "0 0 10px 0 rgba(0, 0, 0, .2)"
+  },
+
 
   // LOGIN and REGISTER pages
   paper: {
