@@ -132,12 +132,6 @@ export default function MyAccount() {
             <Typography>
               Where you met: {user.trips[selectedIndex].middlePoint}
             </Typography>
-            {/* <Typography>
-              Where you should have met:{" "}
-              {() => {
-                return getMiddlePoint(mockData.trips[selectedIndex].cities);
-              }}
-            </Typography> */}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
