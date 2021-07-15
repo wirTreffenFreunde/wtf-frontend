@@ -56,7 +56,7 @@ export const useStyles = makeStyles((theme) => ({
   toolbar: {
     flexWrap: "nowrap",
     justifyContent: "space-between",
-    padding: 0,
+    padding: theme.spacing(0),
   },
   toolbarTitle: {
     flexGrow: 1,
@@ -79,7 +79,7 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   // BANNER
-  
+
   banner: {
     backgroundColor: blue[300],
     marginBottom: theme.spacing(-20),
@@ -92,7 +92,7 @@ export const useStyles = makeStyles((theme) => ({
   taglineHeading: {
     textAlign: "center",
     fontSize: "2rem",
-    
+
     [theme.breakpoints.up("md")]: {
       fontSize: "3rem",
     },
@@ -117,17 +117,18 @@ export const useStyles = makeStyles((theme) => ({
   // HOME PAGE
   homeCard: {
     marginBottom: theme.spacing(2),
-
+    padding: theme.spacing(4),
     [theme.breakpoints.up("md")]: {
       marginBottom: theme.spacing(5),
-      padding: theme.spacing(2),
+      padding: theme.spacing(6),
     },
   },
   h3: {
-    fontSize: "1.2rem",
+    fontSize: "1.3rem",
     marginBottom: theme.spacing(2),
     [theme.breakpoints.up("md")]: {
       fontSize: "1.5rem",
+      marginBottom: theme.spacing(3)
     },
   },
   bodyText: {
@@ -140,14 +141,11 @@ export const useStyles = makeStyles((theme) => ({
   cardInput: {
     position: "relative",
     overflow: "visible",
-    padding: theme.spacing(0),
+    padding: theme.spacing(3, 3, 4, 3),
     marginBottom: theme.spacing(5),
-
-    [theme.breakpoints.up("sm")]: {
-      padding: theme.spacing(1),
-    },
+    
     [theme.breakpoints.up("md")]: {
-      padding: theme.spacing(3, 0, 3, 0),
+      padding: theme.spacing(4, 3, 5, 3),
       marginBottom: theme.spacing(10),
     },
     [theme.breakpoints.up("lg")]: {
@@ -157,34 +155,32 @@ export const useStyles = makeStyles((theme) => ({
   },
   heading4: {
     fontSize: "1.2rem",
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(1),
 
     [theme.breakpoints.up("sm")]: {
       fontSize: "1.5rem",
     },
-    [theme.breakpoints.down("md")]: {
-      marginBottom: theme.spacing(3),
+    [theme.breakpoints.up("md")]: {
+      marginBottom: theme.spacing(2),
     },
   },
   heading5: {
     marginBottom: theme.spacing(2),
     fontSize: "1rem",
 
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
       marginBottom: theme.spacing(3),
-    },
-    [theme.breakpoints.down("md")]: {
-      marginBottom: theme.spacing(4),
     },
   },
   inputFieldGrid: {
     margin: theme.spacing(0, 0, 3, 0),
     flexGrow: 1,
-    [theme.breakpoints.down("md")]: {
+
+    [theme.breakpoints.up("md")]: {
       margin: theme.spacing(0, 2, 4, 2),
     },
-    [theme.breakpoints.down("lg")]: {
-      margin: theme.spacing(0, 2, 4, 2),
+    [theme.breakpoints.up("lg")]: {
+      margin: theme.spacing(0, 2, 6, 2),
     },
   },
   inputField: {
@@ -200,9 +196,19 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fff",
     borderRadius: "50%",
   },
+  inputGridAddBtn: {
+    [theme.breakpoints.down("xs")]: {
+      alignSelf: "center",
+      marginBottom: theme.spacing(3),
+    },
+  },
   inputAddBtn: {
-    marginLeft: theme.spacing(1),
-
+    marginLeft: theme.spacing(2),
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "10px",
+      width: "40px",
+      height: "40px",
+    },
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(2),
     },
@@ -233,8 +239,33 @@ export const useStyles = makeStyles((theme) => ({
   // RESULT PAGE
   cardMap: {
     margin: theme.spacing(3),
-    height: "500px",
+    minHight: "500px",
+    height: "70vh",
+    position: "relative",
   },
+  cardFilter: {
+    padding: theme.spacing(5),
+    position: "absolute",
+    top: theme.spacing(2),
+    left: theme.spacing(2),
+    zIndex: 1,
+  },
+  marker: {
+    //change the size here
+  },
+  middlePointIcon: {
+    fontSize: "30px",
+    zIndex: 1
+  },
+  markerFilter: {
+    backgroundColor: "#fff",
+    borderRadius: "50%",
+    height: "40px",
+    width: "40px",
+    textAlign: "center",
+    boxShadow: "0 0 10px 0 rgba(0, 0, 0, .2)"
+  },
+
 
   // LOGIN and REGISTER pages
   paper: {
@@ -292,10 +323,25 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   // FOOTER
-  footer: {
+  footerContainer: {
+    padding: 0,
+  },
+  footerContainerBorder: {
     borderTop: `1px solid ${theme.palette.divider}`,
-    marginTop: theme.spacing(8),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    padding: 0
+  },
+  footerGrid: {
+    padding: theme.spacing(3),
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(4),
+    },
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(6),
+    },
+  },
+  copyright:{
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
   },
 }));
