@@ -81,16 +81,28 @@ export default function MyAccount() {
       return;
     }
     const formData = new FormData();
-    formData.append("file", currentImage.image, currentImage.image.name);
-    formData.append("title", currentMemoryTitle);
-    console.log(formData, currentImage.image);
+    formData.append("file", currentImage.image);
+    formData.append("upload_preset", "wirtreffenfreunde");
+    formData.append("cloud_name", "dfgwwhpq3");
     axios.defaults.headers.common = {
-      Authorization: "Bearer " + mockData.userTocken,
       "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
     };
-    const res = await axios.post(`/users/uploadMemory`, formData);
+    const res = await axios.post(
+      `https://api.cloudinary.com/v1_1/dfgwwhpq3/image/upload`,
+      formData
+    );
 
-    console.log(res);
+    // fetch("https://api.cloudinary.com/v1_1/dfgwwhpq3/image/upload", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((resp) => resp.json())
+    //   .then((data) => {
+    //     console.log(data.url);
+    //   })
+    //   .catch((err) => console.log(err));
+
+    console.log(res.data.url);
     // if (!res.data) alert("You have to log in!");
   };
 
