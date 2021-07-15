@@ -81,23 +81,17 @@ export default function MyAccount() {
       return;
     }
     const formData = new FormData();
-    formData.append("img", currentImage.image, currentImage.image.name);
+    formData.append("file", currentImage.image, currentImage.image.name);
     formData.append("title", currentMemoryTitle);
-    console.log(formData);
+    console.log(formData, currentImage.image);
     axios.defaults.headers.common = {
       Authorization: "Bearer " + mockData.userTocken,
-      "Content-Type": "multipart/form-data; boundary=${formData._boundary}",
+      "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
     };
-    const res = await axios.post(
-      `/users/uploadMemory`,
-      formData
-    );
+    const res = await axios.post(`/users/uploadMemory`, formData);
+
     console.log(res);
     // if (!res.data) alert("You have to log in!");
-    // fetch("/upload", {
-    //   method: "POST",
-    //   body: formData,
-    // });
   };
 
   const fileChanged = (e) => {
