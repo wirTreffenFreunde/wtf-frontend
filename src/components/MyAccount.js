@@ -14,7 +14,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
+import DeleteIcon from "@material-ui/icons/Delete";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Popover from "@material-ui/core/Popover";
 import Dialog from "@material-ui/core/Dialog";
@@ -37,6 +37,7 @@ export default function MyAccount() {
   const [myMemoryPopupOpen, setMyMemoryPopupOpen] = React.useState(false);
   const [user, setUser] = React.useState({
     trips: [{ title: "", cities: [] }],
+    memories: [],
   });
   const [currentImage, setCurrentImage] = React.useState(undefined);
   const [currentMemoryTitle, setCurrentMemoryTitle] = React.useState("");
@@ -87,23 +88,19 @@ export default function MyAccount() {
     axios.defaults.headers.common = {
       "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
     };
-    const res = await axios.post(
+    const clres = await axios.post(
       `https://api.cloudinary.com/v1_1/dfgwwhpq3/image/upload`,
       formData
     );
 
-    // fetch("https://api.cloudinary.com/v1_1/dfgwwhpq3/image/upload", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((resp) => resp.json())
-    //   .then((data) => {
-    //     console.log(data.url);
-    //   })
-    //   .catch((err) => console.log(err));
+    const memory = {
+      title: currentMemoryTitle,
+      url: clres.data.url,
+    };
+    user.memories.push(memory);
 
-    console.log(res.data.url);
-    // if (!res.data) alert("You have to log in!");
+    updateUser();
+    handleCloseMemoryPopup();
   };
 
   const fileChanged = (e) => {
@@ -112,6 +109,41 @@ export default function MyAccount() {
 
   const memoryTitleChanged = (e) => {
     setCurrentMemoryTitle(e.target.value);
+  };
+
+  const deleteMemory = async (index) => {
+    // const fileNameArray = user.memories[index].url.split("/");
+    // const public_id = fileNameArray[fileNameArray.length - 1].split(".")[0];
+
+    // const formData = new FormData();
+    // formData.append("public_id", public_id);
+    // formData.append("upload_preset", "wirtreffenfreunde");
+    // formData.append("cloud_name", "dfgwwhpq3");
+    // axios.defaults.headers.common = {
+    //   "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+    // };
+
+    // try {
+    //   const clres = await axios.post(
+    //     `https://api.cloudinary.com/v1_1/dfgwwhpq3/image/destroy`,
+    //     formData
+    //   );
+
+    //   console.log(clres);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    user.memories.splice(index, 1);
+    updateUser();
+  };
+
+  const updateUser = async () => {
+    axios.defaults.headers.common = {
+      Authorization: "Bearer " + mockData.userTocken,
+    };
+    const res = await axios.put(`http://localhost:8080/users`, user);
+    setUser(res.data);
   };
 
   return (
@@ -213,22 +245,29 @@ export default function MyAccount() {
             >
               Add Memory
             </Button>
-            <Card className={classes.memoriesRoot}>
-              <CardHeader
-                action={
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                }
-                title="My first trip"
-                subheader="September 14, 2016"
-              />
-              <CardMedia
-                className={classes.memoriesMedia}
-                image="http://localhost:3000/images/paella.png"
-                title="Paella dish"
-              />
-            </Card>
+            {user.memories.map((memory, index) => {
+              return (
+                <Card className={classes.memoriesRoot}>
+                  <CardHeader
+                    action={
+                      <IconButton
+                        aria-label="share"
+                        onClick={(e) => deleteMemory(index)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    }
+                    title={memory.title}
+                    subheader={memory.date}
+                  />
+                  <CardMedia
+                    className={classes.memoriesMedia}
+                    image={memory.url}
+                    title={memory.title}
+                  />
+                </Card>
+              );
+            })}
           </AccordionDetails>
         </Accordion>
       </div>
