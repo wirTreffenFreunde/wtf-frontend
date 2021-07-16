@@ -8,10 +8,12 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  SvgIcon,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CancelIcon from "@material-ui/icons/Cancel";
-import RoomIcon from "@material-ui/icons/Room";
+// import RoomIcon from "@material-ui/icons/Room";
+import { PinIcon } from "./Icons";
 
 import { useStyles } from "../Layout/useStyles";
 import { useMapContext } from "../context/map-context";
@@ -119,7 +121,7 @@ function InputContainer() {
           history.push("/result");
         }}
       >
-        <RoomIcon className={classes.submitBtnIcon} />
+        <PinIcon />
       </Fab>
     </form>
   );
