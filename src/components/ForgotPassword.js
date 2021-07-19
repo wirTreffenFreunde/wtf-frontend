@@ -30,27 +30,10 @@ export default function ForgotPassword() {
     formState: { errors },
   } = useForm();
   const [wrongCredentials, setWrongCredentials] = useState(false);
-  async function onSubmit(data) {
-    try {
-      const response = await axios({
-        method: "POST",
-        url: "/users/login",
-        data: data,
-      });
-      setWrongCredentials(false);
-      const accessToken = response.data.accessToken;
-      axios.defaults.headers.common["authorization"] = `basic ${accessToken}`;
-
-      setUser({ email: data.email });
-
-      if (data["remember-me"]) {
-        localStorage.setItem("token", accessToken);
-      } else sessionStorage.setItem("token", accessToken);
-      console.log(accessToken);
-      history.push("/forgotPassword");
-    } catch (error) {
-      if (error.response.status === "404") setWrongCredentials(true);
-    }
+   function onSubmit(data) {
+    
+    history.push("/reset-password");
+   
   }
 
   return (
@@ -82,7 +65,7 @@ export default function ForgotPassword() {
             )}
           />
           {/* {errors.email && <span>Please enter a valid email address</span>} */}
-
+          <Link href="/reset-password" variant="body2">
           <Button
             type="submit"
             fullWidth
@@ -90,9 +73,11 @@ export default function ForgotPassword() {
             color="secondary"
             size="large"
             className={classes.submit}
-          >
-            Retrieve  Password
+            >
+            Reset  Password
+              
           </Button>
+          </Link>
 
           {/* <Grid container>
             <Grid item xs>

@@ -18,6 +18,7 @@ import { accessToken } from "mapbox-gl";
 import { useUserContext } from "../context/user-context"
 import ForgotPassword from "./ForgotPassword"
 
+
 export default function LogIn() {
   let history = useHistory();
   const classes = useStyles();
@@ -140,7 +141,7 @@ export default function LogIn() {
               </Link>
             </Grid>
             <Grid item xs>
-              <Link href="/forgotpassword" variant="body2">
+              <Link href="/forgot-password" variant="body2">
                 Forgot password ?
               </Link>
             </Grid>

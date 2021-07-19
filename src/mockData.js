@@ -1,5 +1,5 @@
 let mockData = {
-  userTocken:
+  userToken:
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjBlMzAzNDU1MmE4ODA5Yzk2MjcwMjI1IiwiaWF0IjoxNjI1NDkwMjk1fQ.YfpTDhBHrC9pcXzE3BURrnyNtyIv3Y9aENhJtmdshEM",
   // trips: [
   //   {
