@@ -16,13 +16,9 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-  FormHelperText,
 } from "@material-ui/core";
-
-import RoomIcon from "@material-ui/icons/Room";
-import HomeIcon from "@material-ui/icons/Home";
-import HotelIcon from "@material-ui/icons/Hotel";
-import LocalDiningIcon from "@material-ui/icons/LocalDining";
+import { HomeIcon, HotelIcon, BalloonIcon, CityIcon, FoodIcon } from "./Icons";
+import MenuIcon from "@material-ui/icons/Menu";
 
 import { useMapContext } from "../context/map-context";
 
@@ -54,8 +50,9 @@ function Result() {
     longitude: middlePoint.longitude,
     zoom: 10,
   });
+  const [filterMenu, setFilterMenu] = useState(false);
   const [filter, setFilter] = useState({
-    // location: false,
+    location: false,
     hotels: false,
     restaurants: false,
   });
@@ -64,6 +61,7 @@ function Result() {
     right: 10,
     top: 10,
   };
+
   useEffect(() => {
     // changing view port on the map to have all the markers visible
     if (boundsCoordinates) {
@@ -107,6 +105,10 @@ function Result() {
     }, 3000);
   }
 
+  function handleClickFilterMenu() {
+    setFilterMenu(!filterMenu)
+  }
+
   function handleChangeFilter(e) {
     setFilter({ ...filter, [e.target.name]: !filter[e.target.name] });
   }
@@ -148,83 +150,56 @@ function Result() {
       });
     }
   }
-  /* <Button
-      variant="contained"
-      type="submit"
-      color="primary"
-      size="large"
-      //className={classes.submitBtn}
-      onClick={() => findLocation(middlePoint)}
-    >
-      Location name
-    </Button>
-    <Button
-      variant="contained"
-      type="submit"
-      color="primary"
-      size="large"
-      //className={classes.submitBtn}
-      onClick={() => findHotels(middlePoint)}
-    >
-      local hotels
-    </Button>
-    <Button
-      variant="contained"
-      type="submit"
-      color="primary"
-      size="large"
-      //className={classes.submitBtn}
-      onClick={() => findRestaurants(middlePoint)}
-    >
-      Restaurants nearby
-    </Button> */
 
   return (
     <Container maxWidth="lg">
       <Card className={classes.cardMap}>
         <Card className={classes.cardFilter}>
-          <FormControl component="fieldset" className={classes.formControl}>
-            <FormLabel component="legend">Filter:</FormLabel>
-            <FormGroup>
-              {/* <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filter.location}
-                    onChange={handleChangeFilter}
-                    name="location"
-                  />
-                }
-                label="Closest location"
-              /> */}
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filter.hotels}
-                    onChange={handleChangeFilter}
-                    name="hotels"
-                  />
-                }
-                label={`Hotels (${hotels.length ? hotels.length : "0"})`}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filter.restaurants}
-                    onChange={handleChangeFilter}
-                    name="restaurants"
-                  />
-                }
-                label={`Restaurants (${hotels.length ? hotels.length : "0"})`}
-              />
-            </FormGroup>
-            <Button
-              onClick={handleClickFilter}
-              variant="contained"
-              color="primary"
-            >
-              Take me there
-            </Button>
-          </FormControl>
+          <MenuIcon onClick={handleClickFilterMenu}/>
+          {filterMenu && (
+            <FormControl component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend">Filter:</FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={filter.location}
+                      onChange={handleChangeFilter}
+                      name="location"
+                    />
+                  }
+                  label="Closest city"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={filter.hotels}
+                      onChange={handleChangeFilter}
+                      name="hotels"
+                    />
+                  }
+                  label={`Hotels (${hotels.length ? hotels.length : "0"})`}
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={filter.restaurants}
+                      onChange={handleChangeFilter}
+                      name="restaurants"
+                    />
+                  }
+                  label={`Restaurants (${hotels.length ? hotels.length : "0"})`}
+                />
+              </FormGroup>
+              <Button
+                onClick={handleClickFilter}
+                variant="contained"
+                color="primary"
+              >
+                Take me there
+              </Button>
+            </FormControl>
+          )}
         </Card>
         <ReactMapGL
           {...viewport}
@@ -240,18 +215,15 @@ function Result() {
             className={classes.marker}
             latitude={middlePoint.latitude}
             longitude={middlePoint.longitude}
-            offsetTop={-36}
-            offsetLeft={-18}
+            offsetTop={-50}
+            offsetLeft={-25}
+            className={classes.middlePointIcon}
+            onClick={(e) => {
+              e.preventDefault();
+              setSelectedMarker(middlePoint);
+            }}
           >
-            <RoomIcon
-              className={classes.middlePointIcon}
-              onClick={(e) => {
-                e.preventDefault();
-                setSelectedMarker(middlePoint);
-              }}
-              color="primary"
-              fontSize="large"
-            />
+            <BalloonIcon />
           </Marker>
           {filter.hotels &&
             hotels.map((hotel, index) => (
@@ -259,18 +231,15 @@ function Result() {
                 className={classes.markerFilter}
                 latitude={hotel.latitude}
                 longitude={hotel.longitude}
-                offsetTop={-36}
-                offsetLeft={-18}
+                offsetTop={-50}
+                offsetLeft={-25}
                 key={`${index}hotel`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedMarker(hotel);
+                }}
               >
-                <HotelIcon
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSelectedMarker(hotel);
-                  }}
-                  color="secondary"
-                  fontSize="large"
-                />
+                <HotelIcon />
               </Marker>
             ))}
 
@@ -280,18 +249,15 @@ function Result() {
                 className={classes.markerFilter}
                 latitude={restaurant.latitude}
                 longitude={restaurant.longitude}
-                offsetTop={-36}
-                offsetLeft={-18}
+                offsetTop={-50}
+                offsetLeft={-25}
                 key={`${index}hotel`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedMarker(restaurant);
+                }}
               >
-                <LocalDiningIcon
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSelectedMarker(restaurant);
-                  }}
-                  color="secondary"
-                  fontSize="large"
-                />
+                <FoodIcon />
               </Marker>
             ))}
 
@@ -302,17 +268,14 @@ function Result() {
                 key={index}
                 latitude={el.latitude}
                 longitude={el.longitude}
-                offsetTop={-36}
-                offsetLeft={-18}
+                offsetTop={-50}
+                offsetLeft={-25}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedMarker(el);
+                }}
               >
-                <HomeIcon
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSelectedMarker(el);
-                  }}
-                  color="secondary"
-                  fontSize="large"
-                />
+                <HomeIcon />
               </Marker>
             );
           })}
