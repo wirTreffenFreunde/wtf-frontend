@@ -1,7 +1,6 @@
 import "./Icons.css";
 import { useStyles } from "../Layout/useStyles";
 
-
 const width = "50px";
 const height = "50px";
 
