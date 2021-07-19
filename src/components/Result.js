@@ -34,12 +34,9 @@ function Result() {
     middlePoint,
     peopleCoordinates,
     boundsCoordinates,
-    // locality,
-    // findLocation,
+    closestCity,
     hotels,
-    // findHotels,
     restaurants,
-    // findRestaurants,
     filteredBounds,
   } = useMapContext();
 
@@ -151,6 +148,8 @@ function Result() {
     }
   }
 
+console.log(closestCity);
+  
   return (
     <Container maxWidth="lg">
       <Card className={classes.cardMap}>
