@@ -44,6 +44,7 @@ function Result() {
     // findHotels,
     restaurants,
     // findRestaurants,
+    filteredBounds,
   } = useMapContext();
 
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -112,6 +113,33 @@ function Result() {
 
   function handleClickFilter() {
     if (filter.hotels || filter.restaurants) {
+      if (filteredBounds) {
+        const { longitude, latitude, zoom } = new WebMercatorViewport(
+          viewport
+        ).fitBounds(
+          [
+            [filteredBounds.minLng, filteredBounds.minLat],
+            [filteredBounds.maxLng, filteredBounds.maxLat],
+          ],
+          {
+            padding: { top: 100, bottom: 50, left: 50, right: 50 },
+          }
+        );
+        setViewport({
+          ...viewport,
+          longitude,
+          latitude,
+          zoom,
+        });
+      } else {
+        setViewport({
+          ...viewport,
+          latitude: middlePoint.latitude,
+          longitude: middlePoint.longitude,
+          zoom: 12,
+        });
+      }
+    } else {
       setViewport({
         ...viewport,
         latitude: middlePoint.latitude,
