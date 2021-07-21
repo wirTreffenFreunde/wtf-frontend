@@ -39,6 +39,7 @@ function Nav() {
     setUser(null);
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
+
     history.push("/");
   };
 
@@ -106,7 +107,11 @@ function Nav() {
                     <MenuItem component={Link} href="/myAccount">
                       My account
                     </MenuItem>
-                    <MenuItem onClick={logOut}>Logout</MenuItem>
+                    <MenuItem onClick={logOut}>
+                      <Link href="/" variant="body2">
+                        Log out
+                      </Link>{" "}
+                    </MenuItem>
                   </Menu>
                 </>
               ) : (

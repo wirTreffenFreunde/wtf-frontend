@@ -45,7 +45,7 @@ function MapProvider({ children }) {
 		e.preventDefault();
 		try {
 			const encodedAddresses = peopleAddresses.filter((e) => e);
-			const result = await axios.post(`/api`, encodedAddresses);
+			const result = await axios.post(`http://localhost:8080/api`, encodedAddresses);
 			setMiddlePoint({
 				latitude: Number(result.data.middlePoint.latitude),
 				longitude: Number(result.data.middlePoint.longitude),
