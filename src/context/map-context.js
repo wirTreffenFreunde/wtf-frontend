@@ -27,6 +27,7 @@ function MapProvider({ children }) {
 
 	// bounds of all addresses
 	const [boundsCoordinates, setBoundsCoordinates] = useState(null);
+	const [filteredBounds, setFilteredBounds] = useState(null);
 	const [locality, setLocality] = useState([]);
 	const [hotels, setHotels] = useState([]);
 	const [restaurants, setRestaurants] = useState([]);
@@ -44,7 +45,7 @@ function MapProvider({ children }) {
 		e.preventDefault();
 		try {
 			const encodedAddresses = peopleAddresses.filter((e) => e);
-			const result = await axios.post(`/api`, encodedAddresses);
+			const result = await axios.post(`http://localhost:8080/api`, encodedAddresses);
 			setMiddlePoint({
 				latitude: Number(result.data.middlePoint.latitude),
 				longitude: Number(result.data.middlePoint.longitude),
@@ -52,8 +53,9 @@ function MapProvider({ children }) {
 			});
 			setPeopleCoordinates(result.data.peopleAddresses);
 			setBoundsCoordinates(result.data.boundsAddresses);
-      setHotels(result.data.hotelsAddresses)
-      setRestaurants(result.data.restaurantsAddresses)
+      setHotels(result.data.hotelsAddresses);
+      setRestaurants(result.data.restaurantsAddresses);
+			setFilteredBounds(result.data.boundsFiletered);
 		} catch (err) {
 			console.error(err);
 		}
@@ -118,6 +120,7 @@ function MapProvider({ children }) {
 		// findHotels,
 		restaurants,
 		// findRestaurants,
+		filteredBounds,
 	};
 
 	return <MapContext.Provider value={value}>{children}</MapContext.Provider>;

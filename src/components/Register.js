@@ -48,7 +48,7 @@ export default function Register() {
   const submit = async (data) => {
     // e.preventDefault();
     try {
-      const result = await axios.post("/users", data);
+      const result = await axios.post("http://localhost:8080/users", data);
       if (result.status === 200) {
         history.push("/verify");
       }
@@ -207,6 +207,7 @@ export default function Register() {
               />
             </Grid>
           </Grid>
+          {wrongInput && <p>Email already exists, MATE!</p>}
           <Link href="/verify" variant="body2">
           <Button
             type="submit"

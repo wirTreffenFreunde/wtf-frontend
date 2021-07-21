@@ -35,7 +35,7 @@ export default function LogIn() {
     try {
       const response = await axios({
         method: "POST",
-        url: "/users/login",
+        url: "http://localhost:8080/users/login",
         data: data,
       });
       setWrongCredentials(false);

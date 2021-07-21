@@ -33,7 +33,7 @@ export default function NewPassword() {
     try {
       const response = await axios({
         method: "POST",
-        url: "/users/login",
+        url: "http://localhost:8080/users/login",
         data: data,
       });
       setWrongCredentials(false);
@@ -76,6 +76,7 @@ export default function NewPassword() {
                 fullWidth
                 label="New Password"
                 autoComplete="new-password"
+                type="password"
                 autoFocus
               />
             )}
@@ -95,7 +96,7 @@ export default function NewPassword() {
                 fullWidth
                 label="Confirm new Password"
                 autoComplete="current-password"
-                autoFocus
+                
                 type="password"
               />
             )}
