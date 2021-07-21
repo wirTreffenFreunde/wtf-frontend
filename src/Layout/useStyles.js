@@ -1,48 +1,30 @@
-import {
-  amber,
-  blue,
-  deepOrange,
-  green,
-  orange,
-  yellow,
-} from "@material-ui/core/colors";
-import { makeStyles, createTheme } from "@material-ui/core/styles";
+import { blue } from "@material-ui/core/colors";
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 
-export const theme = createTheme({
+export const theme = createMuiTheme({
   palette: {
     primary: {
+      // red - #e53935
+      // blue - #2196f3
       main: blue[500],
     },
     secondary: {
-      main: amber[500],
+      main: "#e53935",
     },
   },
   typography: {
     h2: {
-      fontSize: "1.5rem",
       fontWeight: 600,
       color: "#fff",
     },
-    h3: {
-      textAlign: "center",
-      fontWeight: 600,
-    },
-    h4: {
-      textAlign: "center",
-      fontWeight: 500,
-    },
-    h5: {
-      textAlign: "center",
-    },
     subtitle1: {
-      fontSize: "1rem",
+      fontSize: "1.5rem",
       fontStyle: "italic",
       color: "#fff",
     },
   },
-  spacing: 5,
+  spacing: 4,
 });
-
 export const useStyles = makeStyles((theme) => ({
   "@global": {
     ul: {
@@ -51,42 +33,46 @@ export const useStyles = makeStyles((theme) => ({
       listStyle: "none",
     },
   },
+  card: {
+    margin: theme.spacing(3),
+    padding: theme.spacing(3),
+    height: "500px",
+  },
 
   // NAVIGATION BAR
   toolbar: {
+    paddingLeft: theme.spacing(10),
+    paddingRight: theme.spacing(10),
     flexWrap: "nowrap",
     justifyContent: "space-between",
     padding: theme.spacing(0),
   },
   toolbarTitle: {
     flexGrow: 1,
-    fontSize: "1.1rem",
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      fontSize: "1.3rem",
-    },
   },
   navBar: {
-    display: "none",
-
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
     },
   },
   navLink: {
     color: "#fff",
-    marginRight: theme.spacing(5),
+    marginRight: theme.spacing(4),
   },
 
   // BANNER
-
   banner: {
     backgroundColor: blue[300],
-    marginBottom: theme.spacing(-20),
-    padding: theme.spacing(5, 0, 25, 0),
-
-    [theme.breakpoints.up("sm")]: {
-      padding: theme.spacing(20, 0, 40, 0),
+    padding: theme.spacing(20, 20, 30, 20),
+    background: "url(images/mapPicture.png) no-repeat",
+    backgroundSize: "400px",
+    backgroundPosition: "right",
+    backgroundOrigin: "content-box",
+  },
+  [theme.breakpoints.down("sm")]: {
+    banner: {
+      textAlign: "center",
+      padding: theme.spacing(10, 5, 20, 5),
     },
   },
   taglineHeading: {
@@ -128,7 +114,7 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     [theme.breakpoints.up("md")]: {
       fontSize: "1.5rem",
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
   },
   bodyText: {
@@ -143,7 +129,7 @@ export const useStyles = makeStyles((theme) => ({
     overflow: "visible",
     padding: theme.spacing(3, 3, 4, 3),
     marginBottom: theme.spacing(5),
-    
+
     [theme.breakpoints.up("md")]: {
       padding: theme.spacing(4, 3, 5, 3),
       marginBottom: theme.spacing(10),
@@ -162,14 +148,6 @@ export const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up("md")]: {
       marginBottom: theme.spacing(2),
-    },
-  },
-  heading5: {
-    marginBottom: theme.spacing(2),
-    fontSize: "1rem",
-
-    [theme.breakpoints.up("md")]: {
-      marginBottom: theme.spacing(3),
     },
   },
   inputFieldGrid: {
@@ -222,6 +200,7 @@ export const useStyles = makeStyles((theme) => ({
     height: "60px",
     left: "calc(50% - 30px)", // btn in the middle of the card
     bottom: "-30px",
+    padding: theme.spacing(1),
     [theme.breakpoints.up("md")]: {
       width: "80px",
       height: "80px",
@@ -229,45 +208,28 @@ export const useStyles = makeStyles((theme) => ({
       bottom: "-40px",
     },
   },
-  submitBtnIcon: {
-    fontSize: "2rem",
-    [theme.breakpoints.up("md")]: {
-      fontSize: "3rem",
-    },
-  },
 
   // RESULT PAGE
   cardMap: {
-    margin: theme.spacing(3),
     minHight: "500px",
     height: "70vh",
     position: "relative",
   },
   cardFilter: {
-    padding: theme.spacing(5),
+    padding: theme.spacing(1, 1, 0, 1),
     position: "absolute",
     top: theme.spacing(2),
     left: theme.spacing(2),
     zIndex: 1,
   },
-  marker: {
-    //change the size here
-  },
   middlePointIcon: {
-    fontSize: "30px",
-    zIndex: 1
+    zIndex: 1,
   },
-  markerFilter: {
-    backgroundColor: "#fff",
-    borderRadius: "50%",
-    height: "40px",
-    width: "40px",
-    textAlign: "center",
-    boxShadow: "0 0 10px 0 rgba(0, 0, 0, .2)"
+  submitBtn: {
+    width: "300px",
   },
 
-
-  // LOGIN and REGISTER pages
+  //   // LOGIN and REGISTER pages
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -311,16 +273,26 @@ export const useStyles = makeStyles((theme) => ({
   //     backgroundColor: theme.palette.background.paper,
   //   },
   memoriesRoot: {
-    maxWidth: 345,
+    width: 300,
+    height: 300,
+    margin: theme.spacing(2),
   },
   memoriesMedia: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
+    height: 250,
+    width: 250,
+    margin: "auto",
   },
-  memoryActionButton: {
-    variant: "contained",
-    color: "primary",
+  memoriesMediaXXL: {
+    height: 500,
+    width: 500,
+    margin: "auto",
   },
+  memoriesAddButton: {
+    marginLeft: theme.spacing(4),
+  },
+  //   popOvertypography: {
+  //     padding: theme.spacing(2),
+  //   },
 
   // FOOTER
   footerContainer: {
@@ -329,7 +301,7 @@ export const useStyles = makeStyles((theme) => ({
   footerContainerBorder: {
     borderTop: `1px solid ${theme.palette.divider}`,
     borderBottom: `1px solid ${theme.palette.divider}`,
-    padding: 0
+    padding: 0,
   },
   footerGrid: {
     padding: theme.spacing(3),
@@ -340,7 +312,7 @@ export const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(6),
     },
   },
-  copyright:{
+  copyright: {
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
   },
