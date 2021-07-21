@@ -34,16 +34,24 @@ export default function Register() {
 
   const [wrongInput, setWrongInput] = useState(false);
 
+  
+
+  // const showMessage = () => {
+  //   // e.preventDefault()
+  //   setVerify(true);
+  // };
+
   const submit = async (data) => {
     // e.preventDefault();
     try {
-      const result = await axios.post("/users", data);
+      const result = await axios.post("http://localhost:8080/users", data);
       if (result.status === 200) {
-        history.push("/");
+        history.push("/verify");
       }
     } catch (e) {
       console.log("@", e);
       setWrongInput(e);
+      // showMessage();
     }
   };
 
@@ -180,7 +188,7 @@ export default function Register() {
                     margin="normal"
                     fullWidth
                     label="Retype-Password"
-                    type="retype-password"
+                    type="password"
                     autoFocus
                   />
                 )}
@@ -195,15 +203,20 @@ export default function Register() {
               />
             </Grid>
           </Grid>
+          {wrongInput && <p>Email already exists, MATE!</p>}
+          <Link href="/verify" variant="body2">
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            
           >
-            Sign up
+                  Sign up
           </Button>
+        </Link>
+          {/* {verify && <p>Please verify your Email</p>} */}
         </form>
       </div>
       <Box mt={8}>

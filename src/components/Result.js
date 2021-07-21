@@ -34,12 +34,9 @@ function Result() {
     middlePoint,
     peopleCoordinates,
     boundsCoordinates,
-    // locality,
-    // findLocation,
+    closestCity,
     hotels,
-    // findHotels,
     restaurants,
-    // findRestaurants,
     filteredBounds,
   } = useMapContext();
 
@@ -151,6 +148,8 @@ function Result() {
     }
   }
 
+console.log(closestCity);
+  
   return (
     <Container maxWidth="lg">
       <Card className={classes.cardMap}>
@@ -225,6 +224,22 @@ function Result() {
           >
             <BalloonIcon />
           </Marker>
+          {/* <Marker
+            className={classes.marker}
+            // latitude={closestCity.latitude}
+            // longitude={closestCity.longitude}
+            latitude={0}
+            longitude={0}
+            offsetTop={-50}
+            offsetLeft={-25}
+            // className={classes.middlePointIcon}
+            // onClick={(e) => {
+            //   e.preventDefault();
+            //   setSelectedMarker(closestCity);
+            // }}
+          >
+            <CityIcon />
+          </Marker> */}
           {filter.hotels &&
             hotels.map((hotel, index) => (
               <Marker

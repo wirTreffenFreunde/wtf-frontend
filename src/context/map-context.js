@@ -28,7 +28,7 @@ function MapProvider({ children }) {
 	// bounds of all addresses
 	const [boundsCoordinates, setBoundsCoordinates] = useState(null);
 	const [filteredBounds, setFilteredBounds] = useState(null);
-	const [locality, setLocality] = useState([]);
+	const [closestCity, setClosestCity] = useState([]);
 	const [hotels, setHotels] = useState([]);
 	const [restaurants, setRestaurants] = useState([]);
 
@@ -45,7 +45,7 @@ function MapProvider({ children }) {
 		e.preventDefault();
 		try {
 			const encodedAddresses = peopleAddresses.filter((e) => e);
-			const result = await axios.post(`/api`, encodedAddresses);
+			const result = await axios.post(`http://localhost:8080/api`, encodedAddresses);
 			setMiddlePoint({
 				latitude: Number(result.data.middlePoint.latitude),
 				longitude: Number(result.data.middlePoint.longitude),
@@ -56,54 +56,11 @@ function MapProvider({ children }) {
       setHotels(result.data.hotelsAddresses);
       setRestaurants(result.data.restaurantsAddresses);
 			setFilteredBounds(result.data.boundsFiletered);
+			setClosestCity(result.data.closestCity);
 		} catch (err) {
 			console.error(err);
 		}
 	};
-
-	// const findLocation = async (geoLocation) => {
-	// 	console.log("geoLocation", geoLocation);
-	// 	try {
-	// 		const result = await axios.post(
-	// 			`/api/city`,
-	// 			geoLocation
-	// 		);
-	// 		console.log("closest city", result.data);
-	// 		setLocality(result.data);
-	// 		//console.log("location", locality);
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// };
-
-	// const findHotels = async (geoLocation) => {
-	// 	console.log("geoLocation", geoLocation);
-	// 	try {
-	// 		const result = await axios.post(
-	// 			`/api/hotels`,
-	// 			geoLocation
-	// 		);
-	// 		console.log("Hotels", result.data);
-	// 		setHotels(result.data);
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// };
-
-	// const findRestaurants = async (geoLocation) => {
-	// 	console.log("geoLocation", geoLocation);
-	// 	try {
-	// 		const result = await axios.post(
-	// 			`/api/restaurants`,
-	// 			geoLocation
-	// 		);
-	// 		console.log("restaurants", result.data);
-	// 		setRestaurants(result.data);
-	// 		//console.log("location", locality);
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// };
 
 	const value = {
 		peopleAddresses,
@@ -114,12 +71,9 @@ function MapProvider({ children }) {
 		setMiddlePoint,
 		handleChangeMiddle,
 		handleSubmitMiddle,
-		// locality,
-		// findLocation,
+		closestCity,
 		hotels,
-		// findHotels,
 		restaurants,
-		// findRestaurants,
 		filteredBounds,
 	};
 

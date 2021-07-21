@@ -15,6 +15,7 @@ import Verification from "./Verification";
 import Result from "./Result";
 import Banner from "./Banner";
 import ForgotPassword from "./ForgotPassword";
+import NewPassword from "./NewPassword";
 
 import "./App.css";
 import { theme, useStyles } from "../Layout/useStyles";
@@ -61,11 +62,13 @@ function App() {
                 </Route>
                 <Route exact path="/login" component={LogIn} />
                 <Route exact path="/register" component={Register} />
-                <Route exact path="/myAccount" component={MyAccount} />
                 <Route exact path="/verify" component={Verification} />
+                <Route exact path="/myAccount" component={MyAccount} />
+                <Route exact path="/reset-password" component={NewPassword} />
+
                 <Route
                   exact
-                  path="/forgotPassword"
+                  path="/forgot-password"
                   component={ForgotPassword}
                 />
               </Switch>

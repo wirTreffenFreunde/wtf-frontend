@@ -16,6 +16,7 @@ import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
 import { useUserContext } from "../context/user-context";
 
+
 export default function LogIn() {
   let history = useHistory();
   const classes = useStyles();
@@ -33,7 +34,7 @@ export default function LogIn() {
     try {
       const response = await axios({
         method: "POST",
-        url: "/users/login",
+        url: "http://localhost:8080/users/login",
         data: data,
       });
       setWrongCredentials(false);
@@ -134,7 +135,7 @@ export default function LogIn() {
               <Link href="#" variant="body2"></Link>
             </Grid>
             <Grid item xs>
-              <Link href="/forgotpassword" variant="body2">
+              <Link href="/forgot-password" variant="body2">
                 Forgot password ?
               </Link>
             </Grid>
