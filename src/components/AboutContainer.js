@@ -9,9 +9,9 @@ function AboutContainer() {
 
   return (
     <Container className="AboutContainer" id="about">
-      <Card className={classes.card}>
-        <Typography variant="h3">About us</Typography>
-        <Typography variant="h5" component="h3">
+      <Card className={classes.homeCard}>
+        <Typography variant="h3" className={classes.h3}>About us</Typography>
+        <Typography variant="body" className={classes.bodyText}>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio,
           molestias dolore! Molestias exercitationem ut quibusdam maiores illo
           aperiam hic voluptas recusandae quidem soluta repellendus aut, ea

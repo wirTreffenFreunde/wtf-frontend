@@ -4,7 +4,12 @@ import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 export const theme = createMuiTheme({
   palette: {
     primary: {
+      // red - #e53935
+      // blue - #2196f3
       main: blue[500],
+    },
+    secondary: {
+      main: "#e53935",
     },
   },
   typography: {
@@ -39,6 +44,8 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(10),
     paddingRight: theme.spacing(10),
     flexWrap: "nowrap",
+    justifyContent: "space-between",
+    padding: theme.spacing(0),
   },
   toolbarTitle: {
     flexGrow: 1,
@@ -67,23 +74,156 @@ export const useStyles = makeStyles((theme) => ({
       textAlign: "center",
       padding: theme.spacing(10, 5, 20, 5),
     },
-    taglineHeading: {
+  },
+  taglineHeading: {
+    textAlign: "center",
+    fontSize: "2rem",
+
+    [theme.breakpoints.up("md")]: {
       fontSize: "3rem",
     },
-    taglineText: {
-      fontSize: "1rem",
+    [theme.breakpoints.up("lg")]: {
+      marginLeft: theme.spacing(35),
+      textAlign: "left",
+    },
+  },
+  taglineText: {
+    textAlign: "center",
+    fontSize: "1rem",
+
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.up("lg")]: {
+      marginLeft: theme.spacing(35),
+      textAlign: "left",
     },
   },
 
-  // // INPUT CONTAINER
+  // HOME PAGE
+  homeCard: {
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(4),
+    [theme.breakpoints.up("md")]: {
+      marginBottom: theme.spacing(5),
+      padding: theme.spacing(6),
+    },
+  },
+  h3: {
+    fontSize: "1.3rem",
+    marginBottom: theme.spacing(2),
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem",
+      marginBottom: theme.spacing(3),
+    },
+  },
+  bodyText: {
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.2rem",
+    },
+  },
+
+  // INPUT CONTAINER
+  cardInput: {
+    position: "relative",
+    overflow: "visible",
+    padding: theme.spacing(3, 3, 4, 3),
+    marginBottom: theme.spacing(5),
+
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(4, 3, 5, 3),
+      marginBottom: theme.spacing(10),
+    },
+    [theme.breakpoints.up("lg")]: {
+      padding: theme.spacing(5, 5, 3, 5),
+      margin: theme.spacing(0, 20, 10, 20),
+    },
+  },
+  heading4: {
+    fontSize: "1.2rem",
+    marginBottom: theme.spacing(1),
+
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      marginBottom: theme.spacing(2),
+    },
+  },
+  inputFieldGrid: {
+    margin: theme.spacing(0, 0, 3, 0),
+    flexGrow: 1,
+
+    [theme.breakpoints.up("md")]: {
+      margin: theme.spacing(0, 2, 4, 2),
+    },
+    [theme.breakpoints.up("lg")]: {
+      margin: theme.spacing(0, 2, 6, 2),
+    },
+  },
   inputField: {
-    width: "300px",
+    width: "100%",
+  },
+  inputDeleteBtn: {
+    position: "absolute",
+    top: 0,
+    right: "-12px",
+    zIndex: "1",
+  },
+  inputDeleteBtnIcon: {
+    backgroundColor: "#fff",
+    borderRadius: "50%",
+  },
+  inputGridAddBtn: {
+    [theme.breakpoints.down("xs")]: {
+      alignSelf: "center",
+      marginBottom: theme.spacing(3),
+    },
+  },
+  inputAddBtn: {
+    marginLeft: theme.spacing(2),
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "10px",
+      width: "40px",
+      height: "40px",
+    },
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(2),
+    },
+    [theme.breakpoints.up("md")]: {
+      marginRight: theme.spacing(2),
+    },
+  },
+  submitBtn: {
+    position: "absolute",
+    width: "60px",
+    height: "60px",
+    left: "calc(50% - 30px)", // btn in the middle of the card
+    bottom: "-30px",
+    padding: theme.spacing(1),
+    [theme.breakpoints.up("md")]: {
+      width: "80px",
+      height: "80px",
+      left: "calc(50% - 40px)", // btn in the middle of the card
+      bottom: "-40px",
+    },
   },
 
   // RESULT PAGE
   cardMap: {
-    margin: theme.spacing(3),
-    height: "500px",
+    minHight: "500px",
+    height: "70vh",
+    position: "relative",
+  },
+  cardFilter: {
+    padding: theme.spacing(1, 1, 0, 1),
+    position: "absolute",
+    top: theme.spacing(2),
+    left: theme.spacing(2),
+    zIndex: 1,
+  },
+  middlePointIcon: {
+    zIndex: 1,
   },
   submitBtn: {
     width: "300px",
@@ -155,10 +295,25 @@ export const useStyles = makeStyles((theme) => ({
   //   },
 
   // FOOTER
-  footer: {
+  footerContainer: {
+    padding: 0,
+  },
+  footerContainerBorder: {
     borderTop: `1px solid ${theme.palette.divider}`,
-    marginTop: theme.spacing(8),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    padding: 0,
+  },
+  footerGrid: {
+    padding: theme.spacing(3),
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(4),
+    },
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(6),
+    },
+  },
+  copyright: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
   },
 }));
