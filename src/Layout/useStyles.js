@@ -1,14 +1,7 @@
-import {
-  amber,
-  blue,
-  deepOrange,
-  green,
-  orange,
-  yellow,
-} from "@material-ui/core/colors";
-import { makeStyles, createTheme } from "@material-ui/core/styles";
+import { blue } from "@material-ui/core/colors";
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 
-export const theme = createTheme({
+export const theme = createMuiTheme({
   palette: {
     primary: {
       // red - #e53935
@@ -21,30 +14,17 @@ export const theme = createTheme({
   },
   typography: {
     h2: {
-      fontSize: "1.5rem",
       fontWeight: 600,
       color: "#fff",
     },
-    h3: {
-      textAlign: "center",
-      fontWeight: 600,
-    },
-    h4: {
-      textAlign: "center",
-      fontWeight: 500,
-    },
-    h5: {
-      textAlign: "center",
-    },
     subtitle1: {
-      fontSize: "1rem",
+      fontSize: "1.5rem",
       fontStyle: "italic",
       color: "#fff",
     },
   },
-  spacing: 5,
+  spacing: 4,
 });
-
 export const useStyles = makeStyles((theme) => ({
   "@global": {
     ul: {
@@ -53,42 +33,46 @@ export const useStyles = makeStyles((theme) => ({
       listStyle: "none",
     },
   },
+  card: {
+    margin: theme.spacing(3),
+    padding: theme.spacing(3),
+    height: "500px",
+  },
 
   // NAVIGATION BAR
   toolbar: {
+    paddingLeft: theme.spacing(10),
+    paddingRight: theme.spacing(10),
     flexWrap: "nowrap",
     justifyContent: "space-between",
     padding: theme.spacing(0),
   },
   toolbarTitle: {
     flexGrow: 1,
-    fontSize: "1.1rem",
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      fontSize: "1.3rem",
-    },
   },
   navBar: {
-    display: "none",
-
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
     },
   },
   navLink: {
     color: "#fff",
-    marginRight: theme.spacing(5),
+    marginRight: theme.spacing(4),
   },
 
   // BANNER
-
   banner: {
     backgroundColor: blue[300],
-    marginBottom: theme.spacing(-20),
-    padding: theme.spacing(5, 0, 25, 0),
-
-    [theme.breakpoints.up("sm")]: {
-      padding: theme.spacing(20, 0, 40, 0),
+    padding: theme.spacing(20, 20, 30, 20),
+    background: "url(images/mapPicture.png) no-repeat",
+    backgroundSize: "400px",
+    backgroundPosition: "right",
+    backgroundOrigin: "content-box",
+  },
+  [theme.breakpoints.down("sm")]: {
+    banner: {
+      textAlign: "center",
+      padding: theme.spacing(10, 5, 20, 5),
     },
   },
   taglineHeading: {
@@ -166,14 +150,6 @@ export const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(2),
     },
   },
-  heading5: {
-    marginBottom: theme.spacing(2),
-    fontSize: "1rem",
-
-    [theme.breakpoints.up("md")]: {
-      marginBottom: theme.spacing(3),
-    },
-  },
   inputFieldGrid: {
     margin: theme.spacing(0, 0, 3, 0),
     flexGrow: 1,
@@ -249,8 +225,11 @@ export const useStyles = makeStyles((theme) => ({
   middlePointIcon: {
     zIndex: 1,
   },
+  submitBtn: {
+    width: "300px",
+  },
 
-  // LOGIN and REGISTER pages
+  //   // LOGIN and REGISTER pages
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -294,16 +273,26 @@ export const useStyles = makeStyles((theme) => ({
   //     backgroundColor: theme.palette.background.paper,
   //   },
   memoriesRoot: {
-    maxWidth: 345,
+    width: 300,
+    height: 300,
+    margin: theme.spacing(2),
   },
   memoriesMedia: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
+    height: 250,
+    width: 250,
+    margin: "auto",
   },
-  memoryActionButton: {
-    variant: "contained",
-    color: "primary",
+  memoriesMediaXXL: {
+    height: 500,
+    width: 500,
+    margin: "auto",
   },
+  memoriesAddButton: {
+    marginLeft: theme.spacing(4),
+  },
+  //   popOvertypography: {
+  //     padding: theme.spacing(2),
+  //   },
 
   // FOOTER
   footerContainer: {
