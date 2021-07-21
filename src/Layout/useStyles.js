@@ -1,7 +1,7 @@
 import { blue } from "@material-ui/core/colors";
-import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import { makeStyles, createTheme } from "@material-ui/core/styles";
 
-export const theme = createMuiTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       // red - #e53935
@@ -14,16 +14,28 @@ export const theme = createMuiTheme({
   },
   typography: {
     h2: {
+      fontSize: "1.5rem",
       fontWeight: 600,
       color: "#fff",
     },
+    h3: {
+      textAlign: "center",
+      fontWeight: 600,
+    },
+    h4: {
+      textAlign: "center",
+      fontWeight: 500,
+    },
+    h5: {
+      textAlign: "center",
+    },
     subtitle1: {
-      fontSize: "1.5rem",
+      fontSize: "1rem",
       fontStyle: "italic",
       color: "#fff",
     },
   },
-  spacing: 4,
+  spacing: 5,
 });
 export const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -33,52 +45,44 @@ export const useStyles = makeStyles((theme) => ({
       listStyle: "none",
     },
   },
-  card: {
-    margin: theme.spacing(3),
-    padding: theme.spacing(3),
-    height: "500px",
-  },
 
   // NAVIGATION BAR
   toolbar: {
-    paddingLeft: theme.spacing(10),
-    paddingRight: theme.spacing(10),
     flexWrap: "nowrap",
     justifyContent: "space-between",
     padding: theme.spacing(0),
   },
   toolbarTitle: {
     flexGrow: 1,
+    fontSize: "1.1rem",
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.3rem",
+    },
   },
   navBar: {
-    [theme.breakpoints.down("xs")]: {
-      display: "none",
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
     },
   },
   navLink: {
     color: "#fff",
-    marginRight: theme.spacing(4),
+    marginRight: theme.spacing(5),
   },
 
   // BANNER
   banner: {
     backgroundColor: blue[300],
-    padding: theme.spacing(20, 20, 30, 20),
-    background: "url(images/mapPicture.png) no-repeat",
-    backgroundSize: "400px",
-    backgroundPosition: "right",
-    backgroundOrigin: "content-box",
-  },
-  [theme.breakpoints.down("sm")]: {
-    banner: {
-      textAlign: "center",
-      padding: theme.spacing(10, 5, 20, 5),
+    marginBottom: theme.spacing(-20),
+    padding: theme.spacing(5, 0, 25, 0),
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(20, 0, 40, 0),
     },
   },
   taglineHeading: {
     textAlign: "center",
     fontSize: "2rem",
-
     [theme.breakpoints.up("md")]: {
       fontSize: "3rem",
     },
@@ -90,7 +94,6 @@ export const useStyles = makeStyles((theme) => ({
   taglineText: {
     textAlign: "center",
     fontSize: "1rem",
-
     [theme.breakpoints.up("md")]: {
       fontSize: "1.5rem",
     },
@@ -129,7 +132,6 @@ export const useStyles = makeStyles((theme) => ({
     overflow: "visible",
     padding: theme.spacing(3, 3, 4, 3),
     marginBottom: theme.spacing(5),
-
     [theme.breakpoints.up("md")]: {
       padding: theme.spacing(4, 3, 5, 3),
       marginBottom: theme.spacing(10),
@@ -142,7 +144,6 @@ export const useStyles = makeStyles((theme) => ({
   heading4: {
     fontSize: "1.2rem",
     marginBottom: theme.spacing(1),
-
     [theme.breakpoints.up("sm")]: {
       fontSize: "1.5rem",
     },
@@ -150,10 +151,16 @@ export const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(2),
     },
   },
+  heading5: {
+    marginBottom: theme.spacing(2),
+    fontSize: "1rem",
+    [theme.breakpoints.up("md")]: {
+      marginBottom: theme.spacing(3),
+    },
+  },
   inputFieldGrid: {
     margin: theme.spacing(0, 0, 3, 0),
     flexGrow: 1,
-
     [theme.breakpoints.up("md")]: {
       margin: theme.spacing(0, 2, 4, 2),
     },
@@ -224,9 +231,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   middlePointIcon: {
     zIndex: 1,
-  },
-  submitBtn: {
-    width: "300px",
   },
 
   //   // LOGIN and REGISTER pages

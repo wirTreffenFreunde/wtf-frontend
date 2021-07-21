@@ -8,7 +8,6 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
-  SvgIcon,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CancelIcon from "@material-ui/icons/Cancel";
