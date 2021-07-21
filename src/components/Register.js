@@ -7,14 +7,10 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
-  Link,
   Grid,
   Box,
   Typography,
   Container,
-  List,
-  ListItem,
-  ListItemText,
 } from "@material-ui/core";
 
 import { useForm, Controller } from "react-hook-form";
@@ -24,7 +20,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
 
-import { useUserContext } from "../context/user-context";
+//import { useUserContext } from "../context/user-context";
 import Copyright from "../Layout/Copyright";
 
 export default function Register() {
@@ -52,7 +48,7 @@ export default function Register() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" >
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

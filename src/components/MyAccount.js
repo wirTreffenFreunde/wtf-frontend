@@ -48,7 +48,7 @@ export default function MyAccount() {
   const getUserData = async () => {
     console.log("getting user ....");
     axios.defaults.headers.common = {
-      Authorization: "Bearer " + mockData.userTocken,
+      Authorization: "Bearer " + mockData.userToken,
     };
     const res = await axios.get(`http://localhost:8080/users`);
     if (!res.data) alert("You have to log in!");
@@ -88,10 +88,7 @@ export default function MyAccount() {
       Authorization: "Bearer " + mockData.userTocken,
       "Content-Type": "multipart/form-data; boundary=${formData._boundary}",
     };
-    const res = await axios.post(
-      `/users/uploadMemory`,
-      formData
-    );
+    const res = await axios.post(`/users/uploadMemory`, formData);
     console.log(res);
     // if (!res.data) alert("You have to log in!");
     // fetch("/upload", {

@@ -11,6 +11,7 @@ import Footer from "./Footer";
 import MyAccount from "./MyAccount";
 import LogIn from "./LogIn";
 import Register from "./Register";
+import Verification from "./Verification";
 import Result from "./Result";
 import Banner from "./Banner";
 import ForgotPassword from "./ForgotPassword";
@@ -61,6 +62,7 @@ function App() {
                 <Route exact path="/login" component={LogIn} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/myAccount" component={MyAccount} />
+                <Route exact path="/verify" component={Verification} />
                 <Route
                   exact
                   path="/forgotPassword"

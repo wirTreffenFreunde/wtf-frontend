@@ -34,7 +34,7 @@ export default function ForgotPassword() {
     try {
       const response = await axios({
         method: "POST",
-        url: "/users/login",
+        url: "/users/forgotPassword",
         data: data,
       });
       setWrongCredentials(false);
@@ -91,7 +91,7 @@ export default function ForgotPassword() {
             size="large"
             className={classes.submit}
           >
-            Retrieve  Password
+            Retrieve Password
           </Button>
 
           {/* <Grid container>
