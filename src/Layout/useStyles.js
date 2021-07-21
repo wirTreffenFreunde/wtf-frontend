@@ -223,15 +223,24 @@ export const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   cardFilter: {
-    padding: theme.spacing(1, 1, 0, 1),
+    padding: theme.spacing(1),
     position: "absolute",
     top: theme.spacing(2),
     left: theme.spacing(2),
     zIndex: 1,
+    display: "flex",
+    flexDirection: "column"
+  },
+  filterIcon: {
+  },
+  formControlFilter: {
+    margin: theme.spacing(1),
+
   },
   middlePointIcon: {
     zIndex: 1,
   },
+  
 
   //   // LOGIN and REGISTER pages
   paper: {

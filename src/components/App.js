@@ -16,6 +16,7 @@ import Banner from "./Banner";
 import ForgotPassword from "./ForgotPassword";
 import Verification from "./Verification";
 import NewPassword from "./NewPassword";
+import ResetSent from "./ResetSent";
 
 import "./App.css";
 import { theme, useStyles } from "../Layout/useStyles";
@@ -66,6 +67,7 @@ function App() {
                 <Route exact path="/verify" component={Verification} />
                 <Route exact path="/myAccount" component={MyAccount} />
                 <Route exact path="/reset-password" component={NewPassword} />
+                <Route exact path="/reset-sent" component={ResetSent} />
 
                 <Route
                   exact

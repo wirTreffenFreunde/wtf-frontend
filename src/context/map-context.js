@@ -28,10 +28,14 @@ function MapProvider({ children }) {
 	// bounds of all addresses
 	const [boundsCoordinates, setBoundsCoordinates] = useState(null);
 	const [filteredBounds, setFilteredBounds] = useState(null);
-	const [closestCity, setClosestCity] = useState([]);
+	const [closestCity, setClosestCity] = useState({error: "Let's search something"});
 	const [hotels, setHotels] = useState([]);
 	const [restaurants, setRestaurants] = useState([]);
-
+  const [filter, setFilter] = useState({
+    closestCity: false,
+    hotels: false,
+    restaurants: false,
+  });
 	// saving all the input fields
 	const handleChangeMiddle = (e) => {
 		const currentIndex = e.target.name - 1;
@@ -43,6 +47,11 @@ function MapProvider({ children }) {
 
 	const handleSubmitMiddle = async (e) => {
 		e.preventDefault();
+    setFilter({
+      closestCity: false,
+      hotels: false,
+      restaurants: false,
+    })
 		try {
 			const encodedAddresses = peopleAddresses.filter((e) => e);
 			const result = await axios.post(`http://localhost:8080/api`, encodedAddresses);
@@ -75,6 +84,8 @@ function MapProvider({ children }) {
 		hotels,
 		restaurants,
 		filteredBounds,
+    filter, 
+    setFilter
 	};
 
 	return <MapContext.Provider value={value}>{children}</MapContext.Provider>;

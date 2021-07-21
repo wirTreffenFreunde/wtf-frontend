@@ -24,7 +24,7 @@ export default function ForgotPassword() {
 
   function onSubmit(data) {
     
-    history.push("/reset-password");
+    history.push("/reset-sent");
   }
 
   return (

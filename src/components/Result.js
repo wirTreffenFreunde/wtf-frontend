@@ -38,6 +38,8 @@ function Result() {
     hotels,
     restaurants,
     filteredBounds,
+    filter,
+    setFilter
   } = useMapContext();
 
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -48,11 +50,6 @@ function Result() {
     zoom: 10,
   });
   const [filterMenu, setFilterMenu] = useState(false);
-  const [filter, setFilter] = useState({
-    location: false,
-    hotels: false,
-    restaurants: false,
-  });
 
   const navControlStyle = {
     right: 10,
@@ -103,7 +100,7 @@ function Result() {
   }
 
   function handleClickFilterMenu() {
-    setFilterMenu(!filterMenu)
+    setFilterMenu(!filterMenu);
   }
 
   function handleChangeFilter(e) {
@@ -148,58 +145,68 @@ function Result() {
     }
   }
 
-console.log(closestCity);
-  
   return (
     <Container maxWidth="lg">
       <Card className={classes.cardMap}>
         <Card className={classes.cardFilter}>
-          <MenuIcon onClick={handleClickFilterMenu}/>
-          {filterMenu && (
-            <FormControl component="fieldset" className={classes.formControl}>
-              <FormLabel component="legend">Filter:</FormLabel>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={filter.location}
-                      onChange={handleChangeFilter}
-                      name="location"
+          {closestCity.error ? (
+            <Typography>{closestCity.error}</Typography>
+          ) : (
+            <>
+              <MenuIcon onClick={handleClickFilterMenu} className={classes.filterIcon} />
+              {filterMenu && (
+                <FormControl
+                  component="fieldset"
+                  className={classes.formControlFilter}
+                >
+                  <FormLabel component="legend">Filter:</FormLabel>
+                  <FormGroup>
+                    {/* <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={filter.closestCity}
+                          onChange={handleChangeFilter}
+                          name="closestCity"
+                        />
+                      }
+                      label="Closest city"
+                    /> */}
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={filter.hotels}
+                          onChange={handleChangeFilter}
+                          name="hotels"
+                        />
+                      }
+                      label={`Hotels (${hotels.length ? hotels.length : "0"})`}
                     />
-                  }
-                  label="Closest city"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={filter.hotels}
-                      onChange={handleChangeFilter}
-                      name="hotels"
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={filter.restaurants}
+                          onChange={handleChangeFilter}
+                          name="restaurants"
+                        />
+                      }
+                      label={`Restaurants (${
+                        hotels.length ? hotels.length : "0"
+                      })`}
                     />
-                  }
-                  label={`Hotels (${hotels.length ? hotels.length : "0"})`}
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={filter.restaurants}
-                      onChange={handleChangeFilter}
-                      name="restaurants"
-                    />
-                  }
-                  label={`Restaurants (${hotels.length ? hotels.length : "0"})`}
-                />
-              </FormGroup>
-              <Button
-                onClick={handleClickFilter}
-                variant="contained"
-                color="primary"
-              >
-                Take me there
-              </Button>
-            </FormControl>
+                  </FormGroup>
+                  <Button
+                    onClick={handleClickFilter}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Take me there
+                  </Button>
+                </FormControl>
+              )}
+            </>
           )}
         </Card>
+
         <ReactMapGL
           {...viewport}
           mapboxApiAccessToken={mapboxAccessToken}
@@ -224,22 +231,23 @@ console.log(closestCity);
           >
             <BalloonIcon />
           </Marker>
-          {/* <Marker
-            className={classes.marker}
-            // latitude={closestCity.latitude}
-            // longitude={closestCity.longitude}
-            latitude={0}
-            longitude={0}
-            offsetTop={-50}
-            offsetLeft={-25}
-            // className={classes.middlePointIcon}
-            // onClick={(e) => {
-            //   e.preventDefault();
-            //   setSelectedMarker(closestCity);
-            // }}
-          >
-            <CityIcon />
-          </Marker> */}
+
+          {filter.closestCity && (
+            <Marker
+              className={classes.marker}
+              latitude={closestCity.latitude}
+              longitude={closestCity.longitude}
+              offsetTop={-50}
+              offsetLeft={-25}
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedMarker(closestCity);
+              }}
+            >
+              <CityIcon />
+            </Marker>
+          )}
+
           {filter.hotels &&
             hotels.map((hotel, index) => (
               <Marker
