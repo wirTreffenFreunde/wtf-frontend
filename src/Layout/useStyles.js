@@ -133,11 +133,22 @@ export const useStyles = makeStyles((theme) => ({
   //     backgroundColor: theme.palette.background.paper,
   //   },
   memoriesRoot: {
-    maxWidth: 345,
+    width: 300,
+    height: 300,
+    margin: theme.spacing(2),
   },
   memoriesMedia: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
+    height: 250,
+    width: 250,
+    margin: "auto",
+  },
+  memoriesMediaXXL: {
+    height: 500,
+    width: 500,
+    margin: "auto",
+  },
+  memoriesAddButton: {
+    marginLeft: theme.spacing(4),
   },
   //   popOvertypography: {
   //     padding: theme.spacing(2),

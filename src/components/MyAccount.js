@@ -13,10 +13,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import DeleteIcon from "@material-ui/icons/Delete";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Popover from "@material-ui/core/Popover";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -26,7 +23,6 @@ import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import { useStyles } from "../Layout/useStyles";
-import { TripOriginSharp } from "@material-ui/icons";
 import { mockData } from "../mockData";
 import axios from "axios";
 
@@ -34,6 +30,7 @@ export default function MyAccount() {
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [popupOpen, setPopupOpen] = React.useState(false);
+  const [imgPopupOpen, setImgPopupOpen] = React.useState(false);
   const [myMemoryPopupOpen, setMyMemoryPopupOpen] = React.useState(false);
   const [user, setUser] = React.useState({
     trips: [{ title: "", cities: [] }],
@@ -41,6 +38,8 @@ export default function MyAccount() {
   });
   const [currentImage, setCurrentImage] = React.useState(undefined);
   const [currentMemoryTitle, setCurrentMemoryTitle] = React.useState("");
+  const [selectedMemoryIndex, setSelectedMemoryIndex] =
+    React.useState(undefined);
 
   React.useEffect(() => {
     getUserData();
@@ -66,6 +65,9 @@ export default function MyAccount() {
     setPopupOpen(false);
   };
 
+  const handleImgClose = () => {
+    setImgPopupOpen(false);
+  };
   const handleCloseMemoryPopup = () => {
     setMyMemoryPopupOpen(false);
   };
@@ -112,27 +114,22 @@ export default function MyAccount() {
   };
 
   const deleteMemory = async (index) => {
-    // const fileNameArray = user.memories[index].url.split("/");
-    // const public_id = fileNameArray[fileNameArray.length - 1].split(".")[0];
+    const fileNameArray = user.memories[index].url.split("/");
+    const public_id = fileNameArray[fileNameArray.length - 1].split(".")[0];
 
-    // const formData = new FormData();
-    // formData.append("public_id", public_id);
-    // formData.append("upload_preset", "wirtreffenfreunde");
-    // formData.append("cloud_name", "dfgwwhpq3");
-    // axios.defaults.headers.common = {
-    //   "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-    // };
-
-    // try {
-    //   const clres = await axios.post(
-    //     `https://api.cloudinary.com/v1_1/dfgwwhpq3/image/destroy`,
-    //     formData
-    //   );
-
-    //   console.log(clres);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const res = await axios.delete(`http://localhost:8080/users/memory`, {
+        headers: {
+          Authorization: "Bearer " + mockData.userTocken,
+        },
+        data: {
+          public_id: public_id,
+        },
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
 
     user.memories.splice(index, 1);
     updateUser();
@@ -146,8 +143,47 @@ export default function MyAccount() {
     setUser(res.data);
   };
 
+  const showImage = (index) => {
+    setSelectedMemoryIndex(index);
+    setImgPopupOpen(true);
+  };
+
   return (
     <Container component="main">
+      <Dialog
+        open={imgPopupOpen}
+        onClose={handleImgClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">
+          {selectedMemoryIndex != undefined &&
+          user.memories[selectedMemoryIndex] != undefined
+            ? user.memories[selectedMemoryIndex].title
+            : "none"}
+        </DialogTitle>
+        <CardMedia
+          className={classes.memoriesMediaXXL}
+          image={
+            selectedMemoryIndex != undefined &&
+            user.memories[selectedMemoryIndex] != undefined
+              ? user.memories[selectedMemoryIndex].url
+              : ""
+          }
+          title={
+            selectedMemoryIndex != undefined &&
+            user.memories[selectedMemoryIndex] != undefined
+              ? user.memories[selectedMemoryIndex].title
+              : "none"
+          }
+        />
+        <DialogContent>
+          <DialogContentText></DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleImgClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
       <Dialog
         open={popupOpen}
         onClose={handleClose}
@@ -198,79 +234,82 @@ export default function MyAccount() {
       <Box>
         <Typography className={classes.greeting}>Howdy, my friend!</Typography>
       </Box>
-      <div className={classes.root}>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography className={classes.heading}>
-              Have a glimpse at where have you been
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className={classes.accordionList}>
-              <List component="nav">
-                {user.trips.map((trip, index) => {
-                  return (
-                    <ListItem
-                      button
-                      selected={selectedIndex === index}
-                      onClick={(event) => handleListItemClick(event, index)}
-                      key={trip.title}
-                    >
-                      <ListItemText primary={trip.title} />
-                    </ListItem>
-                  );
-                })}
-              </List>
-            </div>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-          >
-            <Typography className={classes.heading}>
-              Would you like to see some of your memories?
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Button
-              className={classes.memoryActionButton}
-              onClick={showUploadPopup}
-            >
-              Add Memory
-            </Button>
-            {user.memories.map((memory, index) => {
+      {/* <div className={classes.root}> */}
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>
+            Have a glimpse at where have you been
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {/* <div className={classes.accordionList}> */}
+          <List component="nav">
+            {user.trips.map((trip, index) => {
               return (
-                <Card className={classes.memoriesRoot}>
-                  <CardHeader
-                    action={
-                      <IconButton
-                        aria-label="share"
-                        onClick={(e) => deleteMemory(index)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    }
-                    title={memory.title}
-                    subheader={memory.date}
-                  />
-                  <CardMedia
-                    className={classes.memoriesMedia}
-                    image={memory.url}
-                    title={memory.title}
-                  />
-                </Card>
+                <ListItem
+                  button
+                  selected={selectedIndex === index}
+                  onClick={(event) => handleListItemClick(event, index)}
+                  key={trip.title}
+                >
+                  <ListItemText primary={trip.title} />
+                </ListItem>
               );
             })}
-          </AccordionDetails>
-        </Accordion>
-      </div>
+          </List>
+          {/* </div> */}
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography className={classes.heading}>
+            Would you like to see some of your memories?
+          </Typography>
+        </AccordionSummary>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={showUploadPopup}
+          className={classes.memoriesAddButton}
+        >
+          Add Memory
+        </Button>
+        <AccordionDetails>
+          {user.memories.map((memory, index) => {
+            return (
+              <Card className={classes.memoriesRoot} key={memory.url}>
+                <CardHeader
+                  action={
+                    <IconButton
+                      aria-label="share"
+                      onClick={(e) => deleteMemory(index)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  }
+                  title={memory.title}
+                  subheader={memory.date}
+                />
+                <CardMedia
+                  className={classes.memoriesMedia}
+                  image={memory.url}
+                  title={memory.title}
+                  onClick={(e) => showImage(index)}
+                />
+              </Card>
+            );
+          })}
+        </AccordionDetails>
+      </Accordion>
+      {/* </div> */}
     </Container>
   );
 }
