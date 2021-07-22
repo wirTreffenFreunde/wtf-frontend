@@ -16,7 +16,6 @@ import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
 import { useUserContext } from "../context/user-context";
 
-
 export default function LogIn() {
   let history = useHistory();
   const classes = useStyles();
@@ -49,8 +48,12 @@ export default function LogIn() {
         localStorage.setItem("token", accessToken);
       } else sessionStorage.setItem("token", accessToken);
       console.log(accessToken);
-      history.push("/myAccount");
-    } catch (error) {}
+      if (accessToken) {
+        history.push("/myAccount");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -63,7 +66,7 @@ export default function LogIn() {
         <Typography component="h1" variant="h5">
           Log In
         </Typography>
-        {errorMessage && <p>${errorMessage}</p>}
+        {errorMessage && <p>Error: {errorMessage}</p>}
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="email"

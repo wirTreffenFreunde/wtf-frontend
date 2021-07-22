@@ -10,7 +10,7 @@ import Container from "@material-ui/core/Container";
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "../Layout/useStyles";
-
+import axios from "axios";
 export default function ForgotPassword() {
   let history = useHistory();
   const classes = useStyles();
@@ -20,10 +20,20 @@ export default function ForgotPassword() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  function onSubmit(data) {
-    history.push("/reset-password");
-  }
+  const onSubmit = async (data) => {
+    // e.preventDefault();
+    try {
+      const result = await axios.post(
+        "http://localhost:8080/users/forgotpassword",
+        data
+      );
+      if (result.status === 200) {
+        history.push("/reset-password");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">

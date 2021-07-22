@@ -18,17 +18,10 @@ function UserProvider({ children }) {
   );
   const [verify, setVerify] = useState(false);
 
-  const handleEmailVerification = async (e) => {
-    e.preventDefault();
-    try {
-      const getEmailToken = await axios(`/users//verify/:emailToken`);
-      const emailToken = getEmailToken.data;
-      console.log(emailToken);
-      setVerify(true);
-    } catch (err) {
-      console.error(err);
-      //setErrorMessage(err.message);
-    }
+  const verifyUser = (code) => {
+    return axios.get("/users/verify/" + code).then((response) => {
+      return response.data;
+    });
   };
 
   const value = {
@@ -37,7 +30,7 @@ function UserProvider({ children }) {
     verify,
     setVerify,
     //errorMessage,
-    handleEmailVerification,
+    verifyUser,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
