@@ -14,16 +14,13 @@ import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
-import { accessToken } from "mapbox-gl";
-import { useUserContext } from "../context/user-context"
-import ForgotPassword from "./ForgotPassword"
-
+import { useUserContext } from "../context/user-context";
 
 export default function LogIn() {
   let history = useHistory();
   const classes = useStyles();
 
-  const { user, setUser } = useUserContext()
+  const { user, setUser } = useUserContext();
 
   const {
     control,
@@ -31,6 +28,7 @@ export default function LogIn() {
     formState: { errors },
   } = useForm();
   const [wrongCredentials, setWrongCredentials] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   async function onSubmit(data) {
     try {
       const response = await axios({
@@ -39,23 +37,22 @@ export default function LogIn() {
         data: data,
       });
       setWrongCredentials(false);
-      const accessToken = response.data.accessToken
-      axios.defaults.headers.common[
-        "authorization"
-      ] = `basic ${accessToken}`;
+      setErrorMessage(response.data.error);
+      console.log(response.data.error);
+      const accessToken = response.data.accessToken;
+      axios.defaults.headers.common["authorization"] = `basic ${accessToken}`;
 
-      setUser({email: data.email})
+      setUser({ email: data.email });
 
       if (data["remember-me"]) {
-        localStorage.setItem("token",accessToken) 
-
-      }else(
-        sessionStorage.setItem("token",accessToken)
-      )
+        localStorage.setItem("token", accessToken);
+      } else sessionStorage.setItem("token", accessToken);
       console.log(accessToken);
-      history.push('/myAccount')
+      if (accessToken) {
+        history.push("/myAccount");
+      }
     } catch (error) {
-      if (error.response.status === "404") setWrongCredentials(true);
+      console.log(error);
     }
   }
 
@@ -69,6 +66,7 @@ export default function LogIn() {
         <Typography component="h1" variant="h5">
           Log In
         </Typography>
+        {errorMessage && <p>Error: {errorMessage}</p>}
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="email"
@@ -117,8 +115,9 @@ export default function LogIn() {
             control={control}
             render={({ field }) => (
               <FormControlLabel
-               
-                control={<Checkbox  {...field}  value="remember" color="primary" />}
+                control={
+                  <Checkbox {...field} value="remember" color="primary" />
+                }
                 label="Remember me"
               />
             )}
@@ -136,9 +135,7 @@ export default function LogIn() {
           </Button>
           <Grid container>
             <Grid item xm>
-              <Link href="#" variant="body2">
-                
-              </Link>
+              <Link href="#" variant="body2"></Link>
             </Grid>
             <Grid item xs>
               <Link href="/forgot-password" variant="body2">
@@ -147,7 +144,7 @@ export default function LogIn() {
             </Grid>
             <Grid item>
               <Link href="/register" variant="body2">
-                  Sign Up here
+                Sign Up here
               </Link>
             </Grid>
           </Grid>

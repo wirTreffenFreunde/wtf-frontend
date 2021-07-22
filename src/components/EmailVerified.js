@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
-export default function Verification() {
+export default function EmailVerified() {
   const classes = useStyles();
   const [error, setError] = useState("");
   const [verify, setVerify] = useState(false);
@@ -18,7 +18,7 @@ export default function Verification() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h3" variant="h5">
-          Please verify your Email
+          Your email is verified. Proceed to login.
         </Typography>
       </div>
     </Container>

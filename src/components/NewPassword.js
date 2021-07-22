@@ -15,10 +15,10 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
 import { accessToken } from "mapbox-gl";
-import { useUserContext } from "../context/user-context"
-import ForgotPassword from "./ForgotPassword"
+import { useUserContext } from "../context/user-context";
+import ForgotPassword from "./ForgotPassword";
 
-export default function NewPassword() {
+export default function NewPassword(props) {
   let history = useHistory();
   const classes = useStyles();
 
@@ -30,23 +30,15 @@ export default function NewPassword() {
   } = useForm();
   const [wrongCredentials, setWrongCredentials] = useState(false);
   async function onSubmit(data) {
+    data.token = props.match.params.resetPasswordToken;
     try {
       const response = await axios({
-        method: "POST",
-        url: "http://localhost:8080/users/login",
+        method: "PUT",
+        url: "http://localhost:8080/users/resetPassword",
         data: data,
       });
-      setWrongCredentials(false);
-      const accessToken = response.data.accessToken;
-      axios.defaults.headers.common["authorization"] = `basic ${accessToken}`;
 
-      setUser({ email: data.email });
-
-      if (data["remember-me"]) {
-        localStorage.setItem("token", accessToken);
-      } else sessionStorage.setItem("token", accessToken);
-      console.log(accessToken);
-      history.push("/myAccount");
+      //history.push("/myAccount");
     } catch (error) {
       if (error.response.status === "404") setWrongCredentials(true);
     }
@@ -96,7 +88,6 @@ export default function NewPassword() {
                 fullWidth
                 label="Confirm new Password"
                 autoComplete="current-password"
-                
                 type="password"
               />
             )}
