@@ -64,7 +64,7 @@ function MapProvider({ children }) {
 			setBoundsCoordinates(result.data.boundsAddresses);
       setHotels(result.data.hotelsAddresses);
       setRestaurants(result.data.restaurantsAddresses);
-			setFilteredBounds(result.data.boundsFiletered);
+			setFilteredBounds(result.data.boundsFiltered);
 			setClosestCity(result.data.closestCity);
 		} catch (err) {
 			console.error(err);

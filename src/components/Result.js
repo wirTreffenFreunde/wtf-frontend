@@ -39,7 +39,7 @@ function Result() {
     restaurants,
     filteredBounds,
     filter,
-    setFilter
+    setFilter,
   } = useMapContext();
 
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -108,7 +108,7 @@ function Result() {
   }
 
   function handleClickFilter() {
-    if (filter.hotels || filter.restaurants) {
+    if (filter.hotels || filter.restaurants || filter.closestCity) {
       if (filteredBounds) {
         const { longitude, latitude, zoom } = new WebMercatorViewport(
           viewport
@@ -121,10 +121,12 @@ function Result() {
             padding: { top: 100, bottom: 50, left: 50, right: 50 },
           }
         );
+        // const newLng = closestCity.longitude
+        // const newLat = closestCity.latitude
         setViewport({
           ...viewport,
-          longitude,
           latitude,
+          longitude,
           zoom,
         });
       } else {
@@ -153,7 +155,10 @@ function Result() {
             <Typography>{closestCity.error}</Typography>
           ) : (
             <>
-              <MenuIcon onClick={handleClickFilterMenu} className={classes.filterIcon} />
+              <MenuIcon
+                onClick={handleClickFilterMenu}
+                className={classes.filterIcon}
+              />
               {filterMenu && (
                 <FormControl
                   component="fieldset"
@@ -161,7 +166,7 @@ function Result() {
                 >
                   <FormLabel component="legend">Filter:</FormLabel>
                   <FormGroup>
-                    {/* <FormControlLabel
+                    <FormControlLabel
                       control={
                         <Checkbox
                           checked={filter.closestCity}
@@ -170,7 +175,7 @@ function Result() {
                         />
                       }
                       label="Closest city"
-                    /> */}
+                    />
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -218,7 +223,6 @@ function Result() {
           <NavigationControl style={navControlStyle} />
 
           <Marker
-            className={classes.marker}
             latitude={middlePoint.latitude}
             longitude={middlePoint.longitude}
             offsetTop={-50}
@@ -234,7 +238,7 @@ function Result() {
 
           {filter.closestCity && (
             <Marker
-              className={classes.marker}
+              className={classes.cityIcon}
               latitude={closestCity.latitude}
               longitude={closestCity.longitude}
               offsetTop={-50}
@@ -251,7 +255,6 @@ function Result() {
           {filter.hotels &&
             hotels.map((hotel, index) => (
               <Marker
-                className={classes.markerFilter}
                 latitude={hotel.latitude}
                 longitude={hotel.longitude}
                 offsetTop={-50}
@@ -269,7 +272,6 @@ function Result() {
           {filter.restaurants &&
             restaurants.map((restaurant, index) => (
               <Marker
-                className={classes.markerFilter}
                 latitude={restaurant.latitude}
                 longitude={restaurant.longitude}
                 offsetTop={-50}
@@ -287,8 +289,8 @@ function Result() {
           {peopleCoordinates.map((el, index) => {
             return (
               <Marker
-                className={classes.marker}
-                key={index}
+                className={classes.peopleIcon}
+                key={`${index}person`}
                 latitude={el.latitude}
                 longitude={el.longitude}
                 offsetTop={-50}
