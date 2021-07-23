@@ -11,10 +11,10 @@ import Footer from "./Footer";
 import MyAccount from "./MyAccount";
 import LogIn from "./LogIn";
 import Register from "./Register";
+import Verification from "./Verification";
 import Result from "./Result";
 import Banner from "./Banner";
 import ForgotPassword from "./ForgotPassword";
-import Verification from "./Verification";
 import NewPassword from "./NewPassword";
 import ResetSent from "./ResetSent";
 
@@ -22,7 +22,7 @@ import "./App.css";
 import { theme, useStyles } from "../Layout/useStyles";
 import { MapProvider } from "../context/map-context";
 import { UserProvider } from "../context/user-context";
-
+import EmailVerified from "./EmailVerified";
 
 function App() {
   const classes = useStyles();
@@ -66,8 +66,12 @@ function App() {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/verify" component={Verification} />
                 <Route exact path="/myAccount" component={MyAccount} />
-                <Route exact path="/reset-password" component={NewPassword} />
-                <Route exact path="/reset-sent" component={ResetSent} />
+                <Route
+                  exact
+                  path="/reset-password/:resetPasswordToken"
+                  component={NewPassword}
+                />
+                <Route path="/verified" component={EmailVerified} />
 
                 <Route
                   exact

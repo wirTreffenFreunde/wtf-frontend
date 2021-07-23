@@ -7,15 +7,12 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
-  Link,
   Grid,
   Box,
   Typography,
   Container,
-  List,
-  ListItem,
-  ListItemText,
 } from "@material-ui/core";
+import Link from "@material-ui/core/Link";
 
 import { useForm, Controller } from "react-hook-form";
 
@@ -24,7 +21,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
 
-import { useUserContext } from "../context/user-context";
+//import { useUserContext } from "../context/user-context";
 import Copyright from "../Layout/Copyright";
 
 export default function Register() {
@@ -37,8 +34,6 @@ export default function Register() {
   } = useForm();
 
   const [wrongInput, setWrongInput] = useState(false);
-
-  
 
   // const showMessage = () => {
   //   // e.preventDefault()
@@ -209,17 +204,16 @@ export default function Register() {
           </Grid>
           {wrongInput && <p>Email already exists, MATE!</p>}
           <Link href="/verify" variant="body2">
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            
-          >
-                  Sign up
-          </Button>
-        </Link>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign up
+            </Button>
+          </Link>
           {/* {verify && <p>Please verify your Email</p>} */}
         </form>
       </div>
