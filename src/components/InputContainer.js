@@ -48,8 +48,11 @@ function InputContainer() {
               item
               container
               xs={12}
-              md={index === 4 ? 12 : 6}
-              md={index === 4 ? 12 : 6}
+              md={
+                (peopleAddresses.length === 3 && index === 2) || index === 4
+                  ? 12
+                  : 6
+              }
             >
               <Grid item className={classes.inputFieldGrid}>
                 <FormControl variant="outlined" className={classes.inputField}>
