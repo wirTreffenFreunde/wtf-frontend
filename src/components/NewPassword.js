@@ -40,7 +40,7 @@ export default function NewPassword(props) {
 
       //history.push("/myAccount");
     } catch (error) {
-      if (error.response.status === "404") setWrongCredentials(true);
+      console.error(error);
     }
   }
 
@@ -56,7 +56,7 @@ export default function NewPassword(props) {
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Controller
-            name="new-password"
+            name="password"
             control={control}
             defaultValue=""
             rules={{ required: true }}
