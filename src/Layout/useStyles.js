@@ -220,18 +220,31 @@ export const useStyles = makeStyles((theme) => ({
   cardMap: {
     minHight: "500px",
     height: "70vh",
+    marginBottom: theme.spacing(5),
     position: "relative",
   },
   cardFilter: {
-    padding: theme.spacing(1, 1, 0, 1),
+    padding: theme.spacing(1),
     position: "absolute",
     top: theme.spacing(2),
     left: theme.spacing(2),
-    zIndex: 1,
+    zIndex: 3,
+    display: "flex",
+    flexDirection: "column"
+  },
+  formControlFilter: {
+    margin: theme.spacing(1),
   },
   middlePointIcon: {
+    zIndex: 2,
+  },
+  cityIcon:{
     zIndex: 1,
   },
+  peopleIcon: {
+    zIndex: 1,
+  },
+  
 
   //   // LOGIN and REGISTER pages
   paper: {

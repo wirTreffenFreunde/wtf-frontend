@@ -3,6 +3,8 @@ import { useStyles } from "../Layout/useStyles";
 
 const width = "50px";
 const height = "50px";
+const widthBig = "60px";
+const heightBig = "60px";
 
 function PinIcon({ size }) {
   const classes = useStyles();
@@ -95,8 +97,8 @@ function HomeIcon() {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       x="0px"
       y="0px"
-      width={width}
-      height={height}
+      width={widthBig}
+      height={heightBig}
       viewBox="0 0 100 100"
       xmlSpace="preserve"
     >
@@ -179,8 +181,8 @@ function CityIcon() {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       x="0px"
       y="0px"
-      width={width}
-      height={height}
+      width={widthBig}
+      height={heightBig}
       viewBox="0 0 100 100"
       xmlSpace="preserve"
     >

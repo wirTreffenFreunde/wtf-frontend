@@ -16,6 +16,7 @@ import Result from "./Result";
 import Banner from "./Banner";
 import ForgotPassword from "./ForgotPassword";
 import NewPassword from "./NewPassword";
+import ResetSent from "./ResetSent";
 
 import "./App.css";
 import { theme, useStyles } from "../Layout/useStyles";
