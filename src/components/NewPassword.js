@@ -1,12 +1,8 @@
-import { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
@@ -14,23 +10,16 @@ import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
-import { accessToken } from "mapbox-gl";
-import { useUserContext } from "../context/user-context";
-import ForgotPassword from "./ForgotPassword";
+import { hashPassword } from "../crypto";
 
 export default function NewPassword(props) {
   let history = useHistory();
   const classes = useStyles();
-
-  const { user, setUser } = useUserContext();
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const [wrongCredentials, setWrongCredentials] = useState(false);
+  const { control, handleSubmit } = useForm();
   async function onSubmit(data) {
     data.token = props.match.params.resetPasswordToken;
+    data.password = hashPassword(data.password);
+    data["confirm-new-password"] = hashPassword(data["confirm-new-password"]);
     try {
       const response = await axios({
         method: "PUT",
@@ -38,9 +27,9 @@ export default function NewPassword(props) {
         data: data,
       });
 
-      //history.push("/myAccount");
+      history.push("/login");
     } catch (error) {
-      if (error.response.status === "404") setWrongCredentials(true);
+      console.error(error);
     }
   }
 
@@ -56,7 +45,7 @@ export default function NewPassword(props) {
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Controller
-            name="new-password"
+            name="password"
             control={control}
             defaultValue=""
             rules={{ required: true }}

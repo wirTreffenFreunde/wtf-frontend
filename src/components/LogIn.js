@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
 import { useUserContext } from "../context/user-context";
+import { hashPassword } from "../crypto";
 
 export default function LogIn() {
   let history = useHistory();
@@ -30,6 +31,7 @@ export default function LogIn() {
   const [wrongCredentials, setWrongCredentials] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   async function onSubmit(data) {
+    data.password = hashPassword(data.password);
     try {
       const response = await axios({
         method: "POST",
