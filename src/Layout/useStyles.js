@@ -230,7 +230,7 @@ export const useStyles = makeStyles((theme) => ({
     left: theme.spacing(2),
     zIndex: 3,
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   formControlFilter: {
     margin: theme.spacing(1),
@@ -238,13 +238,12 @@ export const useStyles = makeStyles((theme) => ({
   middlePointIcon: {
     zIndex: 2,
   },
-  cityIcon:{
+  cityIcon: {
     zIndex: 1,
   },
   peopleIcon: {
     zIndex: 1,
   },
-  
 
   //   // LOGIN and REGISTER pages
   paper: {
@@ -280,6 +279,12 @@ export const useStyles = makeStyles((theme) => ({
   heading: {
     fontSize: theme.typography.pxToRem(20),
     fontWeight: theme.typography.fontWeightRegular,
+  },
+  cardMapAccount: {
+    width: 500,
+    height: 500,
+    marginBottom: theme.spacing(5),
+    position: "relative",
   },
   accordionList: {
     width: "100%",

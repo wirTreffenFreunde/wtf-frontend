@@ -23,16 +23,29 @@ import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import { useStyles } from "../Layout/useStyles";
-import { mockData } from "../mockData";
+// import { mockData } from "../mockData";
 import axios from "axios";
+import ReactMapGL, {
+  Marker,
+  Popup,
+  NavigationControl,
+  WebMercatorViewport,
+} from "react-map-gl";
+import { useMapContext } from "../context/map-context";
+import { useUserContext } from "../context/user-context";
+import { HomeIcon, HotelIcon, BalloonIcon, CityIcon, FoodIcon } from "./Icons";
+import { RestoreOutlined } from "@material-ui/icons";
+
+const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
 export default function MyAccount() {
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedTrip, setSelectedTrip] = React.useState(undefined);
   const [popupOpen, setPopupOpen] = React.useState(false);
   const [imgPopupOpen, setImgPopupOpen] = React.useState(false);
   const [myMemoryPopupOpen, setMyMemoryPopupOpen] = React.useState(false);
-  const [user, setUser] = React.useState({
+  const [userAccount, setUserAccount] = React.useState({
     trips: [{ title: "", cities: [] }],
     memories: [],
   });
@@ -40,28 +53,57 @@ export default function MyAccount() {
   const [currentMemoryTitle, setCurrentMemoryTitle] = React.useState("");
   const [selectedMemoryIndex, setSelectedMemoryIndex] =
     React.useState(undefined);
+  const {
+    middlePoint,
+    peopleCoordinates,
+    boundsCoordinates,
+    closestCity,
+    hotels,
+    restaurants,
+    filteredBounds,
+    filter,
+    setFilter,
+  } = useMapContext();
+  const { user } = useUserContext();
+  const navControlStyle = {
+    right: 10,
+    top: 10,
+  };
+
+  const [viewport, setViewport] = React.useState({
+    latitude: middlePoint.latitude,
+    longitude: middlePoint.longitude,
+    zoom: 5,
+  });
 
   React.useEffect(() => {
     getUserData();
   }, []);
 
   const getUserData = async () => {
-    console.log("getting user ....");
+    do {
+      console.log("waiting for the token");
+    } while (user === undefined);
+    console.log("getting user with token: ", user);
+    // axios.defaults.headers.common = {
+    //   Authorization: "Bearer " + mockData.userToken,
+    // };
     axios.defaults.headers.common = {
-      Authorization: "Bearer " + mockData.userToken,
+      Authorization: "Bearer " + user,
     };
     const res = await axios.get(`http://localhost:8080/users`);
     if (!res.data) alert("You have to log in!");
     console.log("got user: ", res.data);
-    setUser(res.data);
+    setUserAccount(res.data);
   };
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
-    setPopupOpen(true);
+    getCoordinates(index);
   };
 
   const handleClose = () => {
+    setSelectedTrip(undefined);
     setPopupOpen(false);
   };
 
@@ -99,7 +141,7 @@ export default function MyAccount() {
       title: currentMemoryTitle,
       url: clres.data.url,
     };
-    user.memories.push(memory);
+    userAccount.memories.push(memory);
 
     updateUser();
     handleCloseMemoryPopup();
@@ -114,13 +156,13 @@ export default function MyAccount() {
   };
 
   const deleteMemory = async (index) => {
-    const fileNameArray = user.memories[index].url.split("/");
+    const fileNameArray = userAccount.memories[index].url.split("/");
     const public_id = fileNameArray[fileNameArray.length - 1].split(".")[0];
 
     try {
       const res = await axios.delete(`http://localhost:8080/users/memory`, {
         headers: {
-          Authorization: "Bearer " + mockData.userTocken,
+          Authorization: "Bearer " + user,
         },
         data: {
           public_id: public_id,
@@ -131,21 +173,36 @@ export default function MyAccount() {
       console.log(error);
     }
 
-    user.memories.splice(index, 1);
+    userAccount.memories.splice(index, 1);
     updateUser();
   };
 
   const updateUser = async () => {
     axios.defaults.headers.common = {
-      Authorization: "Bearer " + mockData.userTocken,
+      Authorization: "Bearer " + user,
     };
-    const res = await axios.put(`http://localhost:8080/users`, user);
-    setUser(res.data);
+    const res = await axios.put(`http://localhost:8080/users`, userAccount);
+    setUserAccount(res.data);
   };
 
   const showImage = (index) => {
     setSelectedMemoryIndex(index);
     setImgPopupOpen(true);
+  };
+
+  const getCoordinates = async (index) => {
+    const result = await axios.post(
+      `http://localhost:8080/api`,
+      userAccount.trips[index].cities
+    );
+    console.log(result.data);
+    setViewport({
+      latitude: result.data.middlePoint.latitude,
+      longitude: result.data.middlePoint.longitude,
+      zoom: 5,
+    });
+    setSelectedTrip(result.data);
+    setPopupOpen(true);
   };
 
   return (
@@ -156,23 +213,23 @@ export default function MyAccount() {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          {selectedMemoryIndex != undefined &&
-          user.memories[selectedMemoryIndex] != undefined
-            ? user.memories[selectedMemoryIndex].title
+          {selectedMemoryIndex !== undefined &&
+          userAccount.memories[selectedMemoryIndex] !== undefined
+            ? userAccount.memories[selectedMemoryIndex].title
             : "none"}
         </DialogTitle>
         <CardMedia
           className={classes.memoriesMediaXXL}
           image={
-            selectedMemoryIndex != undefined &&
-            user.memories[selectedMemoryIndex] != undefined
-              ? user.memories[selectedMemoryIndex].url
+            selectedMemoryIndex !== undefined &&
+            userAccount.memories[selectedMemoryIndex] !== undefined
+              ? userAccount.memories[selectedMemoryIndex].url
               : ""
           }
           title={
-            selectedMemoryIndex != undefined &&
-            user.memories[selectedMemoryIndex] != undefined
-              ? user.memories[selectedMemoryIndex].title
+            selectedMemoryIndex !== undefined &&
+            userAccount.memories[selectedMemoryIndex] !== undefined
+              ? userAccount.memories[selectedMemoryIndex].title
               : "none"
           }
         />
@@ -190,17 +247,78 @@ export default function MyAccount() {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          {user.trips[selectedIndex].title}
+          {userAccount.trips !== undefined && userAccount.trips.length > 0
+            ? userAccount.trips[selectedIndex].title
+            : ""}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
             <Typography>
-              Cities: {user.trips[selectedIndex].cities.join(", ")}
+              Cities:{" "}
+              {userAccount.trips !== undefined && userAccount.trips.length > 0
+                ? userAccount.trips[selectedIndex].cities.join(", ")
+                : ""}
             </Typography>
             <Typography>
-              Where you met: {user.trips[selectedIndex].middlePoint}
+              Where you met:{" "}
+              {selectedTrip !== undefined
+                ? selectedTrip.middlePoint.address.address
+                : ""}
+              {selectedTrip !== undefined &&
+              selectedTrip.middlePoint.address.error !== undefined
+                ? selectedTrip.middlePoint.address.error
+                : ""}
             </Typography>
           </DialogContentText>
+          <Card className={classes.cardMapAccount}>
+            {selectedTrip !== undefined && (
+              <ReactMapGL
+                {...viewport}
+                mapboxApiAccessToken={mapboxAccessToken}
+                mapStyle="mapbox://styles/mapbox/streets-v11"
+                width="100%"
+                height="100%"
+                onViewportChange={(viewport) => setViewport(viewport)}
+              >
+                <NavigationControl style={navControlStyle} />
+                {selectedTrip.peopleAddresses.map((addr) => {
+                  return (
+                    <Marker
+                      latitude={addr.latitude}
+                      longitude={addr.longitude}
+                      key={addr.address}
+                      offsetTop={-56}
+                      offsetLeft={-30}
+                    >
+                      <HomeIcon />
+                    </Marker>
+                  );
+                })}
+
+                {selectedTrip.middlePoint.address.error !== undefined ? (
+                  <Marker
+                    latitude={selectedTrip.middlePoint.latitude}
+                    longitude={selectedTrip.middlePoint.longitude}
+                    key={selectedTrip.middlePoint.address.error}
+                    offsetTop={-50}
+                    offsetLeft={-25}
+                  >
+                    <BalloonIcon />
+                  </Marker>
+                ) : (
+                  <Marker
+                    latitude={selectedTrip.middlePoint.address.latitude}
+                    longitude={selectedTrip.middlePoint.address.longitude}
+                    key={selectedTrip.middlePoint.address.address}
+                    offsetTop={-50}
+                    offsetLeft={-25}
+                  >
+                    <BalloonIcon />
+                  </Marker>
+                )}
+              </ReactMapGL>
+            )}
+          </Card>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
@@ -232,9 +350,10 @@ export default function MyAccount() {
         </DialogActions>
       </Dialog>
       <Box>
-        <Typography className={classes.greeting}>Howdy, my friend!</Typography>
+        <Typography className={classes.greeting}>
+          Howdy, {userAccount.firstName}!
+        </Typography>
       </Box>
-      {/* <div className={classes.root}> */}
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -246,9 +365,8 @@ export default function MyAccount() {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {/* <div className={classes.accordionList}> */}
-          <List component="nav">
-            {user.trips.map((trip, index) => {
+          <List component="nav" className={classes.accordionList}>
+            {userAccount.trips.map((trip, index) => {
               return (
                 <ListItem
                   button
@@ -261,7 +379,6 @@ export default function MyAccount() {
               );
             })}
           </List>
-          {/* </div> */}
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -283,7 +400,7 @@ export default function MyAccount() {
           Add Memory
         </Button>
         <AccordionDetails>
-          {user.memories.map((memory, index) => {
+          {userAccount.memories.map((memory, index) => {
             return (
               <Card className={classes.memoriesRoot} key={memory.url}>
                 <CardHeader
@@ -309,7 +426,6 @@ export default function MyAccount() {
           })}
         </AccordionDetails>
       </Accordion>
-      {/* </div> */}
     </Container>
   );
 }
