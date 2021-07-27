@@ -15,7 +15,7 @@ export default function ResetSent() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Please, check you email
+          We have sent a link to your email address for resetting password.
         </Typography>
       </div>
     </Container>

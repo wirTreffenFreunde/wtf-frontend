@@ -28,7 +28,7 @@ export default function ForgotPassword() {
         data
       );
       if (result.status === 200) {
-        history.push("/reset-password");
+        history.push("/reset-send");
       }
     } catch (e) {
       console.log(e);
