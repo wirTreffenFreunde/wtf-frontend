@@ -25,20 +25,15 @@ import TextField from "@material-ui/core/TextField";
 import { useStyles } from "../Layout/useStyles";
 // import { mockData } from "../mockData";
 import axios from "axios";
-import ReactMapGL, {
-  Marker,
-  Popup,
-  NavigationControl,
-  WebMercatorViewport,
-} from "react-map-gl";
+import ReactMapGL, { Marker, NavigationControl } from "react-map-gl";
 import { useMapContext } from "../context/map-context";
-import { useUserContext } from "../context/user-context";
-import { HomeIcon, HotelIcon, BalloonIcon, CityIcon, FoodIcon } from "./Icons";
-import { RestoreOutlined } from "@material-ui/icons";
+import { HomeIcon, BalloonIcon } from "./Icons";
+import { useHistory } from "react-router-dom";
 
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
 export default function MyAccount() {
+  let history = useHistory();
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [selectedTrip, setSelectedTrip] = React.useState(undefined);
@@ -53,18 +48,7 @@ export default function MyAccount() {
   const [currentMemoryTitle, setCurrentMemoryTitle] = React.useState("");
   const [selectedMemoryIndex, setSelectedMemoryIndex] =
     React.useState(undefined);
-  const {
-    middlePoint,
-    peopleCoordinates,
-    boundsCoordinates,
-    closestCity,
-    hotels,
-    restaurants,
-    filteredBounds,
-    filter,
-    setFilter,
-  } = useMapContext();
-  const { user } = useUserContext();
+  const { middlePoint } = useMapContext();
   const navControlStyle = {
     right: 10,
     top: 10,
@@ -78,22 +62,19 @@ export default function MyAccount() {
 
   React.useEffect(() => {
     getUserData();
-  }, []);
+  });
 
   const getUserData = async () => {
+    let token;
     do {
-      console.log("waiting for the token");
-    } while (user === undefined);
-    console.log("getting user with token: ", user);
-    // axios.defaults.headers.common = {
-    //   Authorization: "Bearer " + mockData.userToken,
-    // };
+      token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    } while (token === undefined);
+    if (token === null) history.push("/login");
     axios.defaults.headers.common = {
-      Authorization: "Bearer " + user,
+      Authorization: "Bearer " + token,
     };
     const res = await axios.get(`http://localhost:8080/users`);
     if (!res.data) alert("You have to log in!");
-    console.log("got user: ", res.data);
     setUserAccount(res.data);
   };
 
@@ -160,9 +141,14 @@ export default function MyAccount() {
     const public_id = fileNameArray[fileNameArray.length - 1].split(".")[0];
 
     try {
+      let token;
+      do {
+        token =
+          localStorage.getItem("token") || sessionStorage.getItem("token");
+      } while (token === undefined);
       const res = await axios.delete(`http://localhost:8080/users/memory`, {
         headers: {
-          Authorization: "Bearer " + user,
+          Authorization: "Bearer " + token,
         },
         data: {
           public_id: public_id,
@@ -178,8 +164,12 @@ export default function MyAccount() {
   };
 
   const updateUser = async () => {
+    let token;
+    do {
+      token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    } while (token === undefined);
     axios.defaults.headers.common = {
-      Authorization: "Bearer " + user,
+      Authorization: "Bearer " + token,
     };
     const res = await axios.put(`http://localhost:8080/users`, userAccount);
     setUserAccount(res.data);
