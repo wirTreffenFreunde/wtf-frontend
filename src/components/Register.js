@@ -17,6 +17,7 @@ import Link from "@material-ui/core/Link";
 import { useForm, Controller } from "react-hook-form";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { hashPassword } from "../crypto";
 
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
@@ -41,7 +42,8 @@ export default function Register() {
   // };
 
   const submit = async (data) => {
-    // e.preventDefault();
+    data.password = hashPassword(data.password);
+    data["retype-password"] = hashPassword(data["retype-password"]);
     try {
       const result = await axios.post("http://localhost:8080/users", data);
       if (result.status === 200) {
