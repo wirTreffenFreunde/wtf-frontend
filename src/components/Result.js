@@ -16,6 +16,7 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
+  Box,
 } from "@material-ui/core";
 import { HomeIcon, HotelIcon, BalloonIcon, CityIcon, FoodIcon } from "./Icons";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -24,6 +25,7 @@ import { useMapContext } from "../context/map-context";
 
 import { useStyles } from "../Layout/useStyles";
 import "mapbox-gl/dist/mapbox-gl.css";
+import axios from "axios";
 
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
@@ -50,11 +52,21 @@ function Result() {
     zoom: 10,
   });
   const [filterMenu, setFilterMenu] = useState(false);
+  const [token, setToken] = useState(undefined);
 
   const navControlStyle = {
     right: 10,
     top: 10,
   };
+
+  useEffect(() => {
+    let userToken;
+    do {
+      userToken =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
+    } while (userToken === undefined);
+    setToken(userToken);
+  }, []);
 
   useEffect(() => {
     // changing view port on the map to have all the markers visible
@@ -146,6 +158,27 @@ function Result() {
       });
     }
   }
+
+  const saveTrip = async () => {
+    let myTrip = {
+      title: middlePoint.address.address,
+      cities: [],
+    };
+    peopleCoordinates.map((coordinate) => {
+      myTrip.cities.push(coordinate.address);
+      return coordinate;
+    });
+    axios.defaults.headers.common = {
+      Authorization: "Bearer " + token,
+    };
+    const res = await axios.get(`http://localhost:8080/users`);
+    const user = res.data;
+    if (!user) alert("You have to log in!");
+    user.trips.push(myTrip);
+    const resUpdate = await axios.put(`http://localhost:8080/users`, user);
+    if (!resUpdate.data) alert("Some error occured while saving");
+    alert("Your trip has been saved");
+  };
 
   return (
     <Container maxWidth="lg">
@@ -336,6 +369,13 @@ function Result() {
           )}
         </ReactMapGL>
       </Card>
+      {token !== undefined && token !== null && (
+        <Box className={classes.saveTripBtn}>
+          <Button variant="contained" color="primary" onClick={saveTrip}>
+            Save this trip
+          </Button>
+        </Box>
+      )}
     </Container>
   );
 }

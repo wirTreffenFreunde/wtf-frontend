@@ -1,6 +1,6 @@
 let mockData = {
   userToken:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjBlMzAzNDU1MmE4ODA5Yzk2MjcwMjI1IiwiaWF0IjoxNjI1NDkwMjk1fQ.YfpTDhBHrC9pcXzE3BURrnyNtyIv3Y9aENhJtmdshEM",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjBmZTk0NjA0OGI1YWUxZGNmYzcwNjcyIiwiaWF0IjoxNjI3Mjk4MjI2fQ.P6glFaxFC-jLR4Mi8a4oM9p9ns8MZ5THIvpm36V198U",
   // trips: [
   //   {
   //     title: "MyFirstTRip",
