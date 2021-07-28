@@ -244,10 +244,15 @@ export const useStyles = makeStyles((theme) => ({
   peopleIcon: {
     zIndex: 1,
   },
+  popupCopy: {
+    fontSize: "0.7rem",
+  },
+
   saveTripBtn: {
     width: "100%",
     textAlign: "center",
   },
+  
 
   //   // LOGIN and REGISTER pages
   paper: {

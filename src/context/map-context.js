@@ -17,9 +17,9 @@ function MapProvider({ children }) {
 
 	// middle point
 	const [middlePoint, setMiddlePoint] = useState({
-		latitude: 53.57835738834605,
-		longitude: 9.97645520197268,
-		address: "Hamburg",
+		latitude: 53.55854669314449,
+		longitude: 9.988636859658898,
+    address: "Planten un Blomen, Hamburg"
 	});
 
 	// coordinates from input fields
@@ -58,7 +58,6 @@ function MapProvider({ children }) {
 			setMiddlePoint({
 				latitude: Number(result.data.middlePoint.latitude),
 				longitude: Number(result.data.middlePoint.longitude),
-				address: result.data.middlePoint.address,
 			});
 			setPeopleCoordinates(result.data.peopleAddresses);
 			setBoundsCoordinates(result.data.boundsAddresses);

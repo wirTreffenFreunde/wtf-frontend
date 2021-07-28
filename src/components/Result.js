@@ -357,12 +357,12 @@ function Result() {
                 }}
               >
                 <div onClick={copyToClipboard}>
-                  <Typography>Press to copy</Typography>
                   <Typography>
                     {selectedMarker.address}
                     {/* ,{selectedMarker.latitude},
                       {selectedMarker.longitude} */}
                   </Typography>
+                  <Typography className={classes.popupCopy}>Press to copy</Typography>
                 </div>
               </Badge>
             </Popup>
