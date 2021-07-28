@@ -27,7 +27,6 @@
   "scripts": {
     "start": "react-dotenv && react-scripts start", 
     "build": "react-dotenv && react-scripts build",
-    "serve": "react-dotenv && serve build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -50,6 +49,6 @@
     ]
   },
   "react-dotenv": {
-    "whitelist": ["REACT_APP_API_KEY"]
+    "whitelist": ["ENV_VAR"]
   }
 }

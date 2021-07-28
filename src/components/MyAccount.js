@@ -31,7 +31,7 @@ import { HomeIcon, BalloonIcon } from "./Icons";
 import { useHistory } from "react-router-dom";
 import env from "react-dotenv";
 
-const mapboxAccessToken = process.env.REACT_APP_API_KEY;
+const mapboxAccessToken = env.ENV_VAR;
 
 export default function MyAccount() {
   let history = useHistory();

@@ -29,7 +29,7 @@ import axios from "axios";
 import env from "react-dotenv";
 
 
-const mapboxAccessToken = process.env.REACT_APP_API_KEY;
+const mapboxAccessToken = env.ENV_VAR;
 
 function Result() {
   const classes = useStyles();
