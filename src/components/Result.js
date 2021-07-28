@@ -26,6 +26,8 @@ import { useMapContext } from "../context/map-context";
 import { useStyles } from "../Layout/useStyles";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
+import env from "react-dotenv";
+
 
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
@@ -357,12 +359,12 @@ function Result() {
                 }}
               >
                 <div onClick={copyToClipboard}>
-                  <Typography>Press to copy</Typography>
                   <Typography>
                     {selectedMarker.address}
                     {/* ,{selectedMarker.latitude},
                       {selectedMarker.longitude} */}
                   </Typography>
+                  <Typography className={classes.popupCopy}>Press to copy</Typography>
                 </div>
               </Badge>
             </Popup>
