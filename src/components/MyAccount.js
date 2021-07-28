@@ -29,9 +29,8 @@ import ReactMapGL, { Marker, NavigationControl } from "react-map-gl";
 import { useMapContext } from "../context/map-context";
 import { HomeIcon, BalloonIcon } from "./Icons";
 import { useHistory } from "react-router-dom";
-import env from "react-dotenv";
 
-const mapboxAccessToken = env.ENV_VAR;
+const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
 export default function MyAccount() {
   let history = useHistory();

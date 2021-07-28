@@ -26,10 +26,9 @@ import { useMapContext } from "../context/map-context";
 import { useStyles } from "../Layout/useStyles";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
-import env from "react-dotenv";
 
 
-const mapboxAccessToken = env.ENV_VAR;
+const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
 function Result() {
   const classes = useStyles();
