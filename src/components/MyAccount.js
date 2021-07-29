@@ -30,6 +30,9 @@ import { useMapContext } from "../context/map-context";
 import { HomeIcon, BalloonIcon } from "./Icons";
 import { useHistory } from "react-router-dom";
 
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
 export default function MyAccount() {
