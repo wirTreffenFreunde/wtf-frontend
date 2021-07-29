@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const MapContext = React.createContext();
+const backendURL = process.env.REACT_APP_BACKEND_URL
 
 function useMapContext() {
 	const context = React.useContext(MapContext);
@@ -17,9 +18,9 @@ function MapProvider({ children }) {
 
 	// middle point
 	const [middlePoint, setMiddlePoint] = useState({
-		latitude: 53.57835738834605,
-		longitude: 9.97645520197268,
-		address: "Hamburg",
+		latitude: 53.55854669314449,
+		longitude: 9.988636859658898,
+    address: "Planten un Blomen, Hamburg"
 	});
 
 	// coordinates from input fields
@@ -54,11 +55,10 @@ function MapProvider({ children }) {
     })
 		try {
 			const encodedAddresses = peopleAddresses.filter((e) => e);
-			const result = await axios.post(`http://localhost:8080/api`, encodedAddresses);
+			const result = await axios.post(`${backendURL}/api`, encodedAddresses);
 			setMiddlePoint({
 				latitude: Number(result.data.middlePoint.latitude),
 				longitude: Number(result.data.middlePoint.longitude),
-				address: result.data.middlePoint.address,
 			});
 			setPeopleCoordinates(result.data.peopleAddresses);
 			setBoundsCoordinates(result.data.boundsAddresses);

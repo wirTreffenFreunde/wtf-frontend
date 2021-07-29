@@ -37,6 +37,7 @@ export const theme = createTheme({
   },
   spacing: 5,
 });
+
 export const useStyles = makeStyles((theme) => ({
   "@global": {
     ul: {
@@ -244,10 +245,15 @@ export const useStyles = makeStyles((theme) => ({
   peopleIcon: {
     zIndex: 1,
   },
+  popupCopy: {
+    fontSize: "0.7rem",
+  },
+
   saveTripBtn: {
     width: "100%",
     textAlign: "center",
   },
+  
 
   //   // LOGIN and REGISTER pages
   paper: {
@@ -342,4 +348,4 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
   },
-}));
+}), { withTheme: true });
