@@ -37,6 +37,7 @@ export const theme = createTheme({
   },
   spacing: 5,
 });
+
 export const useStyles = makeStyles((theme) => ({
   "@global": {
     ul: {
@@ -347,4 +348,4 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
   },
-}));
+}), { withTheme: true });

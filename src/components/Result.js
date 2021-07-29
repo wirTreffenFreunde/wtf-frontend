@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import mapboxgl from "mapbox-gl";
 import ReactMapGL, {
   Marker,
   Popup,
@@ -27,6 +28,8 @@ import { useStyles } from "../Layout/useStyles";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
 
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
