@@ -29,7 +29,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
-mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+// mapboxgl.workerClass =
+//   require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
@@ -165,7 +166,7 @@ function Result() {
 
   const saveTrip = async () => {
     let myTrip = {
-      title: middlePoint.address.address,
+      title: closestCity.address,
       cities: [],
     };
     peopleCoordinates.map((coordinate) => {
@@ -366,7 +367,9 @@ function Result() {
                     {/* ,{selectedMarker.latitude},
                       {selectedMarker.longitude} */}
                   </Typography>
-                  <Typography className={classes.popupCopy}>Press to copy</Typography>
+                  <Typography className={classes.popupCopy}>
+                    Press to copy
+                  </Typography>
                 </div>
               </Badge>
             </Popup>
