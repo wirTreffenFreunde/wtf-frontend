@@ -1,4 +1,5 @@
 import React from "react";
+import mapboxgl from "mapbox-gl";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Accordion from "@material-ui/core/Accordion";

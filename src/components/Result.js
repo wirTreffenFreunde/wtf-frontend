@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import mapboxgl from "mapbox-gl";
 import ReactMapGL, {
   Marker,
   Popup,
