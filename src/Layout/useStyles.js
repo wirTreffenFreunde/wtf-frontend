@@ -165,9 +165,6 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       margin: `${theme.spacing(0, 2, 4, 2)} !important`,
     },
-    [theme.breakpoints.up("lg")]: {
-      margin: `${theme.spacing(0, 2, 6, 2)} !important`,
-    },
   },
   inputField: {
     width: "100%",
