@@ -24,6 +24,7 @@ import { useStyles } from "../Layout/useStyles";
 
 //import { useUserContext } from "../context/user-context";
 import Copyright from "../Layout/Copyright";
+const backendURL = process.env.REACT_APP_BACKEND_URL
 
 export default function Register() {
   let history = useHistory();
@@ -45,7 +46,7 @@ export default function Register() {
     data.password = hashPassword(data.password);
     data["retype-password"] = hashPassword(data["retype-password"]);
     try {
-      const result = await axios.post("http://localhost:8080/users", data);
+      const result = await axios.post(`${backendURL}/users`, data);
       if (result.status === 200) {
         history.push("/verify");
       }

@@ -11,6 +11,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "../Layout/useStyles";
 import axios from "axios";
+const backendURL = process.env.REACT_APP_BACKEND_URL
 export default function ForgotPassword() {
   let history = useHistory();
   const classes = useStyles();
@@ -24,7 +25,7 @@ export default function ForgotPassword() {
     // e.preventDefault();
     try {
       const result = await axios.post(
-        "http://localhost:8080/users/forgotpassword",
+        `${backendURL}/users/forgotpassword`,
         data
       );
       if (result.status === 200) {

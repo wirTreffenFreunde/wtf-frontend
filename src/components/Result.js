@@ -29,10 +29,10 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
-// mapboxgl.workerClass =
-//   require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
+const backendURL = process.env.REACT_APP_BACKEND_URL
 
 function Result() {
   const classes = useStyles();
@@ -176,11 +176,11 @@ function Result() {
     axios.defaults.headers.common = {
       Authorization: "Bearer " + token,
     };
-    const res = await axios.get(`http://localhost:8080/users`);
+    const res = await axios.get(`${backendURL}/users`);
     const user = res.data;
     if (!user) alert("You have to log in!");
     user.trips.push(myTrip);
-    const resUpdate = await axios.put(`http://localhost:8080/users`, user);
+    const resUpdate = await axios.put(`${backendURL}/users`, user);
     if (!resUpdate.data) alert("Some error occured while saving");
     alert("Your trip has been saved");
   };

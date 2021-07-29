@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
 import { hashPassword } from "../crypto";
+const backendURL = process.env.REACT_APP_BACKEND_URL
 
 export default function NewPassword(props) {
   let history = useHistory();
@@ -23,7 +24,7 @@ export default function NewPassword(props) {
     try {
       const response = await axios({
         method: "PUT",
-        url: "http://localhost:8080/users/resetPassword",
+        url: `${backendURL}/users/resetPassword`,
         data: data,
       });
 

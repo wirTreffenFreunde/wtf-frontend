@@ -35,6 +35,7 @@ import { useHistory } from "react-router-dom";
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
+const backendURL = process.env.REACT_APP_BACKEND_URL
 
 export default function MyAccount() {
   let history = useHistory();
@@ -77,7 +78,7 @@ export default function MyAccount() {
     axios.defaults.headers.common = {
       Authorization: "Bearer " + token,
     };
-    const res = await axios.get(`http://localhost:8080/users`);
+    const res = await axios.get(`${backendURL}/users`);
     if (!res.data) alert("You have to log in!");
     setUserAccount(res.data);
   };
@@ -150,7 +151,7 @@ export default function MyAccount() {
         token =
           localStorage.getItem("token") || sessionStorage.getItem("token");
       } while (token === undefined);
-      const res = await axios.delete(`http://localhost:8080/users/memory`, {
+      const res = await axios.delete(`${backendURL}/users/memory`, {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -175,7 +176,7 @@ export default function MyAccount() {
     axios.defaults.headers.common = {
       Authorization: "Bearer " + token,
     };
-    const res = await axios.put(`http://localhost:8080/users`, userAccount);
+    const res = await axios.put(`${backendURL}/users`, userAccount);
     setUserAccount(res.data);
   };
 
@@ -186,7 +187,7 @@ export default function MyAccount() {
 
   const getCoordinates = async (index) => {
     const result = await axios.post(
-      `http://localhost:8080/api`,
+      `${backendURL}/api`,
       userAccount.trips[index].cities
     );
     console.log(result.data);
