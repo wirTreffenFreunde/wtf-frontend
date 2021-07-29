@@ -4,7 +4,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import axios from "axios";
 import { useStyles } from "../Layout/useStyles";
 export default function EmailVerified() {
   const classes = useStyles();
