@@ -160,13 +160,13 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   inputFieldGrid: {
-    margin: theme.spacing(0, 0, 3, 0),
+    margin: `${theme.spacing(0, 0, 3, 0)} !important`,
     flexGrow: 1,
     [theme.breakpoints.up("md")]: {
-      margin: theme.spacing(0, 2, 4, 2),
+      margin: `${theme.spacing(0, 2, 4, 2)} !important`,
     },
     [theme.breakpoints.up("lg")]: {
-      margin: theme.spacing(0, 2, 6, 2),
+      margin: `${theme.spacing(0, 2, 6, 2)} !important`,
     },
   },
   inputField: {
@@ -204,16 +204,16 @@ export const useStyles = makeStyles((theme) => ({
   },
   submitBtn: {
     position: "absolute",
-    width: "60px",
-    height: "60px",
-    left: "calc(50% - 30px)", // btn in the middle of the card
-    bottom: "-30px",
+    width: "60px !important",
+    height: "60px !important",
+    left: "calc(50% - 30px) !important", // btn in the middle of the card
+    bottom: "-30px !important",
     padding: theme.spacing(1),
     [theme.breakpoints.up("md")]: {
-      width: "80px",
-      height: "80px",
-      left: "calc(50% - 40px)", // btn in the middle of the card
-      bottom: "-40px",
+      width: "80px !important",
+      height: "80px !important",
+      left: "calc(50% - 40px) !important", // btn in the middle of the card
+      bottom: "-40px !important",
     },
   },
 
