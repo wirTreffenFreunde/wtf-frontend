@@ -17,6 +17,8 @@ import { useStyles } from "../Layout/useStyles";
 import { useUserContext } from "../context/user-context";
 import { hashPassword } from "../crypto";
 
+const backendURL = process.env.REACT_APP_BACKEND_URL
+
 export default function LogIn() {
   let history = useHistory();
   const classes = useStyles();
@@ -35,7 +37,7 @@ export default function LogIn() {
     try {
       const response = await axios({
         method: "POST",
-        url: "http://localhost:8080/users/login",
+        url: `${backendURL}/users/login`,
         data: data,
       });
       setWrongCredentials(false);
