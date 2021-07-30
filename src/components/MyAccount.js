@@ -32,11 +32,11 @@ import { HomeIcon, BalloonIcon } from "./Icons";
 import { useHistory } from "react-router-dom";
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
-// mapboxgl.workerClass =
-//   require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+mapboxgl.workerClass =
+  require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
-const backendURL = process.env.REACT_APP_BACKEND_URL
+const backendURL = process.env.REACT_APP_BACKEND_URL;
 
 export default function MyAccount() {
   let history = useHistory();
@@ -285,7 +285,6 @@ export default function MyAccount() {
                       key={addr.address}
                       offsetTop={-56}
                       offsetLeft={-30}
-                      
                     >
                       <HomeIcon />
                     </Marker>
