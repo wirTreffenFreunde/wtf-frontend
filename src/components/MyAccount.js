@@ -1,5 +1,5 @@
 import React from "react";
-import mapboxgl from "mapbox-gl";
+// import mapboxgl from "mapbox-gl";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Accordion from "@material-ui/core/Accordion";
@@ -32,7 +32,8 @@ import { HomeIcon, BalloonIcon } from "./Icons";
 import { useHistory } from "react-router-dom";
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
-// mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+// mapboxgl.workerClass =
+//   require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const mapboxAccessToken = process.env.REACT_APP_API_KEY;
 
@@ -66,7 +67,7 @@ export default function MyAccount() {
 
   React.useEffect(() => {
     getUserData();
-  });
+  }, []);
 
   const getUserData = async () => {
     let token;
@@ -141,6 +142,7 @@ export default function MyAccount() {
   };
 
   const deleteMemory = async (index) => {
+    console.log(userAccount)
     const fileNameArray = userAccount.memories[index].url.split("/");
     const public_id = fileNameArray[fileNameArray.length - 1].split(".")[0];
 
@@ -175,6 +177,7 @@ export default function MyAccount() {
     axios.defaults.headers.common = {
       Authorization: "Bearer " + token,
     };
+    console.log(userAccount);
     const res = await axios.put(`http://localhost:8080/users`, userAccount);
     setUserAccount(res.data);
   };
