@@ -142,6 +142,7 @@ export default function MyAccount() {
   };
 
   const deleteMemory = async (index) => {
+    console.log(userAccount)
     const fileNameArray = userAccount.memories[index].url.split("/");
     const public_id = fileNameArray[fileNameArray.length - 1].split(".")[0];
 
@@ -176,6 +177,7 @@ export default function MyAccount() {
     axios.defaults.headers.common = {
       Authorization: "Bearer " + token,
     };
+    console.log(userAccount);
     const res = await axios.put(`http://localhost:8080/users`, userAccount);
     setUserAccount(res.data);
   };

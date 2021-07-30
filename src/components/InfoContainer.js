@@ -10,10 +10,7 @@ function InfoContainer() {
       <Card className={classes.homeCard}>
         <Typography variant="h3" className={classes.h3}>How it works</Typography>
         <Typography variant="body" className={classes.bodyText}>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio,
-          molestias dolore! Molestias exercitationem ut quibusdam maiores illo
-          aperiam hic voluptas recusandae quidem soluta repellendus aut, ea
-          earum fugit vitae explicabo.
+        The Project has also a user account where you can store and save your next destination with points of interest like the closest city, restaurants, or hotels. The whole trip can have up to 5 members.
         </Typography>
       </Card>
     </Container>
